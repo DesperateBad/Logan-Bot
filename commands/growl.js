@@ -16,7 +16,7 @@ const bearJokes = [
 exports.conf = {
   enabled: true,
   aliases: [],
-  permLevel: "User"
+  permLevel: "Open"
 };
 
 exports.help = {
