@@ -52,7 +52,7 @@ const config = {
     // This is your permission level, the staff levels should always be above the rest of the roles.
     { level: 2,
       // This is the name of the role.
-      name: "Member",
+      name: "Server Moderator",
       check: (message) => {
         try {
           const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.modRole.toLowerCase());
@@ -64,7 +64,7 @@ const config = {
     },
 
     { level: 3,
-      name: "Moderator", 
+      name: "Server Admin", 
       check: (message) => {
         try {
           const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.adminRole.toLowerCase());
@@ -89,14 +89,14 @@ const config = {
 
     // Bot Admin has some limited access like rebooting the bot or reloading commands.
     { level: 6,
-      name: "GitHub Contributor",
+      name: "Bot Administrator",
       check: (message) => config.admins.includes(message.author.id)
     },
     
     // Bot's owner. Only the Bot's owner should have this as it gives access to potentially
     // dangerous commands such as ?eval
     { level: 7,
-      name: "GitHub Owner", 
+      name: "Bot Owner", 
       check: (message) => message.client.config.ownerID === message.author.id
     }
   ]
