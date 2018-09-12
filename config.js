@@ -45,7 +45,7 @@ const config = {
       
     // This is the lowest permisison level, this is for non-roled users.
     { level: 1,
-      name: "User", 
+      name: "Open", 
       check: () => true
     },
 
