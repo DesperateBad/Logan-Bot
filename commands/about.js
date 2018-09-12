@@ -1,7 +1,8 @@
-exports.run = (client, message, level) => {
+exports.run = async (client, message, level) => {
   
-  const fs = require("fs");
-  const commandList = fs.readdir("./");
+  const { promisify } = require("util");
+  const readdir = promisify(require("fs").readdir);
+  const commandList = await readdir("../commands/");
   
   message.channel.send({embed: {
     color: 0xf29837,
@@ -37,7 +38,7 @@ exports.run = (client, message, level) => {
     }
    }
  })
-};
+}.catch(console.error);
 
 exports.conf = {
   enabled: true,
