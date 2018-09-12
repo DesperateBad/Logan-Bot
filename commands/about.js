@@ -2,7 +2,7 @@ exports.run = async (client, message, level) => {
   
   const { promisify } = require("util");
   const readdir = promisify(require("fs").readdir);
-  const commandList = await readdir("../commands/");
+  const commandList = await readdir("./");
   
   message.channel.send({embed: {
     color: 0xf29837,
