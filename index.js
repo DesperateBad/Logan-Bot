@@ -11,7 +11,6 @@ const readdir = promisify(require("fs").readdir);
 client.config = require("./config.js");
 
 require("./src/functions.js")(client);
-require("./src/commands.js")(client);
 require("./src/misc/randomImageFunctions.js")(client);
 
 
