@@ -1,19 +1,33 @@
 exports.run = async (client, message, args, level) => {
 
+if (client.cooldownProvider.has(message.author.id)) {
+  message.channel.send("That command has a cooldown of 1 hour, sorry ._.");
+  return;
+}
+  
   let suggestionText = args.join(" ");
-
-  // Fetch user via given user id
+  
+  // Fetch Bot Owner by id
   let user = client.fetchUser(client.config.ownerID)
    .then(user => {
       // Once promise returns with user, send user a DM
       user.send(`**From:** ${message.author.username} (ID: ${message.author.id})\n**Text: **` + suggestionText); 
    })
+  
+  
+  // Start the cooldown
+  client.cooldownProvider.add(message.author.id);
+  
+  setTimeout(() => {
+    client.cooldownProvider.delete(message.author.id);
+  }, 3600000);
+  
 };
 
 exports.conf = {
   enabled: true,
   aliases: ['suggest'],
-  permLevel: "User"
+  permLevel: "Open"
 };
 
 exports.help = {
