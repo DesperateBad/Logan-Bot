@@ -11,7 +11,7 @@ exports.run = (client, message, level) => {
 exports.conf = {
   enabled: true,
   aliases: ['rolldice'],
-  permLevel: "User"
+  permLevel: "Open"
 };
 
 exports.help = {
