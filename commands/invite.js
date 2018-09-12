@@ -5,7 +5,7 @@ exports.run = (client, message, level) => {
 exports.conf = {
     enabled: true,
     aliases: ['inv', 'invitelink', 'invlink'],
-    permLevel: "User"
+    permLevel: "Open"
 };
 
 exports.help ={
