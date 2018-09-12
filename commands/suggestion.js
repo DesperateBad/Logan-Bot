@@ -6,6 +6,7 @@ if (client.cooldownProvider.has(message.author.id)) {
 }
   
   let suggestionText = args.join(" ");
+  if (!suggestionText) return message.channel.send("Please provide the text to send to my creator.");
   
   // Fetch Bot Owner by id
   let user = client.fetchUser(client.config.ownerID)
