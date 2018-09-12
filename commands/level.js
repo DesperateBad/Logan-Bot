@@ -6,7 +6,7 @@ exports.run = async (client, message, args, level) => {
 exports.conf = {
   enabled: true,
   aliases: ['mylevel', 'perms'],
-  permLevel: "User"
+  permLevel: "Open"
 };
 
 exports.help = {
