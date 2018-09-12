@@ -20,6 +20,8 @@ client.aliases = new Enmap();
 
 client.serverConfig = new Enmap({provider: new EnmapLevel({name: "serverConfig"})});
 
+client.cooldownProvider = new Set();
+
 
 client.on("ready",() => {
   console.log(chalk.bgCyan.black(`Online and active on ${client.guilds.size} servers.`));
