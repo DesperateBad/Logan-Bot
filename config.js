@@ -76,7 +76,7 @@ const config = {
     },
     // This is the server owner.
     { level: 4,
-      name: "Admin", 
+      name: "Server Owner", 
       check: (message) => message.channel.type === "text" ? (message.guild.ownerID === message.author.id ? true : false) : false
     },
 
@@ -89,14 +89,14 @@ const config = {
 
     // Bot Admin has some limited access like rebooting the bot or reloading commands.
     { level: 6,
-      name: "Bot Admin",
+      name: "GitHub Contributor",
       check: (message) => config.admins.includes(message.author.id)
     },
     
     // Bot's owner. Only the Bot's owner should have this as it gives access to potentially
     // dangerous commands such as ?eval
     { level: 7,
-      name: "Bot Owner", 
+      name: "GitHub Owner", 
       check: (message) => message.client.config.ownerID === message.author.id
     }
   ]
