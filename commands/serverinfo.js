@@ -38,7 +38,7 @@ exports.run = (client, message, level) => {
 exports.conf = {
   enabled: true,
   aliases: ['serverinf'],
-  permLevel: "User"
+  permLevel: "Open"
 };
 
 exports.help = {
