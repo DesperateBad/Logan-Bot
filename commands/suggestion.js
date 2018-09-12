@@ -32,6 +32,6 @@ exports.conf = {
 
 exports.help = {
   name: "suggestion",
-  description: "Sends a suggestion to my creator. Upon receiving the message, he will review it, and message you if he's going to implement it. WARNING: If a user uses this command for anything other than suggesting things, future suggestions from this user will be ignored.",
+  description: "Sends a suggestion to my creator. Upon receiving the message, he will review it, and message you if he's going to implement it.",
   usage: "suggestion [text]"
 };
