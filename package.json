@@ -1,7 +1,7 @@
 {
-  "name": "Hamtaro-Bot",
+  "name": "Logan-Bot",
   "version": "1.0.0",
-  "description": "Hamtaro Bot!",
+  "description": "Logan Bot!",
   "main": "index.js",
   "engines": {
     "node": ">=8.4",
