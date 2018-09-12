@@ -12,7 +12,7 @@ if (client.cooldownProvider.has(message.author.id)) {
   let user = client.fetchUser(client.config.ownerID)
    .then(user => {
       // Once promise returns with user, send user a DM
-      user.send(`**From:** ${message.author.username} (ID: ${message.author.id})\n**Text: **` + suggestionText); 
+      user.send("**From:** " + message.author.toString() + " (ID: ${message.author.id})\n**Text:** " + suggestionText); 
    })
   
   
