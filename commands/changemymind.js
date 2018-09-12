@@ -52,7 +52,7 @@ const Jimp = require('jimp');
 exports.conf = {
   enabled: true,
   aliases: ['changemind'],
-  permLevel: "User"
+  permLevel: "Open"
 };
 
 exports.help = {
