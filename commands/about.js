@@ -38,7 +38,7 @@ exports.run = async (client, message, level) => {
     }
    }
  })
-}.catch(console.error);
+};
 
 exports.conf = {
   enabled: true,
