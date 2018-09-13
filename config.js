@@ -17,8 +17,7 @@ const config = {
   // Default server config
   "defaultConfig" : {
     
-    "modRole": "Moderators",
-    "adminRole": "Admin",
+    "adminRole": "Administrators",
     
     "unknownCommandNotice": "true",
     "disabledCommandNotice": "true",
