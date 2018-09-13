@@ -1,7 +1,3 @@
-module.exports = (client) => {
-  
-const serverConfig = client.serverConfig.ensure(message.guild.id, client.defaultConfig);
-
 const config = {
   
   "botName": "Logan",
@@ -90,4 +86,4 @@ const config = {
     }
   ]
 }
-};
+module.exports = config;
