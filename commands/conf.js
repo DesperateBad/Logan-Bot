@@ -57,19 +57,20 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     const isDefault = !overrides[key] ? "\nThis is the default global default value." : "";
     message.reply(`The value of ${key} is currently ${settings[key]}${isDefault}`);
   } else {
+    
     let configProps = Object.keys(serverConfig).map(prop => {
       return `${prop}  :  ${serverConfig[prop]}\n`;
-    });
+    })
     message.channel.send(`The following are the servers current configuration items:
     \`\`\`${configProps}\`\`\``);
-  }
-  }
+     }
+   }
 };
 
 exports.conf = {
   enabled: true,
   aliases: ["setting", "settings", "conf"],
-  permLevel: "Server Administrator"
+  permLevel: "Server Admin"
 };
 
 exports.help = {
