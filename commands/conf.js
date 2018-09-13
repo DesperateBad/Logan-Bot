@@ -5,7 +5,7 @@ const { inspect } = require("util");
 exports.run = async (client, message, [action, key, ...value], level) => {
 
   // Retrieve current guild settings (merged) and overrides only.
-  const settings = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
+  const serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
   const overrides = client.serverConfig.get(message.guild.id);
   
   // Edit an existing key value
@@ -13,14 +13,11 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     // User must specify a key.
     if (!key) return message.reply("Please specify a key to edit");
     // User must specify a key that actually exists!
-    if (!settings[key]) return message.reply("This key does not exist in my settings");
+    if (!serverConfig[key]) return message.reply("This key does not exist in my settings");
     // User must specify a value to change.
     if (value.length < 1) return message.reply("Please specify a new value for the key");
     // User must specify a different value than the current one.
-    if (value.join(" ") === settings[key]) return message.reply("This setting already has that value!");
-    
-    // If the guild does not have any overrides, initialize it.
-    if (!client.serverConfig.has(message.guild.id)) client.serverConfig.set(message.guild.id, {});
+    if (value.join(" ") === serverConfig[key]) return message.reply("This setting already has that value!");
 
     // setProp is an enmap feature, it defines a single property of an object in an enmap key/value pair.
     client.serverConfig.setProp(message.guild.id, key, value.join(" "));
@@ -32,7 +29,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
   // Resets a key to the default value
   if (action === "reset") {
     if (!key) return message.reply("Please specify a key to reset.");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
+    if (!serverConfig[key]) return message.reply("This key does not exist in the settings");
     if (!overrides[key]) return message.reply("This key does not have an override and is already using defaults.");
     
     // Good demonstration of the custom awaitReply method in `./modules/functions.js` !
@@ -53,9 +50,9 @@ exports.run = async (client, message, [action, key, ...value], level) => {
   
   if (action === "view") {
     if (!key) return message.reply("Please specify a key to view");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
+    if (!serverConfig[key]) return message.reply("This key does not exist in the settings");
     const isDefault = !overrides[key] ? "\nThis is the default global default value." : "";
-    message.reply(`The value of ${key} is currently ${settings[key]}${isDefault}`);
+    message.reply(`The value of ${key} is currently ${serverConfig[key]}${isDefault}`);
   } else {
     
     let configProps = Object.keys(serverConfig).map(prop => {
