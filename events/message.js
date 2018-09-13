@@ -3,7 +3,7 @@ module.exports = async (client, message) => {
   if (message.author.bot) return;
   
   // Get the guild's settings
-  const serverConfig = message.serverConfig = client.getGuildSettings(message.guild);
+  const serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
   
   // Ignore messages not starting with the prefix (in config.json)
   if (message.content.indexOf(client.config.prefix) !== 0) return;
