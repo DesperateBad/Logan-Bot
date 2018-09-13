@@ -17,7 +17,12 @@ require("./src/misc/randomImageFunctions.js")(client);
 client.commands = new Enmap();
 client.aliases = new Enmap();
 
-client.serverConfig = new Enmap({provider: new EnmapLevel({name: "serverConfig"})});
+client.serverConfig = new Enmap({
+                            name: "serverConfig",
+                            fetchAll: false,
+                            autoFetch: true,
+                            cloneLevel: 'deep'
+                          });
 
 client.cooldownProvider = new Set();
 
