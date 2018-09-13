@@ -1,3 +1,5 @@
+const serverConfig = client.serverConfig.ensure(message.guild.id, client.defaultConfig);
+
 const config = {
   
   "botName": "Logan",
@@ -52,7 +54,7 @@ const config = {
       name: "Server Admin", 
       check: (message) => {
         try {
-          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.adminRole.toLowerCase());
+          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === serverConfig.adminRole.toLowerCase());
           return (adminRole && message.member.roles.has(adminRole.id));
         } catch (e) {
           return false;
@@ -74,7 +76,7 @@ const config = {
 
     // Bot Admin has some limited access like rebooting the bot or reloading commands.
     { level: 5,
-      name: "Bot Administrator",
+      name: "Bot Admin",
       check: (message) => config.admins.includes(message.author.id)
     },
     
