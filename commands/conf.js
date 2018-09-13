@@ -55,11 +55,15 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     message.reply(`The value of ${key} is currently ${serverConfig[key]}${isDefault}`);
   } else {
     
-    let configProps = Object.keys(serverConfig).map(prop => {
-      return `${prop}  :  ${serverConfig[prop]}\n`;
+    const longest = Object.keys(serverConfig).reduce((long, str) => Math.max(long, str.length), 0);
+    var confParser = `[The following are the servers current configuration items:\n`;
+    Object.keys(serverConfig).map(prop => {
+      confParser +=`${prop}${' '.repeat(longest - props.length)}:  ${serverConfig[prop]}\n`;
     })
-    message.channel.send(`The following are the servers current configuration items:
-    \`\`\`${configProps}\`\`\``);
+
+    confParser += `Use ${client.config.prefix}conf edit [key] [newValue] to change a configuration item,\nor reset an item with ${client.config.prefix}conf reset [key]`;
+    
+    message.channel.send(confParser, {code: "asciidoc", split: { char: "\u200b" }});
    }
 };
 
