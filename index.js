@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 
 const Enmap = require("enmap");
-const EnmapLevel = require("enmap-sqlite");
 const { promisify } = require("util");
 const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
