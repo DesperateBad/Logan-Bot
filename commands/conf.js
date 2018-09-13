@@ -5,7 +5,7 @@ const { inspect } = require("util");
 exports.run = async (client, message, [action, key, ...value], level) => {
 
   // Retrieve current guild settings (merged) and overrides only.
-  const settings = message.serverConfig;
+  const settings = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
   const overrides = client.serverConfig.get(message.guild.id);
   
   // Edit an existing key value
@@ -57,7 +57,12 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     const isDefault = !overrides[key] ? "\nThis is the default global default value." : "";
     message.reply(`The value of ${key} is currently ${settings[key]}${isDefault}`);
   } else {
-    message.channel.send(inspect(settings), {code: "json"});
+    let configProps = Object.keys(serverConfig).map(prop => {
+      return `${prop}  :  ${serverConfig[prop]}\n`;
+    });
+    message.channel.send(`The following are the servers current configuration items:
+    \`\`\`${configProps}\`\`\``);
+  }
   }
 };
 
