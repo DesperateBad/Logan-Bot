@@ -63,7 +63,6 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     })
     message.channel.send(`The following are the servers current configuration items:
     \`\`\`${configProps}\`\`\``);
-     }
    }
 };
 
