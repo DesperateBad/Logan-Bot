@@ -1,3 +1,5 @@
+module.exports = (client) => {
+  
 const serverConfig = client.serverConfig.ensure(message.guild.id, client.defaultConfig);
 
 const config = {
@@ -87,6 +89,5 @@ const config = {
       check: (message) => message.client.config.ownerID === message.author.id
     }
   ]
+}
 };
-
-module.exports = config;
