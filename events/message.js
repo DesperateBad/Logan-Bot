@@ -46,12 +46,15 @@ module.exports = async (client, message) => {
      message.flags.push(args.shift().slice(1));
    }
    // If the command exists, **AND** the user has permission, run it
-   if (cmd.conf.enabled == true) {
-     cmd.run(client, message, args, level);
-   } else if (serverConfig.disabledCommandNotice == "true") {
+   if (cmd.conf.enabled !== true) {
+     if (message.author.id == client.config.ownerID) {
+        cmd.run(client, message, args, level);
+     } else if (serverConfig.disabledCommandNotice == "true") {
      message.channel.send("That command has been temporarily disabled, and will be available soon. Sorry for the inconvenience! ^-^");
+     } else if (serverConfig.disabledCommandNotice == "false") {
+       return;
+     }
    } else {
-     return;
+     cmd.run(client, message, args, level);
    }
-  
  };
