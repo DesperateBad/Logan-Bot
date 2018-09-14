@@ -66,7 +66,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
 };
 
 exports.conf = {
-  enabled: true,
+  enabled: false,
   aliases: ["setting", "settings", "conf"],
   permLevel: "Server Admin"
 };
