@@ -36,9 +36,9 @@ These are the key names you can change or view with `?conf [view/edit/reset] <ke
 * `disabledCommandNotice`: **Boolean** : Whether to send a message when a user uses a command that is currently in maintenance.
 
 * `announceNewCommands`: **Boolean** : Should your server receive announcements when new commands are added to the bot?
-  * `newCommandAnnouncementChannel`: **String** : Channel to send announcements of new commands to.\
-
-* `announceNewMembers`: **Boolean** : Whether to send a welcome message to a channel when a new member joins the server. 
+  * `newCommandAnnouncementChannel`: **String** : Channel to send announcements of new commands to.  
+  
+* `announceNewMembers`: **Boolean** : Whether to send a welcome message to a channel when a new member joins the server.   
   * `newMemberAnnouncementChannel`: **String** : Name of the channel that new member welcome messages will be sent to.   
   * `newMemberAnnouncementChannel`: **String** : Message to send when a new member joins the server. **Use {{member}} to show the name of the new member**
    
