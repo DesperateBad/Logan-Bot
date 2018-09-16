@@ -8,27 +8,31 @@
     "npm": "*"
   },
   "scripts": {
+    "test": "echo \"Error: No test specified\" && exit 1",
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/High-Fox/Hamtaro-Bot.git"
+    "url": "git+https://github.com/High-Fox/Logan-Bot.git"
   },
   "keywords": [
-    "heroku",
-    "discord.js"
+    "discord",
+    "discord.js",
+    "logan",
+    "logan-bot"
   ],
   "author": "High-Fox",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/High-Fox/Hamtaro-Bot/issues"
+    "url": "https://github.com/High-Fox/Logan-Bot/issues"
   },
-  "homepage": "https://github.com/High-Fox/Hamtaro-Bot#readme",
+  "homepage": "https://github.com/High-Fox/Logan-Bot#readme",
   "dependencies": {
     "chalk": "^2.3.0",
     "discord.js": "^11.3.2",
     "enmap": "latest",
     "better-sqlite-pool": "latest",
-    "jimp": "latest"
+    "jimp": "latest",
+    "express": "^4.15.5"
   }
 }

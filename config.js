@@ -8,7 +8,7 @@ const config = {
   "prefix": "?",
   
   "admins": [],
-  "support": ['242638287712288768'],
+  "support": ['242638287712288768', '412518473420505089'],
   
   "inviteLink": "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot",
   "version": "0.0.0",
@@ -19,6 +19,9 @@ const config = {
     
     "adminRole": "Administrators",
     
+    "newCommandAnnouncementChannel": "announcements",
+    "announceNewCommands": "true",
+
     "unknownCommandNotice": "true",
     "disabledCommandNotice": "true",
     
@@ -52,7 +55,7 @@ const config = {
       name: "Server Admin", 
       check: (message) => {
         try {
-          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === serverConfig.adminRole.toLowerCase());
+          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.adminRole.toLowerCase());
           return (adminRole && message.member.roles.has(adminRole.id));
         } catch (e) {
           return false;

@@ -7,6 +7,12 @@ const { promisify } = require("util");
 const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
 
+const http = require("http");
+const express = require("express");
+
+const pinger = express();
+
+
 client.config = require("./config.js");
 
 require("./src/functions.js")(client);
@@ -23,12 +29,12 @@ client.serverConfig = new Enmap({
                             cloneLevel: 'deep'
                           });
 
-client.cooldownProvider = new Set();
+// client.cooldownProvider = new Set();
 
 
 client.on("ready",() => {
-  console.log(chalk.bgCyan.black(`Online and active on ${client.guilds.size} servers.`));
-  client.user.setActivity(client.config.prefix + "help", {type: 'WATCHING'});
+  console.log(`Online and active on ${client.guilds.size} servers.`);
+  client.user.setActivity(client.config.prefix + `help on ${client.guilds.size} servers`, {type: 'WATCHING'});
 });
 
 
@@ -64,3 +70,13 @@ const init = async () => {
 };
 
 init();
+
+
+pinger.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+pinger.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);

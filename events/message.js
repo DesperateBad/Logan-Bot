@@ -3,7 +3,7 @@ module.exports = async (client, message) => {
   if (message.author.bot) return;
   
   // Get the guild's settings
-  const serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
+  const serverConfig = message.serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
   
   // Ignore messages not starting with the prefix (in config.json)
   if (message.content.indexOf(client.config.prefix) !== 0) return;
@@ -20,7 +20,7 @@ module.exports = async (client, message) => {
   const isOnlyPrefix = /^[?]+$/.test(command);
   if (isOnlyPrefix == true) return;
   
-  // Grab the command or alias data from the client.commands Collection
+  // Grab the command or alias data from the client.commands Enmap
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
 
   // If that command doesn't exist send message

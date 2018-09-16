@@ -56,9 +56,9 @@ exports.run = async (client, message, [action, key, ...value], level) => {
   } else {
     
     const longest = Object.keys(serverConfig).reduce((long, str) => Math.max(long, str.length), 0);
-    var confParser = `[The following are the servers current configuration items:]\n`;
+    var confParser = `The following are the servers current configuration items:\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n`;
     Object.keys(serverConfig).forEach( prop => {
-      confParser += `[${prop}]${" ".repeat(longest - prop.length)}:  ${serverConfig[prop]}\n`;
+      confParser += `${prop}${" ".repeat(longest - prop.length)}::  ${serverConfig[prop]}\n`;
     })
     
     message.channel.send(confParser, {code: "asciidoc", split: { char: "\u200b" }});
@@ -66,7 +66,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
 };
 
 exports.conf = {
-  enabled: false,
+  enabled: true,
   aliases: ["setting", "settings", "conf"],
   permLevel: "Server Admin"
 };
