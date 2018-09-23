@@ -19,16 +19,18 @@ An adorable little bot for you Discord Server! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 ### Setup Instructions:
 1. Invite the bot to your server.
 2. Make sure the bot has permission to send messages in **at least one** text channel.
-3. In a text channel the bot can send messages to, use the command `?setconf edit modRole <role name>`, replacing `<role name>` with the name of a role that has moderator permissions.
-4. Use the command `?setconf edit adminRole <role name>`, replacing `<role name>` with the name of a role that has administrator permissions.
+3. Use the command `?conf edit adminRole <role name>`, replacing `<role name>` with the name of a role that has administrator permissions. (This will be the role that can use the `?conf` command)
 
-**You're all set to use Hamtaro Bot! Use ?help to view commands that your permission level can use!**
+**You're all set to use Logan Bot! Use ?help to view commands that your permission level can use!**
 
 ---
 
 ### Config List:
-These are the key names you can change or view with `?setconf [view/edit/reset] <key name>`. 
+These are the key names for the `?conf` command. 
 > **(Key names are case sensitive)**
+To change a key: `?conf edit <keyName> <newValue>`
+To view a key's value: `?conf view <keyName>`
+To reset a key's value to its default value: `?conf reset <keyName>`
 
 | Key | Type | Description | Default Value |
 |:---:|:---:|:---:|:---:|
@@ -60,5 +62,6 @@ These are the key names you can change or view with `?setconf [view/edit/reset] 
 * Adorable random image commands to lighten up the mood and make you go *awwwww!* ヽ(^◇^*)/
 * A decision maker to help settle an argument or a hard choice to be made.
 * Create your own memes for laughs!
+* Action commands such as ?hug and ?kiss
 * Customizable settings to make your Logan unique to your server!
   
