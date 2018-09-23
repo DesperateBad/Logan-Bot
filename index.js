@@ -1,17 +1,17 @@
 // Define variables and libraries needed
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const Jukebox = require('discord.js-musicbot-addon');
 
 const Enmap = require("enmap");
 const { promisify } = require("util");
 const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
 
+// Stuff to keep bot alive on line #99
 const http = require("http");
 const express = require("express");
-
 const pinger = express();
-
 
 client.config = require("./config.js");
 
@@ -31,15 +31,40 @@ client.serverConfig = new Enmap({
 
 // client.cooldownProvider = new Set();
 
-
 client.on("ready",() => {
   console.log(`Online and active on ${client.guilds.size} servers.`);
-  client.user.setActivity(client.config.prefix + `help on ${client.guilds.size} servers`, {type: 'WATCHING'});
+  client.user.setActivity(client.config.prefix + `help | ${client.guilds.size} Servers`, {type: 'WATCHING'});
 });
 
+/* Jukebox.start(client, {
+  youtubeKey: "AIzaSyAx0mFXmgOrtiNg22YdJWoEqPQuBjYG27w",
+  prefix: '?jb ',
+  thumbnailType: 'medium',
+  mazQueueSize: '500',
+  botOwner: client.config.ownerID,
+  clearOnLeave: true,
+  embedColor: 0xf29837,
+  anyoneCanSkip: true,
+  helpCmd: 'help',
+  playCmd: 'play',
+  skipCmd: 'skip',
+  queueCmd: 'queue',
+  pauseCmd: 'pause',
+  resumeCmd: 'resume',
+  disableVolume: true,
+  leaveCmd: 'leave',
+  clearCmd: 'clearqueue',
+  clearAlt: ['clear'],
+  setCmd: 'set',
+  loopCmd: 'loop',
+  searchCmd: 'search',
+  JoinCmd: 'join',
+  logging: true,
+  botAdmins: [client.config.ownerID]
+}); */
 
 const init = async () => {
-  
+
  const cmdFiles = await readdir("./commands/");
   console.log(`Loading a total of ${cmdFiles.length} commands.`);
   cmdFiles.forEach(f => {
@@ -71,9 +96,7 @@ const init = async () => {
 
 init();
 
-
 pinger.get("/", (request, response) => {
-  console.log(Date.now() + " Ping Received");
   response.sendStatus(200);
 });
 pinger.listen(process.env.PORT);

@@ -17,7 +17,11 @@ const config = {
   // Default server config
   "defaultConfig" : {
     
+    "disabledCommands": [],
+    
     "adminRole": "Administrators",
+    
+    "fallbackChannel": "general",
     
     "newCommandAnnouncementChannel": "announcements",
     "announceNewCommands": "true",
@@ -33,7 +37,7 @@ const config = {
     "newVoiceChannelAnnouncementChannel": "general",
     "newVoiceChannelAnnouncement": "The voice channel {{channel}} was just created!",
     
-    "announceNewMembers": "true",
+    "welcomeMembers": "true",
     "newMemberAnnouncementChannel": "general",
     "newMemberAnnouncementMessage": "Welcome to the server {{member}}!",
     

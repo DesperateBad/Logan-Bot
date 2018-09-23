@@ -27,7 +27,7 @@ module.exports = (client) => {
     return returns;
   };
   
-  client.awaitReply = async (msg, question, limit = 60000) => {
+  client.awaitReply = async (msg, question, limit = 20000) => {
     const filter = m => m.author.id === msg.author.id;
     await msg.channel.send(question);
     try {

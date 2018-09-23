@@ -1,4 +1,8 @@
 module.exports = async (client, message) => {
+  
+  if (message.content.startsWith("?jukebox")) return message.channel.send(`The \`${client.config.prefix}jukebox\` command has changed to \`${client.config.prefix}jb\`.\nUse \`${client.config.prefix}jb help for a list of commands.`);
+  if (message.content.startsWith("?jb")) return;
+  
   // Ignore all bots
   if (message.author.bot) return;
   
@@ -22,7 +26,7 @@ module.exports = async (client, message) => {
   
   // Grab the command or alias data from the client.commands Enmap
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
-
+    
   // If that command doesn't exist send message
   if (!cmd) {
     if (serverConfig.unknownCommandNotice == "true") {
@@ -37,14 +41,14 @@ module.exports = async (client, message) => {
        return message.channel.send( { embed: { title: `You're not allowed to run that command!`, color: 0xf29837, description: `Your permission level is ${level} (${client.config.permLevels.find(l => l.level === level).name}),\nand you need to have level ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})to use this command ;-;`, }, } );
    }
 
-   // To simplify message arguments, the author's level is now put on level (not member so it is supported in DMs)
-   // The "level" command module argument will be deprecated in the future
    message.author.permLevel = level;
   
    message.flags = [];
    while (args[0] && args[0][0] === "-") {
      message.flags.push(args.shift().slice(1));
    }
+     
+     
    // If the command exists, **AND** the user has permission, run it
    if (cmd.conf.enabled !== true) {
      if (message.author.id == client.config.ownerID) {
@@ -57,4 +61,4 @@ module.exports = async (client, message) => {
    } else {
      cmd.run(client, message, args, level);
    }
- };
+};

@@ -28,11 +28,17 @@
   },
   "homepage": "https://github.com/High-Fox/Logan-Bot#readme",
   "dependencies": {
+    "better-sqlite-pool": "latest",
     "chalk": "^2.3.0",
     "discord.js": "^11.3.2",
     "enmap": "latest",
-    "better-sqlite-pool": "latest",
+    "express": "^4.15.5",
     "jimp": "latest",
-    "express": "^4.15.5"
+    "node-opus": "latest",
+    "discord.js-musicbot-addon": "latest",
+    "libsodium-wrappers": "latest",
+    "sodium": "latest",
+    "unirest": "latest",
+    "request": "latest"
   }
 }

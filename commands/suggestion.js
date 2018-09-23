@@ -1,9 +1,4 @@
 exports.run = async (client, message, args, level) => {
-
-if (client.cooldownProvider.has(message.author.id)) {
-  message.channel.send("That command has a cooldown of 1 hour, sorry ._.");
-  return;
-}
   
   let suggestionText = args.join(" ");
   if (!suggestionText) return message.channel.send("Please provide the text to send to my creator.");
