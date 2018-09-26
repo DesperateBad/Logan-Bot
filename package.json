@@ -4,7 +4,7 @@
   "description": "Logan Bot!",
   "main": "index.js",
   "engines": {
-    "node": ">=8.4",
+    "node": "8",
     "npm": "*"
   },
   "scripts": {
@@ -38,7 +38,8 @@
     "discord.js-musicbot-addon": "latest",
     "libsodium-wrappers": "latest",
     "sodium": "latest",
-    "unirest": "latest",
-    "request": "latest"
+    "sillyname": "latest",
+    "request": "latest",
+    "long": "latest"
   }
 }

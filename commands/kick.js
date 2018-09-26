@@ -9,12 +9,17 @@ exports.run = (client, message, args) => {
   }
   
   if (!message.guild.me.permissions.has("KICK_MEMBERS")) {
-    message.channel.send("I do not have kick permissions, so cannot kick that member ._.");
+    message.channel.send("I do not have kick permissions, so cannot kick people ._.");
   }
   
   member.kick()
-    .then(() => message.channel.send(`Successfully kicked ${member.user.username} from the server.`))
-    .catch(message.channel.send(`I was unable to kick ${member.user.username}`));
+    .then(() => {
+    if (message.serverConfig.announceKicks == "true") {
+      const message = message.serverConfig.kickAnnouncementMessage.replace("{{member}}", member.user.tag);
+      message.channel.send(message);
+    } else return;
+  })
+    .catch();
 };
 
 exports.conf = {

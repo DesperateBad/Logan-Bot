@@ -5,7 +5,7 @@ exports.run = async (client, message, level) => {
   const commandList = await readdir("./");
   
   message.channel.send({embed: {
-    color: 0xf29837,
+    color: message.serverConfig.embedColour,
     title: `${client.config.botName} | Release ${client.config.version}`,
     description: "Info about me! ^-^",
     fields: [{
@@ -33,7 +33,7 @@ exports.run = async (client, message, level) => {
       url: client.user.avatarURL
     },
     footer: {
-      avatar_url: "http://hamtaro-api.herokuapp.com/assets/images/profile_hd.jpg",
+      avatar_url: "http://logan-api.herokuapp.com/assets/images/profile_hd.jpg",
       text: `${client.config.botName} © High-Fox 2018`
     }
    }

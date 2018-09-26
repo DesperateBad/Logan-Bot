@@ -22,6 +22,13 @@ require("./src/misc/randomImageFunctions.js")(client);
 client.commands = new Enmap();
 client.aliases = new Enmap();
 
+/* client.serverWarns = new Enmap({
+                      name: "serverWarns",
+                      fetchAll: false,
+                      autoFetch: true,
+                      cloneLevel: 'deep'
+                     }); */
+
 client.serverConfig = new Enmap({
                             name: "serverConfig",
                             fetchAll: false,
@@ -29,7 +36,7 @@ client.serverConfig = new Enmap({
                             cloneLevel: 'deep'
                           });
 
-// client.cooldownProvider = new Set();
+client.cooldownProvider = new Set();
 
 client.on("ready",() => {
   console.log(`Online and active on ${client.guilds.size} servers.`);

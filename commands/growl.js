@@ -10,7 +10,7 @@ const bearJokes = [
   
   var randomBearJoke = Math.floor(Math.random() * bearJokes.length); 
     
-  message.channel.send( { embed: { title: bearJokes[randomBearJoke], color: 0xf29837, image: { url: client.getRandomImage("bear"), }, } } );
+  message.channel.send( { embed: { title: bearJokes[randomBearJoke], color: message.serverConfig.embedColour, image: { url: client.getRandomImage("bear"), }, } } );
 };
 
 exports.conf = {

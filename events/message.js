@@ -1,13 +1,14 @@
 module.exports = async (client, message) => {
   
-  if (message.content.startsWith("?jukebox")) return message.channel.send(`The \`${client.config.prefix}jukebox\` command has changed to \`${client.config.prefix}jb\`.\nUse \`${client.config.prefix}jb help for a list of commands.`);
-  if (message.content.startsWith("?jb")) return;
+  // if (message.content.startsWith("?jukebox")) return message.channel.send(`The \`${client.config.prefix}jukebox\` command has changed to \`${client.config.prefix}jb\`.\nUse \`${client.config.prefix}jb help for a list of commands.`);
+  // if (message.content.startsWith("?jb")) return;
   
   // Ignore all bots
   if (message.author.bot) return;
   
   // Get the guild's settings
   const serverConfig = message.serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
+  // const serverWarns = message.serverWarns = client.serverWarns.ensure(message.guild.id, client.config.defaultWarns);
   
   // Ignore messages not starting with the prefix (in config.json)
   if (message.content.indexOf(client.config.prefix) !== 0) return;
@@ -48,8 +49,10 @@ module.exports = async (client, message) => {
      message.flags.push(args.shift().slice(1));
    }
      
-     
+ // var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
+  
    // If the command exists, **AND** the user has permission, run it
+ // if (isDisabled !== true) {
    if (cmd.conf.enabled !== true) {
      if (message.author.id == client.config.ownerID) {
         cmd.run(client, message, args, level);
@@ -61,4 +64,11 @@ module.exports = async (client, message) => {
    } else {
      cmd.run(client, message, args, level);
    }
+  /* } else if (serverConfig.adminsOverrideDisabledCommands == "true") {
+    const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === serverConfig.adminRole.toLowerCase());
+    if (message.member.roles.has(adminRole.id)) {
+      cmd.run(client, message, args, level);
+    }
+  } else message.channel.send("That command has been disabled on this server. Contact the server admins if you wish to use it.");
+  */
 };

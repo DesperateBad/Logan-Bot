@@ -1,36 +1,67 @@
-exports.run = async (client, message, args) => {
+exports.run = async (client, message, level) => {
   
-  var number = Math.floor(Math.random() * 100) + 1;
-  
-  const filter = a => a.author.id == message.author.id;
-  
+  let number = Math.floor(Math.random * 100) + 1;
   var guesses = 20;
   
-message.channel.send("I\'m thinking of a number between 1 and 100, see if you can guess what it is!\nRespond with **stop/cancel** to end the game");
-message.channel.awaitMessages(filter, { max: 20, time: 100000, errors: ['time'] })
-  .then(collected => { 
-  if (collected.content == "stop" || collected.content == "cancel") {
-    return message.channel.send(`Too bad, my number was ${number}`)
-  } else if (collected.content < number) {
-    guesses -= 1;
-    message.channel.send(`My number is higher than that! You have ${guesses} guesses left!`)
-} else if (collected.content > number) {
-    guesses -= 1;
-    message.channel.send(`My number is lower than that! You have ${guesses} guesses left!`)
-} else if (collected.content == number) {
-    return message.channel.send(`Well done! You figured out that my number was ${number}, with ${guesses} guesses remaining.`)
-}})
-  .catch(collected => message.channel.send(`Times up! My number was ${number}! Try again next time!`));
-};
+  function isBetween(n) {
+    var returned = n >= 1 && n <= 100 ? true : false;
+    return returned;
+  };
+  
+  function endScore(postScore) {
+    var totalScore = postScore * 500;
+    return message.channel.send( { embed: { color: message.serverConfig.embedColour, description: `Congratulations! You figured out my number!`, fields: [{ name: 'Guesses left:', value: `\`${guesses}\``, inline: true }, { name: 'Score:', value: `\`${totalScore}\``, inline: true }] } });
+  };
+  
+  function game() {
+    message.channel.send("I\'m thinking of a number between 1 and 100... (You have 20 guesses)\n**Type stop/cancel to stop the game**")
+      .then(() => {
+        collect()
+      })
+      .catch((err) => console.log(err));
 
+    function collect() {
+      const filter = msg => msg.author.id == message.author.id;
+      message.channel.awaitMessages(filter, { max: 1, time: 25000, errors: ['time'], })
+        .then((collected) => { 
+          checker(collected.first())
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+    }
+    
+    function checker(collected) {
+      if (collected.content == "stop" || collected.content == "cancel") return message.channel.send("Stopped your game.");
+      if (isBetween(collected.content) === true) {
+          message.channel.send("That number isn\'t even between 1 and 100...\n(Don\'t worry, this guess won\'t count towards your score)");
+          collect();
+      } else if (collected.content > number) {
+        guesses--;
+        message.channel.send(`My number is lower than that...\n**You have ${guesses} guesses left**`);
+        collect();
+      } else if (collected.content < number) {
+        guesses--;
+        message.channel.send(`My number is higher than that...\n**You have ${guesses} guesses left**`);
+        collect();
+      } else if (collected.content == number) {
+        return endScore(guesses)
+      }
+    }
+  }
+  
+  game();
+  
+};
+ 
 exports.conf = {
   enabled: true,
-  aliases: ['numbergame', 'ng', 'guessmynumber'],
+  aliases: ['guessmynumber'],
   permLevel: "Open"
 };
 
 exports.help = {
   name: "numberguess",
-  description: "I\'ll think of a number between 1 and 100, and you try to guess what it is within 20 guesses!",
+  description: "I think of a number between 1 and 100, and you try to guess it within 20 guesses!",
   usage: "numberguess"
 };

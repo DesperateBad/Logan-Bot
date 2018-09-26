@@ -1,13 +1,14 @@
 module.exports = (client, guild) => {
   
 const defaultChannel = client.getDefaultChannel(guild);
+const config = client.getGuildSettings(guild);
   
-  defaultChannel.send(`*Squeak!* Thanks for inviting me to your server! H-Here's some info about me, if you're interested. ◕ ◡ ◕`, {
+defaultChannel.send(`Thanks for inviting me to your server! H-Here's some info about me, if you're interested. ◕ ◡ ◕`, {
   embed:{
       author: {
         name: client.user.username,
       },
-      color: 0x2471a3, 
+      color: client.config.defaultConfig.embedColour, 
       thumbnail: {
         url: client.user.avatarURL,
       },
@@ -15,18 +16,14 @@ const defaultChannel = client.getDefaultChannel(guild);
       fields: [
           {
               name: '**My Creator:**',
-              value: '[High-Fox](https://github.com/High-Fox/)'
-          },     
-          {
-              name: 'My Code:',
-              value: '[GitHub Source Code](https://github.com/High-Fox/Logan-Bot/)',
+              value: '[High-Fox](https://github.com/High-Fox/)',
               inline: true
-          },
-          {
+          },     
+          /* {
               name: 'Join my server:',
               value: 'https://discord.gg/dsrRtwZ',
               inline: true
-          } 
+          } */
       ],
       footer: {
           text: `${client.config.botName} © High-Fox 2018`

@@ -11,40 +11,48 @@ const config = {
   "support": ['242638287712288768', '412518473420505089'],
   
   "inviteLink": "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot",
-  "version": "0.0.0",
+  "version": "0.1.0",
   
   
   // Default server config
   "defaultConfig" : {
     
-    "disabledCommands": [],
+    "adminRole": "Admins",
     
-    "adminRole": "Administrators",
+    "embedColour": "ORANGE",
+    
+    "disabledCommands": ['ping'],
+    "adminsOverrideDisabledCommands": "false",
     
     "fallbackChannel": "general",
-    
-    "newCommandAnnouncementChannel": "announcements",
-    "announceNewCommands": "true",
 
     "unknownCommandNotice": "true",
-    "disabledCommandNotice": "true",
     
-    "announceNewTextChannels": "true",
-    "newTextChannelAnnouncementChannel": "general",
-    "newTextChannelAnnouncement": "The text channel {{channel}} was just created!",
+    "announceNewTextChannels": "false",
+    "textChannelAnnouncementChannel": "announcements",
+    "newTextChannelAnnouncement": "A new text channel, {{channel}}, was just created!",
     
-    "announceNewVoiceChannels": "true",
-    "newVoiceChannelAnnouncementChannel": "general",
-    "newVoiceChannelAnnouncement": "The voice channel {{channel}} was just created!",
+    "announceNewVoiceChannels": "false",
+    "voiceChannelAnnouncementChannel": "announcements",
+    "newVoiceChannelAnnouncement": "A new voice channel, {{channel}}, was just created!",
     
     "welcomeMembers": "true",
-    "newMemberAnnouncementChannel": "general",
-    "newMemberAnnouncementMessage": "Welcome to the server {{member}}!",
+    "welcomeChannel": "welcome-channel",
+    "welcomeMessage": "Welcome to the server {{member}}!",
     
-    "announceNewBans": "true",
-    "newBanAnnouncementChannel": "general",
-    "newBanAnnouncementMessage": "{{member}} was just banned from the server!"
+    "announceBans": "true",
+    "banAnnouncementChannel": "announcements",
+    "banAnnouncementMessage": "Oof! {{member}} was just banned from the server!",
     
+    "announceKicks": "false",
+    "kickAnnouncementChannel": "announcements",
+    "kickMessage": "{{member}} was just kicked from the server!"
+    
+  },
+  
+  "defaultWarns" : {
+    
+    "warns": []
   },
   
     permLevels: [

@@ -1,3 +1,4 @@
+const Long = require("long");
 module.exports = (client) => {
   
   client.permLevel = message => {
@@ -79,7 +80,7 @@ module.exports = (client) => {
     return false;
   };
   
-  client.getDefaultChannel = async (guild) => {
+client.getDefaultChannel = async (guild) => {
     guild.channels.forEach((channel) => {
       if(channel.type == "text") {
         if(channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
