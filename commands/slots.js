@@ -39,7 +39,7 @@ exports.run = async (client, message, level) => {
             msg.edit(roll());
           }, 1000)
         }
-      }, 0)
+      }, 1000)
     const allEqual = array => array.every( e => e === array[0]);
     var messageArray = msg.content.split(" | ");
     if (allEqual(messageArray) == "true") {
