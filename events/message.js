@@ -49,10 +49,10 @@ module.exports = async (client, message) => {
      message.flags.push(args.shift().slice(1));
    }
      
- // var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
+var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
   
    // If the command exists, **AND** the user has permission, run it
- // if (isDisabled !== true) {
+ if (isDisabled !== true) {
    if (cmd.conf.enabled !== true) {
      if (message.author.id == client.config.ownerID) {
         cmd.run(client, message, args, level);
@@ -64,11 +64,10 @@ module.exports = async (client, message) => {
    } else {
      cmd.run(client, message, args, level);
    }
-  /* } else if (serverConfig.adminsOverrideDisabledCommands == "true") {
+  } else if (serverConfig.adminsOverrideDisabledCommands == "true") {
     const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === serverConfig.adminRole.toLowerCase());
     if (message.member.roles.has(adminRole.id)) {
       cmd.run(client, message, args, level);
     }
   } else message.channel.send("That command has been disabled on this server. Contact the server admins if you wish to use it.");
-  */
 };

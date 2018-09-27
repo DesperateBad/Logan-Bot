@@ -1,20 +1,33 @@
-module.exports = (client, member) => {
+module.exports = async (client, member) => {
 
   client.serverConfig.ensure(member.guild.id, client.config.defaultConfig);
   
-  let announcementCheck = client.serverConfig.get(member.guild.id, "announceNewMembers");
+  function getChannel(guild) {
+    guild.channels.forEach((channel) => {
+      if(channel.type == "text") {
+        if(channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
+          return channel;
+        }
+      }
+    })
+  };
   
-  if (announcementCheck !== "true") return;
+  console.log(`Attempting to welcome user ${member.user.username} in guild ${member.guild.name}`);
   
+  var serverConfig = client.getGuildSettings(member.guild);
   
-  let welcomeMessage = client.serverConfig.get(member.guild.id, "newMemberAnnouncementMessage"); 
+  if (serverConfig.welcomeMembers !== "true") return;
   
   // Our welcome message has a bit of a placeholder, let's fix that:
-  welcomeMessage = welcomeMessage.replace("{{member}}", member.user.tag)
+  var welcomeMessage = serverConfig.welcomeMessage.replace("{{member}}", member.user.toString())
   
   // we'll send to the welcome channel.
-  member.guild.channels
-    .find("name", client.serverConfig.get(member.guild.id, "newMemberAnnouncementChannel"))
-    .send(welcomeMessage)
-    .catch(console.error);
+  var channel = member.guild.channels.find("name", serverConfig.welcomeChannel);
+  
+  if (channel) {
+    channel.send(welcomeMessage).catch(console.error);
+  } else if (!channel) {
+    var theChannel = getChannel(member.guild);
+    theChannel.send(welcomeMessage).catch(console.error);
+  }
 };

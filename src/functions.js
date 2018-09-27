@@ -1,4 +1,5 @@
 const Long = require("long");
+
 module.exports = (client) => {
   
   client.permLevel = message => {

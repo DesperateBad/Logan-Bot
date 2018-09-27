@@ -1,6 +1,6 @@
 exports.run = (client, message, level) => {
     
-  message.channel.send( { embed: { title: `Special Delivery for ${message.author.username}!`, color: message.serverConfig.embedColour, image: { url: client.getRandomImage("owl"), }, } } )
+  message.channel.send( { embed: { title: `Special Delivery for ${message.author.username}!`, color: 0xf4aa42, image: { url: client.getRandomImage("owl"), }, } } )
 };
 
 exports.conf = {

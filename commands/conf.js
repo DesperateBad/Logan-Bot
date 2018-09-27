@@ -1,7 +1,5 @@
 const { inspect } = require("util");
 
-// This command is to modify/edit guild configuration. Perm Level 3 for admins
-// and owners only. Used for changing prefixes and role names and such.
 exports.run = async (client, message, [action, key, ...value], level) => {
 
   // Retrieve current guild settings (merged) and overrides only.
@@ -25,6 +23,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     client.serverConfig.setProp(message.guild.id, key, value.join(" "));
 
     // Confirm everything is fine!
+    console.log(`${key} was edited to ${value.join(" ")} in guild: ${message.guild.name}`);
     message.reply(`${key} successfully edited to ${value.join(" ")}`);
   } else
   
@@ -58,7 +57,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
   } else {
     
     const longest = Object.keys(serverConfig).reduce((long, str) => Math.max(long, str.length), 0);
-    var confParser = `The following are the servers current configuration items:\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n`;
+    var confParser = `The following are the servers current configuration items:\n-----\n`;
     Object.keys(serverConfig).forEach( prop => {
       confParser += `${prop}${" ".repeat(longest - prop.length)}::  ${serverConfig[prop]}\n`;
     })

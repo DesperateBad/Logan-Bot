@@ -1,5 +1,5 @@
 exports.run = (client, message, level) => {
-        message.channel.send('Pong!').catch(console.error);
+  message.channel.send('Pong!').catch(console.error);
 };
 
 exports.conf = {

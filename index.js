@@ -36,6 +36,13 @@ client.serverConfig = new Enmap({
                             cloneLevel: 'deep'
                           });
 
+/* client.slotsBoard = new Enmap({
+                            name: "slotsBoard",
+                            fetchAll: false,
+                            autoFetch: true,
+                            cloneLevel: 'deep'
+                          }); */
+
 client.cooldownProvider = new Set();
 
 client.on("ready",() => {

@@ -32,20 +32,18 @@ exports.run = async (client, message, level) => {
     }
     
     function checker(collected) {
-      if (collected.content == "stop" || collected.content == "cancel") return message.channel.send("Stopped your game.");
-      if (isBetween(collected.content) === true) {
-          message.channel.send("That number isn\'t even between 1 and 100...\n(Don\'t worry, this guess won\'t count towards your score)");
-          collect();
-      } else if (collected.content > number) {
+      if (collected.content === "stop" || collected.content === "cancel") {
+        return message.channel.send("Stopped your game.");
+      } else if (collected.content > number.toString()) {
         guesses--;
         message.channel.send(`My number is lower than that...\n**You have ${guesses} guesses left**`);
         collect();
-      } else if (collected.content < number) {
+      } else if (collected.content < number.toString()) {
         guesses--;
         message.channel.send(`My number is higher than that...\n**You have ${guesses} guesses left**`);
         collect();
-      } else if (collected.content == number) {
-        return endScore(guesses)
+      } else if (collected.content === number.toString()) {
+        endScore(guesses)
       }
     }
   }

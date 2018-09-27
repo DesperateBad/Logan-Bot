@@ -18,7 +18,7 @@ defaultChannel.send(`Thanks for inviting me to your server! H-Here's some info a
               name: '**My Creator:**',
               value: '[High-Fox](https://github.com/High-Fox/)',
               inline: true
-          },     
+          }  
           /* {
               name: 'Join my server:',
               value: 'https://discord.gg/dsrRtwZ',

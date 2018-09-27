@@ -13,7 +13,7 @@ exports.run = (client, message, [mention, ...text]) => {
   
   // client.serverWarns.push(message.guild.id, "warns",
   
-  member.send(`Hello,\nYou are recieving this message because an admin has decided to warn you on one of their servers.\n**Admin's Message:** \`${reasonText}\``);
+  member.send(`Hello, ${member.toString()}\nYou are recieving this message because an admin has decided to warn you on one of their servers.\n**Admin's Message:** \`${reasonText}\``);
 };
 
 exports.conf = {

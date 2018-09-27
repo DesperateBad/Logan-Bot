@@ -1,18 +1,11 @@
-exports.run = async (client, message, level) => {
+// const mongoose = require('mongoose');
+
+exports.run = async (client, message, args, level) => {
   
-  if (client.cooldownProvider.has(message.author.id)) {
-    if (message.author.id == client.config.ownerID) {
-      client.cooldownProvider.delete(client.config.ownerID);
-      return;
-    } else {
-      return message.channel.send("Please wait 1 hour between rolling the slot machine." + message.author);
-    }
-  }
-  
-  client.cooldownProvider.add(message.author.id);
-    setTimeout(() => {
-      client.cooldownProvider.delete(message.author.id);
-    }, 3600000);
+  /* const boardSchema = mongoose.Schema({
+    username: String,
+    wins: Number
+  }); */
   
   const emojis = ['🍏', '🍊', '🍉', '🍇', '🍒', '🍐', '🍓', '🍋'];
   
@@ -24,28 +17,32 @@ exports.run = async (client, message, level) => {
   };
   
   function roll() {
-    var roll1 = randomEmoji();
-    var roll2 = randomEmoji();
-    var roll3 = randomEmoji();
-    
-    var random3 = " | " + roll1 + " | " + roll2 + " | " + roll3 + " | ";
-    return random3;
+    var roll = randomEmoji();
+    return roll;
   };
   
-  message.channel.send(roll()).then(msg => {   
+  message.channel.send(" |---|---|---| ")
+    .then(msg => {   
       setTimeout(function() {
-        for (rolls = 1; rolls < 3; rolls++) {
-          setTimeout(function() {
-            msg.edit(roll());
+            msg.edit(" | " + roll() + " |---|---| ");
+          }, 500)
+    setTimeout(function() {
+            msg.edit(" | " + roll() + " | " + roll() + " |---| ");
           }, 1000)
-        }
-      }, 1000)
+    setTimeout(function() {
+            msg.edit(" | " + roll() + " | " + roll() + " | " + roll() + " | ");
+          }, 1500)
     const allEqual = array => array.every( e => e === array[0]);
     var messageArray = msg.content.split(" | ");
     if (allEqual(messageArray) == "true") {
-      message.channel.send(`Congratulations! ${message.author.toString()} just matched 3 fruits in the slots machine! How lucky!`);
+      setTimeout(function() {
+        message.channel.send(`**Congratulations! ${message.author.toString()} just matched 3 fruits in the slots machine!**\nBetter add them to the leaderboard, huh?`);
+      }, 3000)
+    //  mongoose.connect('mongodb://logan-bot:' + process.env.DB_PASS + '@ds115353.mlab.com:15353/logan-slots-board');
     } else {
-      message.channel.send("Oh darn, bad luck...");
+      setTimeout(function() {
+        message.channel.send("Oh darn, bad luck...");
+      }, 1500);
     }
   }).catch((err) => {
     message.channel.send("Sorry, but there was an error rolling the slots machine ;-;");
