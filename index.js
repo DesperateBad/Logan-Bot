@@ -7,12 +7,15 @@ const Enmap = require("enmap");
 const { promisify } = require("util");
 const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
+const SQLite = require("better-sqlite3");
+const sql = new SQLite('./slotwins.sqlite');
 
 // Stuff to keep bot alive on line #99
 const http = require("http");
 const express = require("express");
 const pinger = express();
 
+client.sql = sql;
 client.config = require("./config.js");
 
 require("./src/functions.js")(client);
@@ -48,6 +51,18 @@ client.cooldownProvider = new Set();
 client.on("ready",() => {
   console.log(`Online and active on ${client.guilds.size} servers.`);
   client.user.setActivity(client.config.prefix + `help | ${client.guilds.size} Servers`, {type: 'WATCHING'});
+  const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();
+  if (!table['count(*)']) {
+    // If the table isn't there, create it and setup the database correctly.
+    sql.prepare("CREATE TABLE slotwins (id TEXT PRIMARY KEY, user TEXT, guild TEXT, wins INTEGER);").run();
+    // Ensure that the "id" row is always unique and indexed.
+    sql.prepare("CREATE UNIQUE INDEX idx_slotwins_id ON slotwins (id);").run();
+    sql.pragma("synchronous = 1");
+    sql.pragma("journal_mode = wal");
+  }
+  
+  client.getWins = sql.prepare("SELECT * FROM slotwins WHERE user = ? AND guild = ?");
+  client.setWins = sql.prepare("INSERT OR REPLACE INTO slotwins (id, user, guild, wins) VALUES (@id, @user, @guild, @wins);");
 });
 
 /* Jukebox.start(client, {

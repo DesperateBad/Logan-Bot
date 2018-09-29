@@ -25,9 +25,9 @@ module.exports = async (client, member) => {
   var channel = member.guild.channels.find("name", serverConfig.welcomeChannel);
   
   if (channel) {
-    channel.send(welcomeMessage).catch(console.error);
+    channel.send(welcomeMessage);
   } else if (!channel) {
     var theChannel = getChannel(member.guild);
-    theChannel.send(welcomeMessage).catch(console.error);
+    theChannel.send(welcomeMessage);
   }
 };

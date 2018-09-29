@@ -40,6 +40,7 @@
     "sodium": "latest",
     "sillyname": "latest",
     "request": "latest",
-    "long": "latest"
+    "long": "latest",
+    "better-sqlite3": "latest"
   }
 }

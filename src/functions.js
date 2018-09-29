@@ -53,8 +53,8 @@ module.exports = (client) => {
         client.aliases.set(alias, props.help.name);
       });
       return false;
-    } catch (e) {
-      return `Unable to load command ${commandName}: ${e}`;
+    } catch (err) {
+      return `Unable to load command ${commandName}: ${err}`;
     }
   };
 
