@@ -1,6 +1,10 @@
 exports.run = async (client, message, level) => {
   
-  let number = Math.floor(Math.random * 100) + 1;
+  function randomIntFromInterval(min,max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
+  
+  let number = randomIntFromInterval(0,100);
   var guesses = 20;
   
   function isBetween(n) {
@@ -10,7 +14,7 @@ exports.run = async (client, message, level) => {
   
   function endScore(postScore) {
     var totalScore = postScore * 500;
-    return message.channel.send( { embed: { color: message.serverConfig.embedColour, description: `Congratulations! You figured out my number!`, fields: [{ name: 'Guesses left:', value: `\`${guesses}\``, inline: true }, { name: 'Score:', value: `\`${totalScore}\``, inline: true }] } });
+    return message.channel.send( { embed: { color: 0xf4aa42, title: `Congratulations! You figured out my number!`, fields: [{ name: 'Guesses left:', value: `\`${guesses}\``, inline: true }, { name: 'Score:', value: `\`${totalScore}\``, inline: true }] } });
   };
   
   function game() {

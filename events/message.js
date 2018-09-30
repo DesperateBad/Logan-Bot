@@ -9,11 +9,11 @@ module.exports = async (client, message) => {
   // Get the guild's settings
   const serverConfig = message.serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
   // const serverWarns = message.serverWarns = client.serverWarns.ensure(message.guild.id, client.config.defaultWarns);
-  let slotwins;
+  let slotwin;
   
-  slotwins = client.getWins.get(message.author.id, message.guild.id);
-    if (!slotwins) {
-      slotwins = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, wins: 0 }
+  slotwin = client.getWins.get(message.author.id, message.guild.id);
+    if (!slotwin) {
+      slotwin = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, wins: 0 }
     }
   
   // Ignore messages not starting with the prefix (in config.json)
@@ -61,19 +61,19 @@ var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
  if (isDisabled !== true) {
    if (cmd.conf.enabled !== true) {
      if (message.author.id == client.config.ownerID) {
-        cmd.run(client, message, args, level, slotwins);
+        cmd.run(client, message, args, level, slotwin);
      } else if (serverConfig.disabledCommandNotice == "true") {
      message.channel.send("That command has been temporarily disabled, and will be available soon. Sorry for the inconvenience! ^-^");
      } else if (serverConfig.disabledCommandNotice == "false") {
        return;
      }
    } else {
-     cmd.run(client, message, args, level, slotwins);
+     cmd.run(client, message, args, level, slotwin);
    }
   } else if (serverConfig.adminsOverrideDisabledCommands == "true") {
     const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === serverConfig.adminRole.toLowerCase());
     if (message.member.roles.has(adminRole.id)) {
-      cmd.run(client, message, args, level, slotwins);
+      cmd.run(client, message, args, level, slotwin);
     }
   } else message.channel.send("That command has been disabled on this server. Contact the server admins if you wish to use it.");
 };

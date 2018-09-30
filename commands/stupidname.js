@@ -3,7 +3,7 @@ exports.run = (client, message, level) => {
   
   let stupidName = generator();
   
-  message.channel.send(stupidName);
+  message.channel.send("How about, **" + stupidName + "**?");
 
 };
 

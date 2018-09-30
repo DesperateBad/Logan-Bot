@@ -1,15 +1,14 @@
 const Discord = require("discord.js");
 const SQLite = require("better-sqlite3");
-//const sql = require("../slotwins.sqlite");
 
-exports.run = (client, message, args, level, slotwins) => {
+exports.run = (client, message, args, level, slotwin) => {
   
   if (args[0]) {
     
-    const action = args.join(" ");
+    const action = args[0];
     
     if (action === "wins") {
-        return message.reply(`You currently have ${slotwins.wins} wins on this server!`);
+        return message.reply(`You currently have ${slotwin.wins} wins on this server!`);
     }
     
     if (action === "leaderboard") {
@@ -22,11 +21,36 @@ exports.run = (client, message, args, level, slotwins) => {
         .setColor(0xf4aa42);
       
       for (const data of top10) {
-        embed.addField(client.users.get(data.user).tag, `${data.wins} wins`);
+        embed.addField(client.users.get(data.user).tag + ` | ${data.wins} wins`, "\u200b");
       } 
-      return message.channel.send(embed);
+      return message.channel.send({embed});
     }
-  }
+    
+    if (args[0] === "give") {
+      
+      if (!message.author.id == client.config.ownerID) return message.channel.send("Yeah, you're not allowed to do that o.o");
+      
+      const user = message.mentions.users.first();
+      if (!user) return message.reply("You must mention someone or give their ID!");
+ 
+      const winsToAdd = parseInt(args[2], 10);
+      if (!winsToAdd) return message.reply("You didn't even tell me how many wins to give...")
+ 
+      // Get their current points.=
+      let userwins = client.getWins.get(user.id, message.guild.id);
+      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
+      if (!userwins) {
+        userwins = { id: `${message.guild.id}-${user.id}`, user: user.id, guild: message.guild.id, wins: 0 }
+      }
+      userwins.wins += winsToAdd;
+ 
+      // And we save it!
+      client.setWins.run(userwins);
+ 
+      return message.channel.send(`${user.toString()} has received ${winsToAdd} wins from the owner!`);
+      
+      }
+    }
   
   const emojis = ['🍏', '🍊', '🍉', '🍇', '🍒', '🍐', '🍓', '🍋'];
   
@@ -58,16 +82,16 @@ exports.run = (client, message, args, level, slotwins) => {
       
             var isNot3 = text.endsWith("Oh darn, bad luck...");
                 if (isNot3 !== true) {
-                      slotwins.wins++;
-                      const curWins = slotwins.wins;
+                      let userwins = client.getWins.get(message.author.id, message.guild.id);
+                      userwins.wins++;
                     
-                      return message.reply(`You\'ve gained a win! You now have a total of **${curWins}** wins! Ain\'t that dandy?`);
+                      message.reply(`You\'ve gained a win! You now have a total of **${userwins.wins}** wins! Ain\'t that dandy?`);
                     
-                      client.setWins.run(slotwins);
+                      client.setWins.run(userwins);
                 }
     }, 1500)
   }).catch((err) => {
-    message.channel.send("Sorry, but there was an error rolling the slots machine ;-;");
+    return message.channel.send("Sorry, but there was an error rolling the slots machine ;-;");
     console.log(err);
   });
 };
