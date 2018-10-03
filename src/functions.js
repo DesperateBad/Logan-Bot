@@ -81,6 +81,16 @@ module.exports = (client) => {
     return false;
   };
   
+  client.getNumbersBetween = async (x, y) => {
+    var numbers = [];
+    for (var i = x; i < y; i++) {
+      numbers.push(i);
+    }
+    numbers.push(y);
+    
+    return numbers;
+  }
+
 client.getDefaultChannel = async (guild) => {
     guild.channels.forEach((channel) => {
       if(channel.type == "text") {

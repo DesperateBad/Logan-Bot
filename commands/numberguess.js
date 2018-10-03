@@ -26,7 +26,7 @@ exports.run = async (client, message, level) => {
 
     function collect() {
       const filter = msg => msg.author.id == message.author.id;
-      message.channel.awaitMessages(filter, { max: 1, time: 25000, errors: ['time'], })
+      message.channel.awaitMessages(filter, { max: 1, time: 25000, errors: ['time'] })
         .then((collected) => { 
           checker(collected.first())
         })

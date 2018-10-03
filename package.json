@@ -43,6 +43,7 @@
     "long": "latest",
     "better-sqlite3": "latest",
     "canvas": "next",
-    "path": "latest"
+    "path": "latest",
+    "ms": "latest"
   }
 }
