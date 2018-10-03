@@ -6,7 +6,7 @@ const member = memberMention ? memberMention : message.author;
 	
    message.channel.send({
       embed: {
-	  color: message.serverConfig.embedColour,
+	  color: 0xCFD9F9,
 	  author: {
 	       name: "User Info",
 	  },

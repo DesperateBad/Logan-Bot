@@ -1,14 +1,27 @@
 const Discord = require("discord.js");
 const SQLite = require("better-sqlite3");
 
-exports.run = (client, message, args, level, slotwin) => {
+exports.run = async (client, message, args, level, slotwin) => {
+  
+  client.cooldownHandler(30000, message);
   
   if (args[0]) {
     
     const action = args[0];
     
     if (action === "wins") {
-        return message.reply(`You currently have ${slotwin.wins} wins on this server!`);
+        if (!message.mentions.users.first()) {
+          return message.reply(`You currently have ${slotwin.wins} wins on this server!`);
+        } else {
+          var user = message.mentions.users.first();
+          let userWins = client.getWins.get(user.id, message.guild.id);
+          
+          if (!userWins) {
+            userWins = { id: `${message.guild.id}-${user.id}`, user: user.id, guild: message.guild.id, wins: 0 }
+          }
+          
+          return message.channel.send(`${user.toString()} currently has ${userWins.wins} wins.`);
+        }
     }
     
     if (action === "leaderboard") {
@@ -18,7 +31,7 @@ exports.run = (client, message, args, level, slotwin) => {
         .setTitle("Leaderboard")
         .setAuthor(client.user.username, client.user.avatarURL)
         .setDescription("Here are the top 10 members with the most slot wins!")
-        .setColor(0xf4aa42);
+        .setColor(0xCFD9F9);
       
       for (const data of top10) {
         embed.addField(client.users.get(data.user).tag + ` | ${data.wins} wins`, "\u200b");
@@ -52,7 +65,7 @@ exports.run = (client, message, args, level, slotwin) => {
       }
     }
   
-  const emojis = ['🍏', '🍊', '🍉', '🍇', '🍒', '🍐', '🍓', '🍋'];
+  const emojis = ['🍏', '🍊', '🍉', '🍇', '🍒', '🍓', '🍋'];
   
   function randomEmoji() {
     var randomEmoji = Math.floor(Math.random() * emojis.length);
@@ -72,22 +85,27 @@ exports.run = (client, message, args, level, slotwin) => {
       setTimeout(function() {
             msg.edit(" | " + roll() + " | " + roll() + " |---| ");
           }, 1000)
-      setTimeout(function() {
-            const allEqual = array => array.every( e => e == array[0]);
+      setTimeout(async function() {
+            const allEqual = array => array.every( v => v === array[0] );
             var rolls = " | " + roll() + " | " + roll() + " | " + roll() + " | ";
-            var messageArray = rolls.split(" | "); 
+            var messageArray1 = rolls.split(" | "); 
+            var messageArray = messageArray1.filter(e => e != "");
             
-            var text = allEqual(messageArray) ? " | " + roll() + " | " + roll() + " | " + roll() + " | \nYou've gained a win! You now have a total of **${curWins}** wins! Ain\'t that dandy?" : " | " + roll() + " | " + roll() + " | " + roll() + " | \nOh darn, bad luck...";
+            var text = allEqual(messageArray) ? rolls + "" : rolls + "\nOh darn, bad luck...";
             msg.edit(text)
       
             var isNot3 = text.endsWith("Oh darn, bad luck...");
-                if (isNot3 !== true) {
+        
+                if (isNot3 === false) {
                       let userwins = client.getWins.get(message.author.id, message.guild.id);
+                      if (!userwins) {
+                        userwins = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, wins: 0 }
+                      }
+                  
                       userwins.wins++;
-                    
-                      message.reply(`You\'ve gained a win! You now have a total of **${userwins.wins}** wins! Ain\'t that dandy?`);
-                    
                       client.setWins.run(userwins);
+                  
+                      return message.reply(`You\'ve gained a win! You now have a total of **${userwins.wins}** wins! Ain\'t that dandy?`);
                 }
     }, 1500)
   }).catch((err) => {
@@ -104,6 +122,6 @@ exports.conf = {
   
 exports.help = {
   name: "slots",
-  description: "Roll a slots machine, and see if you can get a match of 3 fruits!",
-  usage: "slots"
+  description: "Roll a slots machine, and see if you can get a match of 3 fruits! (Has a 5 min cooldown)",
+  usage: "slots <leaderboard/wins>"
 };

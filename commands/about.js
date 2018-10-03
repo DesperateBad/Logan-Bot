@@ -5,7 +5,7 @@ exports.run = async (client, message, level) => {
   const commandList = await readdir("./");
   
   message.channel.send({embed: {
-    color: message.serverConfig.embedColour,
+    color: 0xCFD9F9,
     title: `${client.config.botName} | Release ${client.config.version}`,
     description: "Info about me! ^-^",
     fields: [{

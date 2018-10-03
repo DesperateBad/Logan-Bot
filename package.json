@@ -1,7 +1,7 @@
 {
   "name": "Logan-Bot",
   "version": "1.0.0",
-  "description": "Logan Bot!",
+  "description": "Logan Bot, bringing fun and happiness to your server!",
   "main": "index.js",
   "engines": {
     "node": "8",
@@ -41,6 +41,8 @@
     "sillyname": "latest",
     "request": "latest",
     "long": "latest",
-    "better-sqlite3": "latest"
+    "better-sqlite3": "latest",
+    "canvas": "next",
+    "path": "latest"
   }
 }

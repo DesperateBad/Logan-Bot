@@ -10,7 +10,7 @@ const readdir = promisify(require("fs").readdir);
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./slotwins.sqlite');
 
-// Stuff to keep bot alive on line #99
+// Stuff to keep bot alive on line #129
 const http = require("http");
 const express = require("express");
 const pinger = express();
@@ -47,6 +47,7 @@ client.serverConfig = new Enmap({
                           }); */
 
 client.cooldownProvider = new Set();
+client.muteHandler = new Set();
 
 client.on("ready",() => {
   console.log(`Online and active on ${client.guilds.size} servers.`);

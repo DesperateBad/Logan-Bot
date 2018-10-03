@@ -1,4 +1,4 @@
-module.exports = async (client, member) => {
+module.exports = (client, member) => {
 
   client.serverConfig.ensure(member.guild.id, client.config.defaultConfig);
   
@@ -11,8 +11,6 @@ module.exports = async (client, member) => {
       }
     })
   };
-  
-  console.log(`Attempting to welcome user ${member.user.username} in guild ${member.guild.name}`);
   
   var serverConfig = client.getGuildSettings(member.guild);
   

@@ -14,7 +14,7 @@ exports.run = async (client, message, level) => {
   
   function endScore(postScore) {
     var totalScore = postScore * 500;
-    return message.channel.send( { embed: { color: 0xf4aa42, title: `Congratulations! You figured out my number!`, fields: [{ name: 'Guesses left:', value: `\`${guesses}\``, inline: true }, { name: 'Score:', value: `\`${totalScore}\``, inline: true }] } });
+    return message.channel.send( { embed: { color: 0xCFD9F9, title: `Congratulations! You figured out my number!`, fields: [{ name: 'Guesses left:', value: `\`${guesses}\``, inline: true }, { name: 'Score:', value: `\`${totalScore}\``, inline: true }] } });
   };
   
   function game() {
@@ -38,6 +38,10 @@ exports.run = async (client, message, level) => {
     function checker(collected) {
       if (collected.content === "stop" || collected.content === "cancel") {
         return message.channel.send("Stopped your game.");
+      } 
+      if (isNaN(collected.content)) {
+        message.channel.send(`That isn\'t even a number...`);
+        collect();
       } else if (collected.content > number.toString()) {
         guesses--;
         message.channel.send(`My number is lower than that...\n**You have ${guesses} guesses left**`);

@@ -8,7 +8,7 @@ defaultChannel.send(`Thanks for inviting me to your server! H-Here's some info a
       author: {
         name: client.user.username,
       },
-      color: client.config.defaultConfig.embedColour, 
+      color: 0xCFD9F9, 
       thumbnail: {
         url: client.user.avatarURL,
       },

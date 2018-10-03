@@ -11,7 +11,7 @@ const config = {
   "support": ['242638287712288768', '412518473420505089'],
   
   "inviteLink": "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   
   
   // Default server config

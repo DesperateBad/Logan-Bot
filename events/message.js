@@ -55,9 +55,11 @@ module.exports = async (client, message) => {
      message.flags.push(args.shift().slice(1));
    }
      
+  if (client.cooldownProvider.has(message.author.id)) return message.channel.send("That command is currently on cooldown. Please try again later");
+
 var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
   
-   // If the command exists, **AND** the user has permission, run it
+// If the command exists, **AND** the user has permission, run it
  if (isDisabled !== true) {
    if (cmd.conf.enabled !== true) {
      if (message.author.id == client.config.ownerID) {

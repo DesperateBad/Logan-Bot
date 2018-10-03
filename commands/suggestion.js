@@ -12,12 +12,8 @@ exports.run = async (client, message, args, level) => {
   
   
   // Start the cooldown
-  client.cooldownProvider.add(message.author.id);
-  
-  setTimeout(() => {
-    client.cooldownProvider.delete(message.author.id);
-  }, 3600000);
-  
+  client.cooldownHandler(3600000, message);
+
 };
 
 exports.conf = {
@@ -28,6 +24,6 @@ exports.conf = {
 
 exports.help = {
   name: "suggestion",
-  description: "Sends a suggestion to my creator. Upon receiving the message, he will review it, and message you if he's going to implement it.",
-  usage: "suggestion [text]"
+  description: "Sends a suggestion to my creator. (Has a 24 hour cooldown)",
+  usage: "suggestion [message]"
 };
