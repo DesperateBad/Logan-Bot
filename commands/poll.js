@@ -85,7 +85,7 @@ exports.run = async (client, message, args, level) => {
 
     let reactinfo = "\nReact to this message to cast a vote!\n"
     optionemotes.array.forEach(element => {
-      pollembed.addField(`${element.toString()} for ${options[currentemote]}\n`,)
+      pollembed.addField(`${element.toString()} for ${options[currentemote]}\n`, '\u200b')
       currentemote++;
     })
 
@@ -102,7 +102,12 @@ exports.run = async (client, message, args, level) => {
     const filter = (reaction, emoji) => (optionemotes.indexOf(reaction.emoji.name) > -1) === true;
 
     msg.awaitReactions(filter, { time: ms(timelimit) })
-      .then(collected => msg.channel.send({pollended})
+      .then(collected => {
+        msg.reactions.array.forEach(reaction => {
+          pollended.addField(``)
+        })
+        msg.channel.send({pollended})
+      }
   });
 
   message.author.send(`Your poll's unique ID is \`${pollID}\`\nUse it to edit your poll if you need to.`);
