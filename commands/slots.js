@@ -3,7 +3,7 @@ const SQLite = require("better-sqlite3");
 
 exports.run = async (client, message, args, level, slotwin) => {
   
-  client.cooldownHandler(30000, message);
+  client.cooldownHandler(5000, message);
   
   if (args[0]) {
     
@@ -78,7 +78,7 @@ exports.run = async (client, message, args, level, slotwin) => {
   };
   
   message.channel.send(" |---|---|---| ")
-    .then(msg => {   
+    .then(async msg => {   
       setTimeout(function() {
             msg.edit(" | " + roll() + " |---|---| ");
           }, 500)
