@@ -1,36 +1,30 @@
-// Define variables and libraries needed
+// Discord Libraries
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const Jukebox = require('discord.js-musicbot-addon');
 
+// NPM modules used
 const Enmap = require("enmap");
 const { promisify } = require("util");
 const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./slotwins.sqlite');
 
 // Stuff to keep bot alive on line #129
 const http = require("http");
 const express = require("express");
 const pinger = express();
 
-client.sql = sql;
+// Config
 client.config = require("./config.js");
 
-require("./src/functions.js")(client);
+// Functions
+require("./src/functions/functions.js")(client);
+require("./src/functions/shopFunctions")(client);
 require("./src/misc/randomImageFunctions.js")(client);
 
 
 client.commands = new Enmap();
 client.aliases = new Enmap();
-
-/* client.serverWarns = new Enmap({
-                      name: "serverWarns",
-                      fetchAll: false,
-                      autoFetch: true,
-                      cloneLevel: 'deep'
-                     }); */
 
 client.serverConfig = new Enmap({
                             name: "serverConfig",
@@ -39,59 +33,12 @@ client.serverConfig = new Enmap({
                             cloneLevel: 'deep'
                           });
 
-/* client.slotsBoard = new Enmap({
-                            name: "slotsBoard",
-                            fetchAll: false,
-                            autoFetch: true,
-                            cloneLevel: 'deep'
-                          }); */
-
 client.cooldownProvider = new Set();
-client.muteHandler = new Set();
 
 client.on("ready",() => {
   console.log(`Online and active on ${client.guilds.size} servers.`);
   client.user.setActivity(client.config.prefix + `help | ${client.guilds.size} Servers`, {type: 'WATCHING'});
-  const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();
-  if (!table['count(*)']) {
-    // If the table isn't there, create it and setup the database correctly.
-    sql.prepare("CREATE TABLE slotwins (id TEXT PRIMARY KEY, user TEXT, guild TEXT, wins INTEGER);").run();
-    // Ensure that the "id" row is always unique and indexed.
-    sql.prepare("CREATE UNIQUE INDEX idx_slotwins_id ON slotwins (id);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
-  }
-  
-  client.getWins = sql.prepare("SELECT * FROM slotwins WHERE user = ? AND guild = ?");
-  client.setWins = sql.prepare("INSERT OR REPLACE INTO slotwins (id, user, guild, wins) VALUES (@id, @user, @guild, @wins);");
 });
-
-/* Jukebox.start(client, {
-  youtubeKey: "AIzaSyAx0mFXmgOrtiNg22YdJWoEqPQuBjYG27w",
-  prefix: '?jb ',
-  thumbnailType: 'medium',
-  mazQueueSize: '500',
-  botOwner: client.config.ownerID,
-  clearOnLeave: true,
-  embedColor: 0xf29837,
-  anyoneCanSkip: true,
-  helpCmd: 'help',
-  playCmd: 'play',
-  skipCmd: 'skip',
-  queueCmd: 'queue',
-  pauseCmd: 'pause',
-  resumeCmd: 'resume',
-  disableVolume: true,
-  leaveCmd: 'leave',
-  clearCmd: 'clearqueue',
-  clearAlt: ['clear'],
-  setCmd: 'set',
-  loopCmd: 'loop',
-  searchCmd: 'search',
-  JoinCmd: 'join',
-  logging: true,
-  botAdmins: [client.config.ownerID]
-}); */
 
 const init = async () => {
 
