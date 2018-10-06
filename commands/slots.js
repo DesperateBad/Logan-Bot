@@ -30,7 +30,7 @@ exports.run = async (client, message, args, level, slotwin) => {
     }
     
     if (action === "leaderboard") {
-      const top10 = client.sql.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
+      const top10 = client.slotsSQL.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
 
       const embed = new Discord.RichEmbed()
         .setTitle("Leaderboard")
@@ -39,7 +39,18 @@ exports.run = async (client, message, args, level, slotwin) => {
         .setColor(0xCFD9F9);
       
       for (const data of top10) {
-        embed.addField(client.users.get(data.user).tag + ` | ${data.wins} wins`, "\u200b");
+        if (currentplace === 1) {
+          embed.addField(`🏆 ${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
+          currentplace++;
+        } else if (currentplace === 2) {
+          embed.addField(`🥈 ${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
+          currentplace++;
+        } else if (currentplace === 3) {
+          embed.addField(`🥉 ${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
+          currentplace++
+        } else {
+          embed.addField(`${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
+        }
       } 
       return message.channel.send({embed});
     }

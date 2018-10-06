@@ -3,7 +3,6 @@ const SQLite = require("better-sqlite3");
 
 module.exports = (client) => {
 
-
 client.slotsSQL = slotsSQL;
 
 const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();

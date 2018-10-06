@@ -8,6 +8,7 @@ module.exports = (client) => {
     }
 
     client.buyItem = (member) => {
+        const top9 = client
         const user = client.get
     }
 
