@@ -100,16 +100,18 @@ client.getDefaultChannel = async (guild) => {
       }
     })
   };
+  
+client.cooldownHandler = (time, oncdmsg, message) => {
+  if (!client.cooldownProvider.has(message.author.id)) {
+    if (message.author.id == client.config.ownerID) return;
     
-client.cooldownHandler = (time, message) => {
-  if (message.author.id == client.config.ownerID) return;
-  
-  client.cooldownProvider.add(message.author.id);
-  
-  setTimeout(function() {
-    client.cooldownProvider.delete(message.author.id);
-  }, time)
-}
+      client.cooldownProvider.set(message.author.id, oncdmsg);
+    
+      setTimeout(function() {
+        client.cooldownProvider.delete(message.author.id);
+      }, time)
+   }
+};
   
   String.prototype.toProperCase = function() {
     return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});

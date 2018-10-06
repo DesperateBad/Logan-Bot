@@ -4,8 +4,7 @@ const SQLite = require("better-sqlite3");
 exports.run = async (client, message, args, level, slotwin) => {
   
   if (message.channel.id == "443686685960830976") {
-    var slotschannel = message.guild.channels.get('497652725459189760').toString();
-    return message.channel.send(`${slotschannel} please ;-;`)
+    return message.channel.send(`${message.guild.channels.get('497652725459189760').toString()} please ;-;`)
   };
   
   client.cooldownHandler(15000, "Please wait 15 seconds between each slots roll", message);
@@ -30,13 +29,15 @@ exports.run = async (client, message, args, level, slotwin) => {
     }
     
     if (action === "leaderboard") {
-      const top10 = client.slotsSQL.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
+      const top10 = client.sql.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
 
       const embed = new Discord.RichEmbed()
         .setTitle("Leaderboard")
         .setAuthor(client.user.username, client.user.avatarURL)
         .setDescription("Here are the top 10 members with the most slot wins!")
         .setColor(0xCFD9F9);
+      
+      var currentplace = 1;
       
       for (const data of top10) {
         if (currentplace === 1) {
@@ -49,7 +50,7 @@ exports.run = async (client, message, args, level, slotwin) => {
           embed.addField(`🥉 ${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
           currentplace++
         } else {
-          embed.addField(`${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
+          embed.addField(`\u200b\u200b\u200b${client.users.get(data.user).tag} | ${data.wins} wins`, "\u200b");
         }
       } 
       return message.channel.send({embed});

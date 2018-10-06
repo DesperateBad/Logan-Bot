@@ -35,7 +35,6 @@
     "express": "^4.15.5",
     "jimp": "latest",
     "node-opus": "latest",
-    "discord.js-musicbot-addon": "latest",
     "libsodium-wrappers": "latest",
     "sodium": "latest",
     "sillyname": "latest",
