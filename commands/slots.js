@@ -3,7 +3,12 @@ const SQLite = require("better-sqlite3");
 
 exports.run = async (client, message, args, level, slotwin) => {
   
-  client.cooldownHandler(5000, message);
+  if (message.channel.id == "443686685960830976") {
+    var slotschannel = message.guild.channels.get('497652725459189760').toString();
+    return message.channel.send(`${slotschannel} please ;-;`)
+  };
+  
+  client.cooldownHandler(15000, "Please wait 15 seconds between each slots roll", message);
   
   if (args[0]) {
     
@@ -25,7 +30,7 @@ exports.run = async (client, message, args, level, slotwin) => {
     }
     
     if (action === "leaderboard") {
-      const top10 = client.slotsSQL.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
+      const top10 = client.sql.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
 
       const embed = new Discord.RichEmbed()
         .setTitle("Leaderboard")
@@ -122,6 +127,6 @@ exports.conf = {
   
 exports.help = {
   name: "slots",
-  description: "Roll a slots machine, and see if you can get a match of 3 fruits! (Has a 5 min cooldown)",
+  description: "Roll a slots machine, and see if you can get a match of 3 fruits! (Has a 15 second cooldown)",
   usage: "slots <leaderboard/wins>"
 };

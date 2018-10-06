@@ -1,4 +1,4 @@
-const slotsSQL = new SQLite('../../shopDatabases/slotwins.sqlite');
+const slotsSQL = new SQLite('../../databases/slots/slotwins.sqlite');
 const SQLite = require("better-sqlite3");
 
 module.exports = (client) => {

@@ -1,20 +1,7 @@
 module.exports = async (client, message) => {
   
-  // if (message.content.startsWith("?jukebox")) return message.channel.send(`The \`${client.config.prefix}jukebox\` command has changed to \`${client.config.prefix}jb\`.\nUse \`${client.config.prefix}jb help for a list of commands.`);
-  // if (message.content.startsWith("?jb")) return;
-  
   // Ignore all bots
   if (message.author.bot) return;
-  
-  // Get the guild's settings
-  const serverConfig = message.serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
-  // const serverWarns = message.serverWarns = client.serverWarns.ensure(message.guild.id, client.config.defaultWarns);
-  let slotwin;
-  
-  slotwin = client.getWins.get(message.author.id, message.guild.id);
-    if (!slotwin) {
-      slotwin = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, wins: 0 }
-    }
   
   // Ignore messages not starting with the prefix (in config.json)
   if (message.content.indexOf(client.config.prefix) !== 0) return;
@@ -23,18 +10,31 @@ module.exports = async (client, message) => {
   const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   
-  // Get the users perms
-  const level = client.permLevel(message)
-  
   // If the message is just "?", ignore it
   if (!command) return;
   const isOnlyPrefix = /^[?]+$/.test(command);
   if (isOnlyPrefix == true) return;
   
+  // Get the guild's settings
+  const serverConfig = message.serverConfig = client.serverConfig.ensure(message.guild.id, client.config.defaultConfig);
+  
+  // Get the users slots wins
+  let slotwin;
+  slotwin = client.getWins.get(message.author.id, message.guild.id);
+    if (!slotwin) {
+      slotwin = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, wins: 0 }
+    }
+  
+  // Get the users perms
+  const level = client.permLevel(message)
+  
+  // Check if command is on cooldown for the user
+  if (client.cooldownProvider.has(message.author.id)) return message.channel.send(client.cooldownProvider.get(message.author.id));
+  
   // Grab the command or alias data from the client.commands Enmap
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
     
-  // If that command doesn't exist send message
+  // If that command doesn't exist send message if unknownCommandNotice is set to true
   if (!cmd) {
     if (serverConfig.unknownCommandNotice == "true") {
       return message.channel.send("I-I don't recognise that command!");
@@ -54,8 +54,6 @@ module.exports = async (client, message) => {
    while (args[0] && args[0][0] === "-") {
      message.flags.push(args.shift().slice(1));
    }
-     
-  if (client.cooldownProvider.has(message.author.id)) return message.channel.send("Just wait a bit to use that again please, I get stressed .-.");
 
 var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
   
