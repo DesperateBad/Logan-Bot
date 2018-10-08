@@ -43,10 +43,10 @@ var maxWidth = 210;
 var lineHeight = 20;
 var x = 49;
 var y = 99;
-var text = args.join(" ");
+var text = args;
 wrapText(ctx, text, x, y, maxWidth, lineHeight); 
 
-var m = ctx.measureText(args.join(" "))
+var m = ctx.measureText(args)
 
 
   const attachment = new Discord.Attachment(canvas.toBuffer(), 'quid.png');

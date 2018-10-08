@@ -27,14 +27,12 @@ const hamsterLinks = [
   "https://media.giphy.com/media/uTIZmj69qCjCM/giphy.gif",
   "https://media.giphy.com/media/M4trH1uta8OPu/giphy.gif"
 ];
-
-var randomHamsterLink = Math.floor(Math.random() * hamsterLinks.length);
   
-return hamsterLinks[randomHamsterLink];
+return hamsterLinks.random();
 
 } else if (animal == "owl") {
 
-const owlLinks = [
+const owl = [
   "https://media.giphy.com/media/bz7Lkscqm6mrK/giphy.gif",
   "https://media.giphy.com/media/1hWHUCgi3wKT6/giphy.gif",
   "https://media.giphy.com/media/s68CylvQ9ioRa/giphy.gif",
@@ -76,16 +74,14 @@ const owlLinks = [
   "https://tenor.com/view/owl-gif-9623961",
   "https://tenor.com/view/owl-funny-animals-gif-11081718",
   "https://i.imgflip.com/1x39ol.jpg",
-  "https://imgur.com/a/ZqFuIoc",
-];
+  "https://imgur.com/a/ZqFuIoc"
+].random();
   
-var randomOwlLink = Math.floor(Math.random() * owlLinks.length);
-  
-return owlLinks[randomOwlLink];
+return owl;
 
 } else if (animal == "bear") {
 
-const bearLinks = [
+const bear = [
   "https://media.giphy.com/media/3oeHLrjZGBgnPx5VII/giphy.gif",
   "https://media.giphy.com/media/kNGHx5m4QPra0/giphy.gif",
   "https://media.giphy.com/media/IThjAlJnD9WNO/giphy.gif",
@@ -107,43 +103,39 @@ const bearLinks = [
   "https://media.giphy.com/media/Osub6rry9Pu2k/giphy.gif",
   "https://media.giphy.com/media/YCCDVrmnXj8vC/giphy.gif",
   "https://media.giphy.com/media/vYtDDrgTXyrm0/giphy.gif"
-];
-  
-var randomBearLink = Math.floor(Math.random() * bearLinks.length);
-  
-return bearLinks[randomBearLink];
+].random()
+
+return bear;
   
     }
   };
   
-  client.getRandomActionImage = (action) => {
-    if (action == "hug") {
-      const hugs = [
-        "https://media.giphy.com/media/26FeTvBUZErLbTonS/giphy.gif",
-        "https://media.giphy.com/media/llmZp6fCVb4ju/giphy.gif",
-        "https://media.giphy.com/media/QbkL9WuorOlgI/giphy.gif",
-        "https://media.giphy.com/media/16bJmyPvRbCDu/giphy.gif",
-        "https://media.giphy.com/media/us8FXd0EtOXXa/giphy.gif",
-        "https://media.giphy.com/media/7eQ8Ky3dAsRYA/giphy.gif",
-        "https://media.giphy.com/media/KL7xA3fLx7bna/giphy.gif",
-        "https://media.giphy.com/media/8tpiC1JAYVMFq/giphy.gif",
-        "https://media.giphy.com/media/gnXG2hODaCOru/giphy.gif",
-        "https://media.giphy.com/media/OiKAQbQEQItxK/giphy.gif",
-        "https://media.giphy.com/media/UwaByp0aMg6BO/giphy.gif",
-        "https://media.giphy.com/media/WQ9l85vIyhRV6/giphy.gif",
-        "https://media.giphy.com/media/W4NKtcOqK2kYo/giphy.gif",
-        "https://media.giphy.com/media/13YrHUvPzUUmkM/giphy.gif",
-        "https://media.giphy.com/media/3EJsCqoEiq6n6/giphy.gif",
-        "https://media.giphy.com/media/Ilkurs1e3hP0c/giphy.gif",
-        "https://media.giphy.com/media/gl8ymnpv4Sqha/giphy.gif",
-        "https://media.giphy.com/media/Y9joz1712cgg0/giphy.gif",
-        "https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif",
-        "https://media.giphy.com/media/yziFo5qYAOgY8/giphy.gif"
-        ];
-      
-      var randomHug = Math.floor(Math.random() * hugs.length);
-      
-      return hugs[randomHug];
-      }
+client.getRandomActionImage = (action) => {
+  if (action == "hug") {
+    const hugs = [
+      "https://media.giphy.com/media/26FeTvBUZErLbTonS/giphy.gif",
+      "https://media.giphy.com/media/llmZp6fCVb4ju/giphy.gif",
+      "https://media.giphy.com/media/QbkL9WuorOlgI/giphy.gif",
+      "https://media.giphy.com/media/16bJmyPvRbCDu/giphy.gif",
+      "https://media.giphy.com/media/us8FXd0EtOXXa/giphy.gif",
+      "https://media.giphy.com/media/7eQ8Ky3dAsRYA/giphy.gif",
+      "https://media.giphy.com/media/KL7xA3fLx7bna/giphy.gif",
+      "https://media.giphy.com/media/8tpiC1JAYVMFq/giphy.gif",
+      "https://media.giphy.com/media/gnXG2hODaCOru/giphy.gif",
+      "https://media.giphy.com/media/OiKAQbQEQItxK/giphy.gif",
+      "https://media.giphy.com/media/UwaByp0aMg6BO/giphy.gif",
+      "https://media.giphy.com/media/WQ9l85vIyhRV6/giphy.gif",
+      "https://media.giphy.com/media/W4NKtcOqK2kYo/giphy.gif",
+      "https://media.giphy.com/media/13YrHUvPzUUmkM/giphy.gif",
+      "https://media.giphy.com/media/3EJsCqoEiq6n6/giphy.gif",
+      "https://media.giphy.com/media/Ilkurs1e3hP0c/giphy.gif",
+      "https://media.giphy.com/media/gl8ymnpv4Sqha/giphy.gif",
+      "https://media.giphy.com/media/Y9joz1712cgg0/giphy.gif",
+      "https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif",
+      "https://media.giphy.com/media/yziFo5qYAOgY8/giphy.gif"
+    ];  
+
+    return hugs.random();
+    }
   }
 };

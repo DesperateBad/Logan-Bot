@@ -1,10 +1,8 @@
 exports.run = (client, message, args) => {
   
-  const text = args.join(" ");
+  if (!args) return message.channel.send("You have to give me something to say...");
   
-  if (!text) return message.channel.send("You have to give me something to say...");
-  
-  message.channel.send(text);
+  message.channel.send(args);
 
 };
 

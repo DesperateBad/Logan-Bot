@@ -1,6 +1,6 @@
 exports.run = (client, message, args, level) => {
 
-  const decideResponse = [
+  const response = [
     'Yes',
     'No',
     'Most likely',
@@ -15,13 +15,9 @@ exports.run = (client, message, args, level) => {
     'The voices are telling me \"yes\"...',
     'Pfffft... no',
     'Oh, YES!'
-  ];
-  
-  var randomResponse = Math.floor(Math.random() * decideResponse.length);
-  
-  var decision = args.join(" ");
+  ].random();
       
-  if (!decision) {
+  if (!args) {
     return message.reply("I can't decide on nothing o-o");
   }
   
@@ -42,15 +38,14 @@ exports.run = (client, message, args, level) => {
     sentMessage.edit("Thinking...")
   }, 900)
   setTimeout(function() {
-   if (decision.includes(" or ")) {
-    var options = decision.split(" or ");
-    var randomOption = Math.floor(Math.random() * options.length);
+   if (args.includes(" or ")) {
+    var option = args.split(" or ").random();
      
-    sentMessage.edit("**Question:** " + decision + "\n**Answer**: " + options[randomOption])
+    sentMessage.edit("**Question:** " + args + "\n**Answer**: " + option)
      
    } else {
      
-    sentMessage.edit("**Question:** " + decision + "\n**Answer**: " + decideResponse[randomResponse])
+    sentMessage.edit("**Question:** " + args + "\n**Answer**: " + response)
    };
   }, 1180)
   });

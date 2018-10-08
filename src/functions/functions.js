@@ -42,7 +42,7 @@ module.exports = (client) => {
   
   client.loadCommand = (commandName) => {
     try {
-      const props = require(`../commands/${commandName}`);
+      const props = require(`../../commands/${commandName}`);
       
       console.log(`Loading Command: ${props.help.name}`);
       if (props.init) {
@@ -70,8 +70,8 @@ module.exports = (client) => {
     if (command.shutdown) {
       await command.shutdown(client);
     }
-    const mod = require.cache[require.resolve(`../commands/${commandName}`)];
-    delete require.cache[require.resolve(`../commands/${commandName}.js`)];
+    const mod = require.cache[require.resolve(`../../commands/${commandName}`)];
+    delete require.cache[require.resolve(`../../commands/${commandName}.js`)];
     for (let i = 0; i < mod.parent.children.length; i++) {
       if (mod.parent.children[i] === mod) {
         mod.parent.children.splice(i, 1);
@@ -100,21 +100,28 @@ client.getDefaultChannel = async (guild) => {
       }
     })
   };
+  
+client.cooldownHandler = (time, oncdmsg, message) => {
+  if (!client.cooldownProvider.has(message.author.id)) {
+    if (message.author.id == client.config.ownerID) return;
     
-client.cooldownHandler = (time, message) => {
-  if (message.author.id == client.config.ownerID) return;
+      client.cooldownProvider.set(message.author.id, oncdmsg);
+    
+      setTimeout(function() {
+        client.cooldownProvider.delete(message.author.id);
+      }, time)
+   }
+};
   
-  client.cooldownProvider.add(message.author.id);
+String.prototype.toProperCase = function() {
+  return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}; 
   
-  setTimeout(function() {
-    client.cooldownProvider.delete(message.author.id);
-  }, time)
+Array.prototype.random = function() {
+  let rand = Math.floor(Math.random() * this.length);
+  return this[rand];
 }
   
-  String.prototype.toProperCase = function() {
-    return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-  }; 
-  
-  client.wait = require("util").promisify(setTimeout);
+client.wait = require("util").promisify(setTimeout);
   
 };

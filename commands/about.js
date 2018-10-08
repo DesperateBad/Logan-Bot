@@ -22,12 +22,12 @@ exports.run = async (client, message, level) => {
         name: "Commands:",
         value: `${commandList.length}`,
         inline: true
-      },
-      {
+      }
+      /*{
         name: "Discord Server:",
         value: "[Invite Link](https://discordapp.com/invite/dsrRtwZ)",
         inline: true
-      }
+      }*/
     ],
     thumbnail: {
       url: client.user.avatarURL

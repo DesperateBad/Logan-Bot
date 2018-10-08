@@ -3,16 +3,17 @@ const SQLite = require("better-sqlite3");
 
 exports.run = async (client, message, args, level, slotwin) => {
   
+  const argsarr = args.split(" ");
+  
   if (message.channel.id == "443686685960830976") {
-    var slotschannel = message.guild.channels.get('497652725459189760').toString();
-    return message.channel.send(`${slotschannel} please ;-;`)
+    return message.channel.send(`${message.guild.channels.get('497652725459189760').toString()} please ;-;`)
   };
   
   client.cooldownHandler(15000, "Please wait 15 seconds between each slots roll", message);
   
-  if (args[0]) {
+  if (argsarr[0]) {
     
-    const action = args[0];
+    const action = argsarr[0];
     
     if (action === "wins") {
         if (!message.mentions.users.first()) {
@@ -30,13 +31,15 @@ exports.run = async (client, message, args, level, slotwin) => {
     }
     
     if (action === "leaderboard") {
-      const top10 = client.slotsSQL.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
+      const top10 = client.sql.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
 
       const embed = new Discord.RichEmbed()
         .setTitle("Leaderboard")
         .setAuthor(client.user.username, client.user.avatarURL)
         .setDescription("Here are the top 10 members with the most slot wins!")
         .setColor(0xCFD9F9);
+      
+      var currentplace = 1;
       
       for (const data of top10) {
         if (currentplace === 1) {
@@ -55,7 +58,7 @@ exports.run = async (client, message, args, level, slotwin) => {
       return message.channel.send({embed});
     }
     
-    if (args[0] === "give") {
+    if (argsarr[0] === "give") {
       
       if (!message.author.id == client.config.ownerID) return message.channel.send("Yeah, you're not allowed to do that o.o");
       
@@ -81,11 +84,9 @@ exports.run = async (client, message, args, level, slotwin) => {
       }
     }
   
-  const emojis = ['🍏', '🍊', '🍉', '🍇', '🍒', '🍓', '🍋'];
-  
   function randomEmoji() {
-    var randomEmoji = Math.floor(Math.random() * emojis.length);
-    return emojis[randomEmoji];
+    const emoji = ['🍏', '🍊', '🍉', '🍇', '🍒', '🍓', '🍋'].random();
+    return emoji;
   };
   
   function roll() {

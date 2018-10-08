@@ -1,10 +1,8 @@
 exports.run = (client, message, level) => {
   
-  const sides = [ "1", "2", "3", "4", "5", "6" ];
+  const side = [ "1", "2", "3", "4", "5", "6" ].random();
   
-  var randomSide = Math.floor(Math.random() * sides.length);
-  
-  message.channel.send(`You rolled a ${sides[randomSide]}!`);
+  message.channel.send(`You rolled a ${side}!`);
   
 };
 

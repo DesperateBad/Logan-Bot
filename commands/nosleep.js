@@ -42,10 +42,10 @@ var maxWidth = 230;
 var lineHeight = 15;
 var x = 24;
 var y = 252;
-var text = args.join(" ");
+var text = args;
 wrapText(ctx, text, x, y, maxWidth, lineHeight); 
 
-var m = ctx.measureText(args.join(" "))
+var m = ctx.measureText(args)
 
 
   const attachment = new Discord.Attachment(canvas.toBuffer(), 'none.jpg');

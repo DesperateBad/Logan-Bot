@@ -14,10 +14,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     return text;
   };
   
-  const code = args.join(" ");
-  
   try {
-    const evaled = eval(code);
+    const evaled = eval(args);
     const clean = await client.clean(client, evaled);
     
   } catch (err) {

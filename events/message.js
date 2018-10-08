@@ -7,8 +7,9 @@ module.exports = async (client, message) => {
   if (message.content.indexOf(client.config.prefix) !== 0) return;
   
   // Our standard argument/command name definition
-  const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+  const array = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
+  const command = array.shift().toLowerCase();
+  const args = array.join(" ");
   
   // If the message is just "?", ignore it
   if (!command) return;
@@ -49,11 +50,6 @@ module.exports = async (client, message) => {
    }
 
    message.author.permLevel = level;
-  
-   message.flags = [];
-   while (args[0] && args[0][0] === "-") {
-     message.flags.push(args.shift().slice(1));
-   }
 
 var isDisabled = (serverConfig.disabledCommands.indexOf(command) > -1);
   

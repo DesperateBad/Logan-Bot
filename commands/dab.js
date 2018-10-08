@@ -1,10 +1,15 @@
 exports.run = (client, message, level) => {
   
-  const dabs = ['<o/', 'c/-', '*dabs*', 'https://media.giphy.com/media/3oz8xODcLLAxb8Qyju/giphy.gif', 'https://media.giphy.com/media/lae7QSMFxEkkE/giphy.gif', 'https://media.giphy.com/media/xkjsHi4t4iP3gI7We2/giphy.gif'];
+  const dab = [
+    '<o/',
+    'c/-',
+    '*dabs*',
+    'https://media.giphy.com/media/3oz8xODcLLAxb8Qyju/giphy.gif',
+    'https://media.giphy.com/media/lae7QSMFxEkkE/giphy.gif',
+    'https://media.giphy.com/media/xkjsHi4t4iP3gI7We2/giphy.gif'
+  ].random();
   
-  var randomDab = Math.floor(Math.random() * dabs.length);
-  
-  message.channel.send(dabs[randomDab]);
+  message.channel.send(dab);
 
 };
 

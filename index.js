@@ -7,18 +7,18 @@ const { promisify } = require("util");
 const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
 const SQLite = require("better-sqlite3");
+const sql = new SQLite("./src/databases/slots/slotwins.sqlite");
 
 // Stuff to keep bot alive on line #129
 const http = require("http");
 const express = require("express");
 const pinger = express();
 
+client.sql = sql;
 client.config = require("./config.js");
 
 require("./src/functions/functions.js")(client);
-require('./src/setupScripts/slotsDB')(client);
-require('./src/setupScripts/shopDB')(client);
-require("./src/misc/randomImageFunctions.js")(client);
+require("./src/functions/randomImageFunctions.js")(client);
 
 
 client.commands = new Enmap();
@@ -28,7 +28,7 @@ client.serverConfig = new Enmap({
                             name: "serverConfig",
                             fetchAll: false,
                             autoFetch: true,
-                            cloneLevel: 'deep'
+                            cloneLevel: "deep"
                           });
 
 client.cooldownProvider = new Map();
@@ -36,6 +36,18 @@ client.cooldownProvider = new Map();
 client.on("ready",() => {
   console.log(`Online and active on ${client.guilds.size} servers.`);
   client.user.setActivity(client.config.prefix + `help | ${client.guilds.size} Servers`, {type: 'WATCHING'});
+  const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();
+  if (!table['count(*)']) {
+    // If the table isn't there, create it and setup the database correctly.
+    sql.prepare("CREATE TABLE slotwins (id TEXT PRIMARY KEY, user TEXT, guild TEXT, wins INTEGER);").run();
+    // Ensure that the "id" row is always unique and indexed.
+    sql.prepare("CREATE UNIQUE INDEX idx_slotwins_id ON slotwins (id);").run();
+    sql.pragma("synchronous = 1");
+    sql.pragma("journal_mode = wal");
+  }
+  
+  client.getWins = sql.prepare("SELECT * FROM slotwins WHERE user = ? AND guild = ?");
+  client.setWins = sql.prepare("INSERT OR REPLACE INTO slotwins (id, user, guild, wins) VALUES (@id, @user, @guild, @wins);");
 });
 
 const init = async () => {
