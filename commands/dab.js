@@ -1,5 +1,5 @@
 exports.run = (client, message, level) => {
-  
+
   const dab = [
     '<o/',
     'c/-',
@@ -8,7 +8,7 @@ exports.run = (client, message, level) => {
     'https://media.giphy.com/media/lae7QSMFxEkkE/giphy.gif',
     'https://media.giphy.com/media/xkjsHi4t4iP3gI7We2/giphy.gif'
   ].random();
-  
+
   message.channel.send(dab);
 
 };

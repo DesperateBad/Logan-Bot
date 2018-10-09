@@ -8,7 +8,7 @@ exports.conf = {
     permLevel: "Open"
 };
 
-exports.help ={
+exports.help = {
     name: 'invite',
     description: 'Get my creator\'s secret invite link...',
     usage: 'invite'

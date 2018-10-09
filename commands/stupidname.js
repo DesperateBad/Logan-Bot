@@ -1,8 +1,8 @@
 const generator = require('sillyname');
 exports.run = (client, message, level) => {
-  
+
   let stupidName = generator();
-  
+
   message.channel.send("How about, **" + stupidName + "**?");
 
 };

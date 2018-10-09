@@ -1,13 +1,13 @@
 module.exports = async (client, channel) => {
-  
+
   const serverConfig = client.getGuildSettings(channel.guild);
-  
+
   if (channel.type == "text") {
     if (serverConfig.announceNewTextChannels == "true") {
       const announcementChannel = channel.guild.channels.find("name", serverConfig.textChannelAnnouncementChannel);
       const message = serverConfig.newTextChannelAnnouncement;
       const announcementMessage = message.replace("{{channel}}", channel.name);
-      
+
       announcementChannel.send(announcementMessage);
     } else {
       return;
@@ -17,10 +17,10 @@ module.exports = async (client, channel) => {
       const announcementChannel = channel.guild.channels.find("name", serverConfig.voiceChannelAnnouncementChannel);
       const message = serverConfig.newVoiceChannelAnnouncement;
       const announcementMessage = message.replace("{{channel}}", channel.name);
-      
+
       announcementChannel.send(announcementMessage);
     } else {
       return;
     }
-   }
- };
+  }
+};

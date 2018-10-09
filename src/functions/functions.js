@@ -1,7 +1,7 @@
 const Long = require("long");
 
 module.exports = (client) => {
-  
+
   client.permLevel = message => {
     let permlvl = 0;
 
@@ -17,7 +17,7 @@ module.exports = (client) => {
     }
     return permlvl;
   };
-  
+
   client.getGuildSettings = (guild) => {
     const def = client.config.defaultConfig;
     if (!guild) return def;
@@ -28,7 +28,7 @@ module.exports = (client) => {
     }
     return returns;
   };
-  
+
   client.awaitReply = async (msg, question, limit = 20000) => {
     const filter = m => m.author.id === msg.author.id;
     await msg.channel.send(question);
@@ -39,11 +39,25 @@ module.exports = (client) => {
       return false;
     }
   };
+
+  client.loadItem = (folderName, itemName) => {
+    try {
+      const props = require(`../../items/${folderName}/${itemName}`);
+
+      console.log(`Loading ${folderName} Item: ${props.conf.name}`);
+      if (props.init) {
+        props.init(client);
+      }
+      client.items.set(props.conf.name, props);
+    } catch (err) {
+      return `Unable to load ${folderName} item ${itemName}: ${err}`
+    }
+  };
   
   client.loadCommand = (commandName) => {
     try {
       const props = require(`../../commands/${commandName}`);
-      
+
       console.log(`Loading Command: ${props.help.name}`);
       if (props.init) {
         props.init(client);
@@ -66,7 +80,7 @@ module.exports = (client) => {
       command = client.commands.get(client.aliases.get(commandName));
     }
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
-  
+
     if (command.shutdown) {
       await command.shutdown(client);
     }
@@ -80,48 +94,48 @@ module.exports = (client) => {
     }
     return false;
   };
-  
+
   client.getNumbersBetween = async (x, y) => {
     var numbers = [];
     for (var i = x; i < y; i++) {
       numbers.push(i);
     }
     numbers.push(y);
-    
+
     return numbers;
   }
 
-client.getDefaultChannel = async (guild) => {
+  client.getDefaultChannel = async (guild) => {
     guild.channels.forEach((channel) => {
-      if(channel.type == "text") {
-        if(channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
+      if (channel.type == "text") {
+        if (channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
           return channel;
         }
       }
     })
   };
-  
-client.cooldownHandler = (time, oncdmsg, message) => {
-  if (!client.cooldownProvider.has(message.author.id)) {
-    if (message.author.id == client.config.ownerID) return;
-    
+
+  client.cooldownHandler = (time, oncdmsg, message) => {
+    if (!client.cooldownProvider.has(message.author.id)) {
+      if (message.author.id == client.config.ownerID) return;
+
       client.cooldownProvider.set(message.author.id, oncdmsg);
-    
-      setTimeout(function() {
+
+      setTimeout(function () {
         client.cooldownProvider.delete(message.author.id);
       }, time)
-   }
-};
-  
-String.prototype.toProperCase = function() {
-  return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}; 
-  
-Array.prototype.random = function() {
-  let rand = Math.floor(Math.random() * this.length);
-  return this[rand];
-}
-  
-client.wait = require("util").promisify(setTimeout);
-  
+    }
+  };
+
+  String.prototype.toProperCase = function () {
+    return this.replace(/([^\W_]+[^\s-]*) */g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+  };
+
+  Array.prototype.random = function () {
+    let rand = Math.floor(Math.random() * this.length);
+    return this[rand];
+  }
+
+  client.wait = require("util").promisify(setTimeout);
+
 };

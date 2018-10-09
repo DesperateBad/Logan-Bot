@@ -4,7 +4,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     if (text && text.constructor.name == "Promise")
       text = await text;
     if (typeof evaled !== "string")
-      text = require("util").inspect(text, {depth: 1});
+      text = require("util").inspect(text, { depth: 1 });
 
     text = text
       .replace(/`/g, "`" + String.fromCharCode(8203))
@@ -13,11 +13,11 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
     return text;
   };
-  
+
   try {
     const evaled = eval(args);
     const clean = await client.clean(client, evaled);
-    
+
   } catch (err) {
     console.log("Error executing ?eval command");
   }

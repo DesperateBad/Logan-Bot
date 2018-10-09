@@ -35,14 +35,15 @@
     "express": "^4.15.5",
     "jimp": "latest",
     "node-opus": "latest",
-    "libsodium-wrappers": "latest",
-    "sodium": "latest",
     "sillyname": "latest",
     "request": "latest",
     "long": "latest",
     "better-sqlite3": "latest",
     "canvas": "next",
     "path": "latest",
-    "ms": "latest"
+    "ms": "latest",
+    "require-dir": "latest",
+    "assert": "latest",
+    "mongodb": "latest"
   }
 }

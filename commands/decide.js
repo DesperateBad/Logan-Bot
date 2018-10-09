@@ -16,52 +16,52 @@ exports.run = (client, message, args, level) => {
     'Pfffft... no',
     'Oh, YES!'
   ].random();
-      
+
   if (!args) {
     return message.reply("I can't decide on nothing o-o");
   }
-  
+
   message.channel.startTyping();
-      
+
   message.channel.send(".")
-   .then(sentMessage => {  
-  setTimeout(function() {
-    sentMessage.edit("Thinking")
-  }, 10)
-  setTimeout(function() {
-    sentMessage.edit("Thinking.")
-  }, 100)
-  setTimeout(function() {
-    sentMessage.edit("Thinking..")
-  }, 500)
-  setTimeout(function() {
-    sentMessage.edit("Thinking...")
-  }, 900)
-  setTimeout(function() {
-   if (args.includes(" or ")) {
-    var option = args.split(" or ").random();
-     
-    sentMessage.edit("**Question:** " + args + "\n**Answer**: " + option)
-     
-   } else {
-     
-    sentMessage.edit("**Question:** " + args + "\n**Answer**: " + response)
-   };
-  }, 1180)
-  });
-  
+    .then(sentMessage => {
+      setTimeout(function () {
+        sentMessage.edit("Thinking")
+      }, 10)
+      setTimeout(function () {
+        sentMessage.edit("Thinking.")
+      }, 100)
+      setTimeout(function () {
+        sentMessage.edit("Thinking..")
+      }, 500)
+      setTimeout(function () {
+        sentMessage.edit("Thinking...")
+      }, 900)
+      setTimeout(function () {
+        if (args.includes(" or ")) {
+          var option = args.split(" or ").random();
+
+          sentMessage.edit("**Question:** " + args + "\n**Answer**: " + option)
+
+        } else {
+
+          sentMessage.edit("**Question:** " + args + "\n**Answer**: " + response)
+        };
+      }, 1180)
+    });
+
   message.channel.stopTyping();
-  
- };
-  
-  exports.conf = {
-    enabled: true,
-    aliases: ['decision'],
-    permLevel: "Open"
-  };
-  
-  exports.help = {
-    name: "decide",
-    description: "Got trouble deciding? I can help with that ^-^",
-    usage: "decide [text]"
-  };
+
+};
+
+exports.conf = {
+  enabled: true,
+  aliases: ['decision'],
+  permLevel: "Open"
+};
+
+exports.help = {
+  name: "decide",
+  description: "Got trouble deciding? I can help with that ^-^",
+  usage: "decide [text]"
+};
