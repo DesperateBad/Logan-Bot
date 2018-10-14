@@ -10,6 +10,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Animals",
   name: "hoot",
   description: "H-Hoot! H-Hoot! ^o,o^",
   usage: "hoot"
