@@ -20,6 +20,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Miscellaneous",
   name: "dab",
   description: "Dab like a cool guy",
   usage: "dab"
