@@ -10,6 +10,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Miscellaneous",
   name: "level",
   description: "Tells you your permission level.",
   usage: "level"
