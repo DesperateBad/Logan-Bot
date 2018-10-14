@@ -44,6 +44,20 @@
     "ms": "latest",
     "require-dir": "latest",
     "assert": "latest",
-    "mongodb": "latest"
+    "mongodb": "latest",
+    "express-passport": "^0.1.0",
+    "express-session": "^1.15.6",
+    "helmet": "^3.9.0",
+    "klaw": "^2.1.1",
+    "marked": "^0.5.0",
+    "memorystore": "^1.6.0",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^1.3.0",
+    "passport": "^0.4.0",
+    "passport-discord": "^0.1.3",
+    "readline-sync": "^1.4.9",
+    "snekfetch": "^3.5.8",
+    "ejs": "latest",
+    "body-parser": "latest"
   }
 }
