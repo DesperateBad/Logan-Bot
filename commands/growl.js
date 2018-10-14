@@ -18,6 +18,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Animals",
   name: "growl",
   description: "Growl Growl! ʕ•ᴥ•ʔ",
   usage: "growl"
