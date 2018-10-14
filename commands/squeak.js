@@ -10,6 +10,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Animals",
   name: "squeak",
   description: "Squee-Squeek! 🐹",
   usage: "squeak"
