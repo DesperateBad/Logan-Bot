@@ -66,6 +66,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Memes",
   name: "burnpaper",
   description: "Burn the stupid paper",
   usage: "burnpaper [text]"
