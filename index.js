@@ -8,22 +8,27 @@ const chalk = require("chalk");
 const readdir = promisify(require("fs").readdir);
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./src/databases/slots/slotwins.sqlite");
-const requireDir = require("require-dir");
 
-// Stuff to keep bot alive on line #129
 const http = require("http");
-const express = require("express");
-const pinger = express();
+const Express = require("express");
+const express = Express();
 
 client.sql = sql;
 client.config = require("./config.js");
 
-requireDir("./src/functions/")(client);
+require("./src/functions/functions.js")(client);
+require("./src/functions/randomImageFunctions.js")(client);
 
 
 client.commands = new Enmap();
 client.aliases = new Enmap();
-client.items = new Enmap();
+
+client.serverMutes = new Enmap({
+  name: "serverWarns",
+  fetchAll: false,
+  autoFetch: true,
+  cloneLevel: "deep"
+});
 
 client.serverConfig = new Enmap({
   name: "serverConfig",
@@ -34,14 +39,25 @@ client.serverConfig = new Enmap({
 
 client.cooldownProvider = new Map();
 
-client.on("ready", () => {
+client.on("ready", async () => {
+  var cmds = await readdir("./commands/");
   console.log(`Online and active on ${client.guilds.size} servers.`);
-  client.user.setActivity(client.config.prefix + `help | ${client.guilds.size} Servers`, { type: 'WATCHING' });
+  client.user.setActivity(client.config.prefix + `help | ${cmds.length} Commands`, {type: 'PLAYING'});
+  
+  const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();
+  if (!table['count(*)']) {
+    sql.prepare("CREATE TABLE slotwins (id TEXT PRIMARY KEY, user TEXT, guild TEXT, wins INTEGER);").run();
+    sql.prepare("CREATE UNIQUE INDEX idx_slotwins_id ON slotwins (id);").run();
+    sql.pragma("synchronous = 1");
+    sql.pragma("journal_mode = wal");
+  }
+  client.getWins = sql.prepare("SELECT * FROM slotwins WHERE user = ? AND guild = ?");
+  client.setWins = sql.prepare("INSERT OR REPLACE INTO slotwins (id, user, guild, wins) VALUES (@id, @user, @guild, @wins);");
 });
 
 const init = async () => {
 
-  const cmdFiles = await readdir("./commands/");
+ const cmdFiles = await readdir("./commands/");
   console.log(`Loading a total of ${cmdFiles.length} commands.`);
   cmdFiles.forEach(f => {
     if (!f.endsWith(".js")) return;
@@ -58,22 +74,11 @@ const init = async () => {
     delete require.cache[require.resolve(`./events/${file}`)];
   });
 
-  // Load item sripts
-  const itemFolders = await readdir("./items/");
-  itemFolders.forEach(folder => {
-    const itemFiles = await readdir(`./items/${folder}/`);
-    itemFiles.forEach(file => {
-      if (!file.endsWith(".js")) return;
-      const response = client.loadItem(folder, file);
-      if (response) console.log(response);
-    })
-  })
-
   client.levelCache = {};
-  for (let i = 0; i < client.config.permLevels.length; i++) {
-    const thisLevel = client.config.permLevels[i];
-    client.levelCache[thisLevel.name] = thisLevel.level;
-  }
+    for (let i = 0; i < client.config.permLevels.length; i++) {
+      const thisLevel = client.config.permLevels[i];
+      client.levelCache[thisLevel.name] = thisLevel.level;
+  } 
 
   client.login(process.env.TOKEN);
 
@@ -81,10 +86,11 @@ const init = async () => {
 
 init();
 
-pinger.get("/", (request, response) => {
+express.get("/", (request, response) => {
   response.sendStatus(200);
 });
-pinger.listen(process.env.PORT);
+
+express.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
