@@ -12,8 +12,10 @@ const config = {
 
   "inviteLink": "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot",
   "version": "0.2.0",
-  "inventoryDBUrl": "mongodb://logan-bot:<<password>>@ds113046.mlab.com:13046/user-inventories",
 
+  "callbackURL": "https://logan-bot.glitch.me/callback",
+
+  "domain": "https://logan-bot.glitch.me/",
 
   // Default server config
   "defaultConfig": {
@@ -52,16 +54,8 @@ const config = {
   },
 
   "defaultInv": {
-    items: [
-      {
-        id: 368181623,
-        amount: 1
-      },
-      {
-        id: 261951299,
-        amount: 3
-      }
-    ]
+     368181623: 1,
+     261951299: 3
   },
 
   permLevels: [
