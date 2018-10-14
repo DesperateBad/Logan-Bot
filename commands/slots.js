@@ -3,17 +3,15 @@ const SQLite = require("better-sqlite3");
 
 exports.run = async (client, message, args, level, slotwin) => {
 
-  const argsarr = args.split(" ");
-
   if (message.channel.id == "443686685960830976") {
     return message.channel.send(`${message.guild.channels.get('497652725459189760').toString()} please ;-;`)
   };
 
   client.cooldownHandler(15000, "Please wait 15 seconds between each slots roll", message);
 
-  if (argsarr[0]) {
+  if (args[0]) {
 
-    const action = argsarr[0];
+    const action = args[0];
 
     if (action === "wins") {
       if (!message.mentions.users.first()) {
