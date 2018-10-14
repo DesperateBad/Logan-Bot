@@ -67,6 +67,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Fun",
   name: "numberguess",
   description: "I think of a number between 1 and 100, and you try to guess it within 20 guesses!",
   usage: "numberguess"
