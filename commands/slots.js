@@ -138,6 +138,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Fun",
   name: "slots",
   description: "Roll a slots machine, and see if you can get a match of 3 fruits! (Has a 15 second cooldown)",
   usage: "slots <leaderboard/wins>"
