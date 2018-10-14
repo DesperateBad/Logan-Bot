@@ -13,6 +13,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Fun",
   name: "say",
   description: "Ill say what you want!",
   usage: "say [text]"
