@@ -56,6 +56,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Memes",
   name: "changemymind",
   description: "Make your own Steven Crowder \'Change My Mind\' sign!",
   usage: "changemymind [text]"
