@@ -17,6 +17,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Fun",
   name: "hug",
   description: "Give someone a nice, warm hug :D",
   usage: "hug [@mention]"
