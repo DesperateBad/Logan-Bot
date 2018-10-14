@@ -12,6 +12,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Administration",
   name: "restart",
   description: "Puts me to sleep, then wakes me back up again! c:",
   usage: "restart"
