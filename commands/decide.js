@@ -63,6 +63,7 @@ exports.run = (client, message, args, level) => {
   };
   
   exports.help = {
+    category: "Utility",
     name: "decide",
     description: "Got trouble deciding? I can help with that ^-^",
     usage: "decide [text]"
