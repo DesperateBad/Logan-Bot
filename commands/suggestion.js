@@ -6,7 +6,7 @@ exports.run = async (client, message, args, level) => {
   let user = client.fetchUser(client.config.ownerID)
     .then(user => {
       // Once promise returns with user, send user a DM
-      user.send("**From:** " + message.author.toString() + " (ID: ${message.author.id})\n**Text:** " + args);
+      user.send("**From:** " + message.author.toString() + ` (id: ${message.author.id})\n**Text:** ` + args.join(" "));
     })
 
 
