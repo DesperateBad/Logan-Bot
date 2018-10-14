@@ -30,6 +30,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Info",
   name: 'help',
   description: 'Gives you all of my commands :3',
   usage: 'help [command]'
