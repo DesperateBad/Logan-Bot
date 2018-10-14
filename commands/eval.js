@@ -30,6 +30,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "System",
   name: "eval",
   description: "Executes arbitrary javascript. Only usable by the Bot Owner, for safety reasons.",
   usage: "eval [...code]"
