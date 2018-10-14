@@ -1,7 +1,6 @@
 exports.run = (client, message, args, level) => {
 
-  const inp = args.split(" ");
-  if (!inp[0]) {
+  if (!args[0]) {
     const myCommands = message.guild ? client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level) : client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level);
 
     const commandNames = myCommands.keyArray();
@@ -14,7 +13,7 @@ exports.run = (client, message, args, level) => {
     });
     message.author.send(output, { code: "asciidoc", split: { char: "\u200b" } });
   } else {
-    let command = inp[0];
+    let command = args[0];
     if (client.commands.has(command)) {
       command = client.commands.get(command);
       if (level < client.levelCache[command.conf.permLevel]) return;
