@@ -7,9 +7,8 @@ module.exports = async (client, message) => {
   if (message.content.indexOf(client.config.prefix) !== 0) return;
 
   // Our standard argument/command name definition
-  const array = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
-  const command = array.shift().toLowerCase();
-  const args = array.join(" ");
+  const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
 
   // If the message is just "?", ignore it
   if (!command) return;
