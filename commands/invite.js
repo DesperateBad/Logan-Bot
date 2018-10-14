@@ -9,6 +9,7 @@ exports.conf = {
 };
 
 exports.help = {
+    category: "Info",
     name: 'invite',
     description: 'Get my creator\'s secret invite link...',
     usage: 'invite'
