@@ -65,6 +65,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Memes",
   name: "nosleep",
   description: "Brains do this all the time...",
   usage: "nosleep [text]"
