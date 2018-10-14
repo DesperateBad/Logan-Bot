@@ -43,6 +43,7 @@ exports.conf = {
 };
 
 exports.help = {
+	category: "Info",
 	name: 'serverinfo',
 	description: 'Displays information about the current server.',
 	usage: 'serverinfo'
