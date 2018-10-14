@@ -42,11 +42,10 @@ exports.run = async (client, message, args, level) => {
     var lineHeight = 15;
     var x = 24;
     var y = 252;
-    var text = args;
+    var text = args.join(" ");
     wrapText(ctx, text, x, y, maxWidth, lineHeight);
 
-    var m = ctx.measureText(args)
-
+    var m = ctx.measureText(args.join(" "))
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), 'none.jpg');
     message.channel.send('Goddammit brain...', attachment);
