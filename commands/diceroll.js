@@ -13,6 +13,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Utility",
   name: "diceroll",
   description: "Roll a six-sided dice ^-^",
   usage: "diceroll"
