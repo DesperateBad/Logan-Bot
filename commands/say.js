@@ -2,7 +2,7 @@ exports.run = (client, message, args) => {
 
   if (!args) return message.channel.send("You have to give me something to say...");
 
-  message.channel.send(args);
+  message.channel.send(args.join(" "));
 
 };
 
