@@ -9,6 +9,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Miscellaneous",
   name: 'ping',
   description: 'Pong!',
   usage: 'ping'
