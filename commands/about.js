@@ -48,6 +48,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: "Info",
   name: "about",
   description: "Info about me :D",
   usage: "about"
