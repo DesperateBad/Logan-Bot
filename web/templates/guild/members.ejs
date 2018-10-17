@@ -67,7 +67,7 @@
   }
   
   function getMembers(start, callback) {
-    $.getJSON(`/web/${guildID}/members/list?start=${start}&limit=${pages.limit}&sortby=${pages.sortby}&filter=${pages.filter}`, function(response) {
+    $.getJSON(`/dashboard/${guildID}/members/list?start=${start}&limit=${pages.limit}&sortby=${pages.sortby}&filter=${pages.filter}`, function(response) {
       pages.total = response.pageof;
       pages.current = response.page;
       pages.elements = response.total;
@@ -93,7 +93,7 @@
         .replace("{joined}", moment(member.joinedAt).format("MMMM Do YYYY, h:mm a"))
         .replace("{roles}", roles);
       if (member.bot) {
-        thishtml = thishtml.replace("{botimg}", ' <img src="/public/images/bot.png">');
+        thishtml = thishtml.replace("{botimg}", member.avatarURL);
       } else { 
         thishtml = thishtml.replace("{botimg}", '');
       }

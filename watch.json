@@ -12,7 +12,9 @@
     ],
     "include": [
       "\\.js$",
-      "\\.json"
+      "\\.json",
+      "\\.ejs",
+      "\\.css"
     ]
   },
   "throttle": 900000

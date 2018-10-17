@@ -29,7 +29,7 @@ exports.run = async (client, message, args, level, slotwin) => {
     }
 
     if (action === "leaderboard") {
-      const top10 = client.slotsSQL.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
+      const top10 = client.sql.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
 
       const embed = new Discord.RichEmbed()
         .setTitle("Leaderboard")
@@ -56,9 +56,9 @@ exports.run = async (client, message, args, level, slotwin) => {
       return message.channel.send({ embed });
     }
 
-    if (argsarr[0] === "give") {
+    if (args[0] === "give") {
 
-      if (!message.author.id == client.config.ownerID) return message.channel.send("Yeah, you're not allowed to do that -_-");
+      if (message.author.id !== client.config.ownerID) return message.channel.send("Yeah, you're not allowed to do that -_-");
 
       const user = message.mentions.users.first();
       if (!user) return message.reply("You must mention someone or give their ID!");

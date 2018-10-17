@@ -11,7 +11,7 @@ exports.run = (client, message, args, level) => {
 				name: "User Info",
 			},
 			thumbnail: {
-				url: `${member.avatarURL}`,
+				url: member.avatarURL,
 			},
 			fields: [
 				{

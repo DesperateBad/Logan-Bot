@@ -1,6 +1,7 @@
 const config = {
 
   "botName": "Logan",
+  "botDescription": "Logan brings fun and happiness to servers everywhere!",
 
   // The following can not be changed by users:
   "ownerID": "428783792275193868",
@@ -15,7 +16,7 @@ const config = {
 
   "callbackURL": "https://logan-bot.glitch.me/callback",
 
-  "domain": "https://logan-bot.glitch.me/",
+  "domain": "https://logan-bot.glitch.me",
 
   // Default server config
   "defaultConfig": {
@@ -73,7 +74,7 @@ const config = {
       check: (message) => {
         try {
           const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.adminRole.toLowerCase());
-          return (adminRole && message.member.roles.has(adminRole.id));
+          return (message.member.permissions.has("MANAGE_GUILD"));
         } catch (e) {
           return false;
         }

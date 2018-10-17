@@ -19,16 +19,12 @@ client.config = require("./config.js");
 require("./src/functions/functions.js")(client);
 require("./src/functions/randomImageFunctions.js")(client);
 
+// Start website
+require("./web/index.js")(client);
+
 
 client.commands = new Enmap();
 client.aliases = new Enmap();
-
-client.serverMutes = new Enmap({
-  name: "serverWarns",
-  fetchAll: false,
-  autoFetch: true,
-  cloneLevel: "deep"
-});
 
 client.serverConfig = new Enmap({
   name: "serverConfig",
@@ -85,12 +81,3 @@ const init = async () => {
 };
 
 init();
-
-express.get("/", (request, response) => {
-  response.sendStatus(200);
-});
-
-express.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);

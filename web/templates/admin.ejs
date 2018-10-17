@@ -25,10 +25,10 @@
                 <% 
                   let href, text;
                   if(bot.guilds.get(guild.id)) {
-                    href = `/web/${guild.id}/manage`;
+                    href = `/dashboard/${guild.id}/manage`;
                     text = "Manage";
                   } else {
-                    href = "https://discordapp.com/api/oauth2/authorize?client_id=470864521842655252&permissions=0&redirect_uri=https%3A%2F%2Flogan-bot.glitch.me%2Fcallback&scope=bot";
+                    href = "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=identify&response_type=code&redirect_uri=https%3A%2F%2Flogan-bot.glitch.me%2Fcallback";
                     text = "Invite Bot";
                   }
                   %>

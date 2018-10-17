@@ -40,11 +40,28 @@ module.exports = (client) => {
     }
   };
   
+  client.writeSettings = (id, newSettings) => {
+    const defaults = client.config.defaultConfig;
+    let settings = client.serverConfig.get(id);
+    if (typeof settings != "object") settings = {};
+    for (const key in newSettings) {
+      if (defaults[key] !== newSettings[key]) {
+        settings[key] = newSettings[key];
+      } else {
+        delete settings[key];
+      }
+    }
+    var values = Object.values(settings);
+    var place = 0;
+    Object.keys(settings).forEach(item => {
+      client.serverConfig.setProp(id, item, values[place]) 
+      place++;
+    })
+  };
+  
   client.loadCommand = (commandName) => {
     try {
       const props = require(`../../commands/${commandName}`);
-      
-      console.log(`Loading Command: ${props.help.name}`);
       if (props.init) {
         props.init(client);
       }
@@ -113,16 +130,18 @@ client.cooldownHandler = (time, oncdmsg, message) => {
    }
 };
   
-client.muteHandler = (time, message) => {
-  if (!message.serverWarns.has(message.guild.id, message.author.id)) {
-    if (message.author.id == client.config.ownerID) return;
-    
-    message.serverWarns.set(message.guild.id, message.author.id, time);
-    
-    setTimeout(function() {
-      message.serverWarns.delete(message.guild.id, message.author.id);
-    }, time)
-  }
+client.muteHandler = (message, time) => {
+  let muted = message.guild.roles.find("name", "Muted");
+  if (!muted) {
+    message.guild.createRole({
+      name: "Muted"
+    });
+    muted = message.guild.roles.find("name", "Muted");
+  };
+  message.mentions.members.first().addRole(muted.id).catch((err) => { console.log(err); message.channel.send("There was an error muting the user ;-;") });
+  setTimeout(function() {
+    message.mentions.members.first().removeRole(muted.id);
+  }, time)
 };
   
 String.prototype.toProperCase = function() {
@@ -135,5 +154,9 @@ Array.prototype.random = function() {
 }
   
 client.wait = require("util").promisify(setTimeout);
+  
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', reason.stack || reason)
+});
   
 };

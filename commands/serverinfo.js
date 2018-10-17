@@ -8,7 +8,7 @@ exports.run = (client, message, level) => {
 				icon_url: message.guild.iconURL
 			},
 			thumbnail: {
-				url: `${message.guild.iconURL}`,
+				url: message.guild.iconURL,
 			},
 			title: "Server Info",
 			fields: [{

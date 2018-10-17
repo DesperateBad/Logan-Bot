@@ -30,6 +30,11 @@ module.exports = async (client, message) => {
 
   // Check if command is on cooldown for the user
   if (client.cooldownProvider.has(message.author.id)) return message.channel.send(client.cooldownProvider.get(message.author.id));
+  
+  let muted = message.guild.roles.get("name", "muted");
+  if (muted) {
+    if (message.member.roles.has(muted.id)) return message.delete().catch(console.error);
+  };
 
   // Grab the command or alias data from the client.commands Enmap
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));

@@ -74,7 +74,7 @@ exports.conf = {
 
 exports.help = {
   category: "Moderation",
-  name: "setconf",
+  name: "conf",
   description: "View or change settings for your server.",
   usage: "conf [view/edit/reset] <key> <value>"
 };
