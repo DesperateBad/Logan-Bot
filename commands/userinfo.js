@@ -44,6 +44,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: 'Info',
 	name: 'userinfo',
 	description: 'Get information about yourself or another user!',
 	usage: 'userinfo'

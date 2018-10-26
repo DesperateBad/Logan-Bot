@@ -18,6 +18,10 @@ module.exports = (client) => {
     return permlvl;
   };
   
+  client.changeNickname = (guild, data) => {
+    guild.me.setNickname(data.nickname);
+  };
+  
   client.getGuildSettings = (guild) => {
     const def = client.config.defaultConfig;
     if (!guild) return def;
@@ -57,6 +61,11 @@ module.exports = (client) => {
       client.serverConfig.setProp(id, item, values[place]) 
       place++;
     })
+  };
+  
+  client.updateGuildCmd = (id, commandData) => {
+    let conf = client.serverConfig.get(id);
+    // if (conf.disabledCommands.indexOf(commandData.command) < 0)) return;
   };
   
   client.loadCommand = (commandName) => {
@@ -121,6 +130,7 @@ client.getDefaultChannel = async (guild) => {
 client.cooldownHandler = (time, oncdmsg, message) => {
   if (!client.cooldownProvider.has(message.author.id)) {
     if (message.author.id == client.config.ownerID) return;
+    // if (message.author.id == '412518473420505089') return;
     
       client.cooldownProvider.set(message.author.id, oncdmsg);
     
@@ -129,14 +139,23 @@ client.cooldownHandler = (time, oncdmsg, message) => {
       }, time)
    }
 };
+
+client.getCurrentDate = () => {
+    var d = new Date();
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    var n = `${day}/${month}/${year}`;
+    return n;
+};
   
 client.muteHandler = (message, time) => {
-  let muted = message.guild.roles.find("name", "Muted");
+  let muted = message.guild.roles.find(r => r.name === "Muted");
   if (!muted) {
     message.guild.createRole({
       name: "Muted"
     });
-    muted = message.guild.roles.find("name", "Muted");
+    muted = message.guild.roles.find(r => r.name === "Muted");
   };
   message.mentions.members.first().addRole(muted.id).catch((err) => { console.log(err); message.channel.send("There was an error muting the user ;-;") });
   setTimeout(function() {

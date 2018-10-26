@@ -1,5 +1,3 @@
-
-
 // Native Node Imports
 const url = require("url");
 const path = require("path");
@@ -255,84 +253,44 @@ module.exports = (client) => {
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
-  // Displays the list of members on the guild (paginated).
-  // NOTE: to be done, merge with manage and stats in a single UX page.
-  app.get("/dashboard/:guildID/members", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
-    if (!guild) return res.status(404);
-    renderTemplate(res, req, "guild/members.ejs", {
-      guild: guild,
-      members: guild.members.array()
-    });
-  });
-
-  // This JSON endpoint retrieves a partial list of members. This list can
-  // be filtered, sorted, and limited to a partial count (for pagination).
-  // NOTE: This is the most complex endpoint simply because of this filtering
-  // otherwise it would be on the client side and that would be horribly slow.
-  app.get("/dashboard/:guildID/members/list", checkAuth, async (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
-    if (!guild) return res.status(404);
-    if (req.query.fetch) {
-      await guild.fetchMembers();
-    }
-    const totals = guild.members.size;
-    const start = parseInt(req.query.start, 10) || 0;
-    const limit = parseInt(req.query.limit, 10) || 50;
-    let members = guild.members;
-    
-    if (req.query.filter && req.query.filter !== "null") {
-      //if (!req.query.filtervalue) return res.status(400);
-      members = members.filter(m=> {
-        m = req.query.filterUser ? m.user : m;
-        return m["displayName"].toLowerCase().includes(req.query.filter.toLowerCase());
-      });
-    }
-    
-    if (req.query.sortby) {
-      members = members.sort((a, b) => a[req.query.sortby] > b[req.query.sortby]);
-    }
-    const memberArray = members.array().slice(start, start+limit);
-    
-    const returnObject = [];
-    for (let i = 0; i < memberArray.length; i++) {
-      const m = memberArray[i];
-      returnObject.push({
-        id: m.id,
-        status: m.user.presence.status,
-        bot: m.user.bot,
-        username: m.user.username,
-        displayName: m.displayName,
-        tag: m.user.tag,
-        discriminator: m.user.discriminator,
-        joinedAt: m.joinedTimestamp,
-        createdAt: m.user.createdTimestamp,
-        highestRole: {
-          hexColor: m.highestRole.hexColor
-        },
-        memberFor: moment.duration(Date.now() - m.joinedAt).format(" D [days], H [hrs], m [mins], s [secs]"),
-        roles: m.roles.map(r=>({
-          name: r.name,
-          id: r.id,
-          hexColor: r.hexColor
-        }))
-      });
-    }
-    res.json({
-      total: totals,
-      page: (start/limit)+1,
-      pageof: Math.ceil(members.size / limit),
-      members: returnObject
-    });
-  });
-
-  // Displays general guild statistics. 
-  app.get("/dashboard/:guildID/stats", checkAuth, (req, res) => {
+  app.post("/dashboard/:guildID/manage/updateCmd", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    renderTemplate(res, req, "guild/stats.ejs", {guild});
+    client.editGuildCommands(guild.id, req.body);
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
+  });
+  
+  app.post("/dashboard/:guildID/manage/changeNick", checkAuth, (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    client.changeNickname(guild.id, req.body);
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
+  });
+  
+  app.post("/dashboard/:guildID/manage/changePrefix", checkAuth, (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const guildConf = client.serverConfig.get(req.params.guildID);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    guildConf.set("prefix", req.body.prefix);
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
+  });
+  
+  app.post("/dashboard/:guildID/manage/updateConf", checkAuth, (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const guildConf = client.serverConfig.get(req.params.guildID);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    for (const key in req.body) {
+      client.serverConfig.setProp(req.params.guildID, key, req.body[key]);
+    };
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
   // Leaves the guild (this is triggered from the manage page, and only
@@ -357,4 +315,5 @@ module.exports = (client) => {
   });
   
   client.site = app.listen(process.env.PORT);
+  console.log("Web UI up and running cap'n!");
 };

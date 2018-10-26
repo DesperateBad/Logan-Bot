@@ -1,0 +1,141 @@
+<%
+const conf = bot.getGuildSettings(guild);
+const guildChannels = [];
+guild.channels.forEach((channel) => {
+  guildChannels.push(channel.name);
+});
+%>
+
+<div id="Bot Settings" class="tabcontent">
+  <input value="nickname" placeholder="<% if(guild.me.nickname) { %> <%= guild.me.nickname %> <% } else { %> <%= bot.user.username %> <% } %>" id="nickname" type="text" class="validate white-text">
+  <label class="active" for="nickname">Nickname</label>
+  
+  <div class="input-field">
+    <input placeholder="<%= conf.prefix %>" id="prefix" type="text" class="validate white-text">
+    <label class="active" for="nickname">Server Prefix</label>
+  </div>
+  
+  <a id="leaveButton" class="waves-effect waves-light btn red" href="/dashboard/<%= guild.id %>/leave"><i class="fa fa-fw sign-out-alt"></i>Leave Server</a>
+
+</div>
+
+<div class="tabcontent" id="Commands">
+  <ul class="checkbox-grid">
+    
+  </ul>
+</div>
+
+<div class="tabcontent" id="Events">
+  
+  <div class="container">
+    <h4>Member Join</h4>
+    <div class="checkAndSelect">
+    <label for="welcomeMembers">
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="welcomeMembers" data-selectid="welcomeChannel"/>
+      <span>Enable Welcome Message</span>
+    </label>
+    <br>
+    <label>Welcome Channel</label>
+    <select class="browser-default" id="welcomeChannel">
+      <% for (const channel in guildChannels) { %>
+      <% if (guildChannels[channel] == conf.welcomeChannel) { %>
+      <option value="<%= conf.welcomeChannel %>" selected><%= conf.welcomeChannel %></option>
+      <% } else { %>
+      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <% } %>
+      <% } %>
+    </select>
+   </div>
+  </div>
+  
+  <br>
+  
+  <div class="divider"></div>
+  
+  <div class="container">
+    <h4>Member Leave</h4>
+    <div class="checkAndSelect">
+    <label for="announceLeaves">
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceLeaves" data-selectid="leaveAnnouncementChannel" name="" />
+      <span>Enable Member Leave Announcement</span>
+    </label>
+    <br>
+    <label>Leave Message Channel</label>
+    <select class="browser-default" id="leaveAnnouncementChannel">
+      <% for (const channel in guildChannels) { %>
+      <% if (guildChannels[channel] == conf.leaveAnnouncementChannel) { %>
+      <option value="<%= conf.leaveAnnouncementChannel %>" selected><%= conf.leaveAnnouncementChannel %></option>
+      <% } else { %>
+      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <% } %>
+      <% } %>
+    </select>
+    </div>
+  </div>
+  
+  <br>
+  
+  <div class="divider"></div>
+  
+  <div class="container">
+    <h4>Member Ban</h4>
+    <div class="checkAndSelect">
+    <label for="announceBans">
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" />
+      <span>Enable Member Ban Announcement</span>
+    </label>
+    <br>
+    <label>Ban Message Channel</label>
+    <select class="browser-default" id="banAnnouncementChannel">
+      <% for (const channel in guildChannels) { %>
+      <% if (guildChannels[channel] == conf.banAnnouncementChannel) { %>
+      <option value="<%= conf.banAnnouncementChannel %>" selected><%= conf.banAnnouncementChannel %></option>
+      <% } else { %>
+      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <% } %>
+      <% } %>
+    </select>
+  </div>
+</div>
+  
+  <br>
+  
+  <div class="divider"></div>
+  
+  <div class="container">
+    <h4>Channel Creation</h4>
+    <div class="twoChecksAndSelect">
+    <label for="announceNewTextChannels">
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewTextChannels" data-selectid="newChannelAnnouncementChannel" />
+      <p>Enable Text Channel Creation Announcement</p>
+    </label>
+    
+    <label for="announceNewVoiceChannels">
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewVoiceChannels" data-selectid="newChannelAnnouncementChannel" />
+      <span>Enable Voice Channel Creation Announcement</span>
+    </label>
+    <br>
+    <label>Channel Creation Announcement Channel</label>
+    <select class="browser-default" id="newChannelAnnouncementChannel">
+      <% for (const channel in guildChannels) { %>
+      <% if (guildChannels[channel] == conf.newChannelAnnouncementChannel) { %>
+      <option value="<%= conf.newChannelAnnouncementChannel %>" selected><%= conf.newChannelAnnouncementChannel %></option>
+      <% } else { %>
+      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <% } %>
+      <% } %>
+    </select>
+  </div>
+</div>
+  
+</div>
+
+<div class="tabcontent" id="Automod">
+  
+</div>
+
+<div class="tabcontent" id="Logging">
+  <h3>
+    Logging
+  </h3>
+</div>

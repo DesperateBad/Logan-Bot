@@ -7,7 +7,6 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       text = require("util").inspect(text, { depth: 1 });
 
     text = text
-      .replace(/`/g, "`" + String.fromCharCode(8203))
       .replace(/@/g, "@" + String.fromCharCode(8203))
       .replace(client.token, "mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0");
 
@@ -15,7 +14,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   };
 
   try {
-    const evaled = eval(args);
+    const evaled = eval(args.join(" "));
     const clean = await client.clean(client, evaled);
 
   } catch (err) {

@@ -43,11 +43,11 @@ exports.run = (client, message, args, level) => {
    if (decision.includes(" or ")) {
     var option = decision.split(" or ").random();
      
-    sentMessage.edit("**Question:** " + args + "\n**Answer**: " + option)
+    sentMessage.edit("**Question:** " + args.join(" ") + "\n**Answer**: " + option)
      
    } else {
      
-    sentMessage.edit("**Question:** " + args + "\n**Answer**: " + response)
+    sentMessage.edit("**Question:** " + args.join(" ") + "\n**Answer**: " + response)
    };
   }, 1180)
   });

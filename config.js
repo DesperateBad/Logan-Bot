@@ -17,15 +17,60 @@ const config = {
   "callbackURL": "https://logan-bot.glitch.me/callback",
 
   "domain": "https://logan-bot.glitch.me",
+  
+  
+  "dashboardTabs": [
+      
+      {
+        name: "Bot Settings",
+        blocks: [
+          "changeNickname",
+          "changePrefix",
+          "leaveButton"
+        ]
+      },
+      
+      {
+        name: "Commands",
+        blocks: [
+          "enableCommands"
+        ]
+      },
+      
+      "divider",
+      
+      {
+        name: "Events",
+        blocks: [
+          "memberJoinOptions",
+          "memberLeaveOptions",
+          "memberBanOptions",
+          "channelCreateOptions"
+        ]
+      },
+      
+      {
+        name: "Automod",
+        blocks: [
+          "automodOptions"
+        ]
+      },
+      
+      {
+        name: "Logging",
+        blocks: [
+          "loggingOptions"
+        ]
+      }
+    
+  ],
 
   // Default server config
   "defaultConfig": {
 
-    "adminRole": "Admins",
-
-    "embedColour": "ORANGE",
-
-    "disabledCommands": ['ping'],
+    "prefix": "?",
+    
+    "disabledCommands": [],
     "adminsOverrideDisabledCommands": "false",
 
     "fallbackChannel": "general",
@@ -33,12 +78,10 @@ const config = {
     "unknownCommandNotice": "true",
 
     "announceNewTextChannels": "false",
-    "textChannelAnnouncementChannel": "announcements",
     "newTextChannelAnnouncement": "A new text channel, {{channel}}, was just created!",
-
     "announceNewVoiceChannels": "false",
-    "voiceChannelAnnouncementChannel": "announcements",
     "newVoiceChannelAnnouncement": "A new voice channel, {{channel}}, was just created!",
+    "newChannelAnnouncementChannel": "announcements",
 
     "welcomeMembers": "true",
     "welcomeChannel": "welcome-channel",
@@ -48,9 +91,9 @@ const config = {
     "banAnnouncementChannel": "announcements",
     "banAnnouncementMessage": "Oof! {{member}} was just banned from the server!",
 
-    "announceKicks": "false",
-    "kickAnnouncementChannel": "announcements",
-    "kickMessage": "{{member}} was just kicked from the server!"
+    "announceLeaves": "false",
+    "leaveAnnouncementMessage": "announcements",
+    "leaveMessage": "{{member}} just left the server ._."
 
   },
 
@@ -73,7 +116,7 @@ const config = {
       name: "Server Admin",
       check: (message) => {
         try {
-          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.adminRole.toLowerCase());
+          // const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.serverConfig.adminRole.toLowerCase());
           return (message.member.permissions.has("MANAGE_GUILD"));
         } catch (e) {
           return false;

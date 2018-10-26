@@ -25,7 +25,17 @@ module.exports = (client) => {
         "https://media.giphy.com/media/TkUZUZ9E6KhJC/giphy.gif",
         "https://media.giphy.com/media/L2vRqCV1lPTq0/giphy.gif",
         "https://media.giphy.com/media/uTIZmj69qCjCM/giphy.gif",
-        "https://media.giphy.com/media/M4trH1uta8OPu/giphy.gif"
+        "https://media.giphy.com/media/M4trH1uta8OPu/giphy.gif",
+        "https://media.giphy.com/media/Qvx4qnHPL1LDa/giphy.gif",
+        "https://media.giphy.com/media/l0HlF7861MzOUsieQ/giphy.gif",
+        "https://media.giphy.com/media/NU8tcjnPaODTy/giphy.gif",
+        "https://media.giphy.com/media/KuFe5aNtHivUQ/giphy.gif",
+        "https://media.giphy.com/media/ZtB2l3jHiJsFa/giphy.gif",
+        "https://media.giphy.com/media/isSbkGRkEyhmU/giphy.gif",
+        "https://media.giphy.com/media/3og0IMhy0539OY6yic/giphy.gif",
+        "https://media.giphy.com/media/3kzJE1GWuwNq9WwQVq/giphy.gif",
+        "https://media.giphy.com/media/j1JUH8V3OaZGM/giphy.gif",
+        "https://media.giphy.com/media/ohnCQCQsd1oT6/giphy.gif"
       ];
 
       return hamsterLinks.random();
@@ -132,7 +142,17 @@ module.exports = (client) => {
         "https://media.giphy.com/media/gl8ymnpv4Sqha/giphy.gif",
         "https://media.giphy.com/media/Y9joz1712cgg0/giphy.gif",
         "https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif",
-        "https://media.giphy.com/media/yziFo5qYAOgY8/giphy.gif"
+        "https://media.giphy.com/media/yziFo5qYAOgY8/giphy.gif",
+        "https://media.giphy.com/media/42YlR8u9gV5Cw/giphy.gif",
+        "https://media.giphy.com/media/xT39CXg70nNS0MFNLy/giphy.gif",
+        "https://media.giphy.com/media/3M4NpbLCTxBqU/giphy.gif",
+        "https://media.giphy.com/media/3oEhmDMA4r9GxhwEqA/giphy.gif",
+        "https://media.giphy.com/media/lXiRKBj0SAA0EWvbG/giphy.gif",
+        "https://media.giphy.com/media/UwaByp0aMg6BO/giphy.gif",
+        "https://media.giphy.com/media/6uEE79cXjssla/giphy.gif",
+        "https://media.giphy.com/media/a5vmVcRPc63qU/giphy.gif",
+        "https://media.giphy.com/media/117o9BJASzmLNC/giphy.gif",
+        "https://media.giphy.com/media/3o7TKzhTnnkuBU03Dy/giphy.gif"
       ];
 
       return hugs.random();

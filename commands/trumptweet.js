@@ -1,12 +1,11 @@
-exports.run = async (client, message, args, level) => {
-
+exports.run = (client, message, args) => {
   const Discord = require("discord.js");
   const fs = require('fs')
   const path = require('path')
   const Canvas = require('canvas')
 
   const Image = Canvas.Image
-  const canvas = Canvas.createCanvas(460, 460)
+  const canvas = Canvas.createCanvas(500, 344)
   const ctx = canvas.getContext('2d')
 
   function wrapText(context, text, x, y, maxWidth, lineHeight) {
@@ -27,45 +26,49 @@ exports.run = async (client, message, args, level) => {
       }
     }
     context.fillText(line, x, y);
-  }
-
+  };
+  
   const img = new Image()
   img.onload = () => {
 
     ctx.drawImage(img, 0, 0)
 
-    ctx.font = 'normal 17px Verdana'
+    ctx.font = 'normal 29px Verdana'
 
     ctx.fillStyle = '#000'
 
-    var maxWidth = 230;
-    var lineHeight = 15;
+    var maxWidth = 460;
+    var lineHeight = 40;
     var x = 24;
-    var y = 252;
+    var y = 130;
     var text = args.join(" ");
+    var date = client.getCurrentDate();
     wrapText(ctx, text, x, y, maxWidth, lineHeight);
+    
+    ctx.fillStyle = '#3b3b3b';
+    ctx.font = 'normal 20px Verdana';
+    ctx.fillText(date, 24, 330);
 
     var m = ctx.measureText(args.join(" "))
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), 'none.jpg');
-    message.channel.send('Goddammit brain...', attachment);
+    message.channel.send('👌🏻', attachment);
   }
   img.onerror = err => {
     console.log(err)
   }
-  img.src = 'https://i.imgur.com/huPsilK.jpg'
-
+  img.src = 'https://cdn.pbrd.co/images/HJTKxd1.png'
 };
 
 exports.conf = {
   enabled: true,
-  aliases: ['bp'],
+  aliases: [],
   permLevel: "Open"
 };
 
 exports.help = {
   category: "Memes",
-  name: "nosleep",
-  description: "When your brain just won't let you sleep",
-  usage: "nosleep [text]"
+  name: "trumptweet",
+  description: "Make a fake trump tweet!",
+  usage: "trumptweet [text]"
 };

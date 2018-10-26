@@ -1,10 +1,59 @@
-<div class="card-header" style="padding: 2px;">
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link<% if(active === 'manage') { %> active<% } %>" href="/dashboard/<%= guild.id %>/manage">Settings</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link<% if(active === 'members') { %> active<% } %>" href="/dashboard/<%= guild.id %>/members">Members</a>
-    </li>
-  </ul>
+<%
+  let help = {};
+  let tabs = [];
+  bot.commands.forEach((command) => {
+    const cat = command.help.category;
+    if (!command.hasOwnProperty('category')) help[cat] = [];
+    help[cat].push(command);
+  });
+  bot.config.dashboardTabs.forEach((tab) => {
+    let tabName;
+    if (tab === "divider") {
+      tabName = "divider";
+    } else tabName = tab.name;
+    tabs.push(tabName);
+  });
+  let conf = bot.getGuildSettings(guild.id);
+  let disabledCommands = ['ping'];
+%>
+
+<div class="container">
+<div class="tab-background">
+  <div class="tab-avatar">
+  <% if (guild.icon) { %>
+        <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=64` %>" alt="<%= guild.name %>" class="responsive-img circle">
+        <% } else { %>
+          <canvas style="background-color: #7289da" class="responsive-img circle" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="64px" height="64px"></canvas>
+          <script>
+            function draw() {
+              const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
+              ctx.font = '10px Arial';
+              ctx.textAlign = "center";
+              ctx.fillStyle = "white";
+              ctx.textBaseline = "middle";
+              ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 10, 64);
+            };
+            draw();
+          </script>
+          <% } %>
+  </div>
+  
+  <div class="tab">
+    <% tabs.forEach((tab) => { %>
+    <% if(tab === "divider") { %>
+    <div class="divider" style="margin-top: 5px; margin-bottom: 5px;"></div>
+    <% } else if(tab === "Bot Settings") { %>
+    <button class="tablinks" onclick="openTab(event, '<%= tab %>')" id="defaultOpen">
+      <%= tab %>
+    </button>
+    <% } else { %>
+    <button class="tablinks" onclick="openTab(event, '<%= tab %>')">
+      <%= tab %>
+    </button>
+    <% } %>
+  <% }); %>
+  </div>
 </div>
+</div>
+
+<%- include('./guild-manage-blocks', {guild}) %>

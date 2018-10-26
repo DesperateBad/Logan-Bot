@@ -31,7 +31,7 @@ module.exports = async (client, message) => {
   // Check if command is on cooldown for the user
   if (client.cooldownProvider.has(message.author.id)) return message.channel.send(client.cooldownProvider.get(message.author.id));
   
-  let muted = message.guild.roles.get("name", "muted");
+  var muted = message.guild.roles.find(r => r.name === "Muted");
   if (muted) {
     if (message.member.roles.has(muted.id)) return message.delete().catch(console.error);
   };

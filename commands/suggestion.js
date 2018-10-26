@@ -22,6 +22,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: 'Miscellaneous',
   name: "suggestion",
   description: "Sends a suggestion to my creator. (Has a 24 hour cooldown)",
   usage: "suggestion [message]"

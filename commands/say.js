@@ -24,7 +24,7 @@ exports.run = (client, message, args) => {
 exports.conf = {
   enabled: true,
   aliases: [],
-  permLevel: "Owner"
+  permLevel: "Bot Owner"
 };
 
 exports.help = {

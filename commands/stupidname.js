@@ -14,6 +14,7 @@ exports.conf = {
 };
 
 exports.help = {
+  category: 'Miscellaneous',
   name: 'stupidname',
   description: 'Don\'t know why you would use this, but you can.',
   usage: 'stupidname'
