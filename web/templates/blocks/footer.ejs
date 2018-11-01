@@ -1,3 +1,15 @@
     <hr>
+  </div>
+  <script type="text/javascript">
+    var load;
+  function startLoading() {
+    load = setTimeout(finishLoading, 1764);
+  };
+  
+  function finishLoading() {
+    $('.lds-ellipsis').css( "display", "none" );
+    $('div.content').css( "display", "block" );
+  }
+  </script>
   </body>
 </html>

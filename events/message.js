@@ -42,7 +42,10 @@ module.exports = async (client, message) => {
   // If that command doesn't exist send message if unknownCommandNotice is set to true
   if (!cmd) {
     if (serverConfig.unknownCommandNotice == "true") {
-      return message.channel.send("I-I don't recognise that command!");
+      return message.channel.send("I-I don't recognise that command!")
+        .then((msg) => {
+          msg.delete(3000)
+      });
     } else {
       return;
     }

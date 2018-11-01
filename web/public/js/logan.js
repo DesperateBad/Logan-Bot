@@ -40,7 +40,7 @@ $( document ).ready(function() {
     };
   
     $('.checkAndSelect').find("input[type='checkbox']").on('change', function() {
-      var selectBar = this.getAttribute("data-selectid");
+      let selectBar = this.getAttribute("data-selectid");
       if (this.checked) {
         $('.checkAndSelect').find('#' + selectBar).prop('disabled', false);
       } else {
@@ -48,15 +48,23 @@ $( document ).ready(function() {
       }
     });
   
-    $('.twoChecksAndSelect').find("input[type='checkbox']").first().on('change', function() {
-      var selectBar = this.getAttribute("data-selectid");
-      var secondCheck = $
+    $('.twoChecksAndSelect').find('input[data-nthof="first"], input[data-nthof="second"]').on('change', function() {
+      var secondCheckId = $(this).attr('data-othercheck'),
+          secondCheck = document.getElementById(secondCheckId),
+          selectBar = $(this).attr('data-selectid');
+      if (this.checked || secondCheck.checked) {
+        $('.twoChecksAndSelect').find('#' + selectBar).prop('disabled', false);
+      } else {
+        $('.twoChecksAndSelect').find('#' + selectBar).prop('disabled', true);
+      }
+    });
+      
   
-    $('.eventCheckbox').on('change', function() {
-      var enabled = this.checked ? "true" : "false",
+    $('.eventCheckbox').on('click change', function() {
+      let enabled = this.checked ? "true" : "false",
           event = this.val(),
           eventEzName = this.name,
-          url = "/dashboard/" + server + "/manage/updateEvent/",
+          url = "/dashboard/" + server + "/manage/updateConf",
           data = { event: event, enabled: enabled };
       updateConf(url, data, function (err, msg) {
         if (err) return showError();
@@ -65,8 +73,8 @@ $( document ).ready(function() {
       })
     });
   
-    $('.cmdCheckBox').on('change', function() {
-      var command = $(this).val(),
+    $('.cmdCheckBox').on('click change', function() {
+      let command = $(this).val(),
           enabled = this.checked,
           url = "/dashboard/" + server + "/manage/updateCmd",
           data = { command: command, enabled: enabled };
@@ -78,9 +86,10 @@ $( document ).ready(function() {
       
     });
   
-  $('#changeNickname').on('input', function(e) {
+  $('.changeNick').on('keyup', function(e) {
     e.preventDefault();
-    var nick = $(this).val(),
+    if ((e.code || e.which) == 13) {
+    let nick = $(this).val(),
         url = "/dashboard/" + server + "/manage/changeNickname",
         data = { nickname: nick };
     updateConf(url, data, function (err, msg) {
@@ -88,11 +97,13 @@ $( document ).ready(function() {
       var newNick = nick;
       return showSuccess(`Nickname changed to ${newNick}`);
     })
+    } else return;
   });
   
-  $('#changePrefix').on('input', function(e) {
+  $('.changePrefix').on('keyup', function(e) {
     e.preventDefault();
-    var prefix = $(this).val(),
+    if ((e.code || e.which) == 13) {
+    let prefix = $(this).val(),
         url = "/dashboard/" + server + "/manage/changePrefix",
         data = { prefix: prefix };
     updateConf(url, data, function (err, msg) {
@@ -100,6 +111,7 @@ $( document ).ready(function() {
       var newNick = prefix;
       return showSuccess(`Prefix changed to ${prefix}`);
     })
+    } else return;
   });
   
 });

@@ -17,31 +17,34 @@
   let disabledCommands = ['ping'];
 %>
 
-<div class="container">
+<div class="container left">
 <div class="tab-background">
   <div class="tab-avatar">
   <% if (guild.icon) { %>
-        <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=64` %>" alt="<%= guild.name %>" class="responsive-img circle">
+        <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=64` %>" alt="<%= guild.name %>" class="circle z-depth-5">
         <% } else { %>
-          <canvas style="background-color: #7289da" class="responsive-img circle" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="64px" height="64px"></canvas>
+        <canvas style="background-color: #7289da" class="circle z-depth-5" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="64px" height="64px"></canvas>
           <script>
             function draw() {
               const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
-              ctx.font = '10px Arial';
+              ctx.font = '18px Arial';
               ctx.textAlign = "center";
               ctx.fillStyle = "white";
               ctx.textBaseline = "middle";
-              ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 10, 64);
+              ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 32, 34);
             };
             draw();
           </script>
-          <% } %>
+        <% } %>
+  </div>
+  <div class="tab-avatar-caption">
+    <span><%= guild.name %></span>
   </div>
   
   <div class="tab">
     <% tabs.forEach((tab) => { %>
     <% if(tab === "divider") { %>
-    <div class="divider" style="margin-top: 5px; margin-bottom: 5px;"></div>
+    <div class="divider" style="margin-top: 5px; margin-bottom: 5px; color: #3b3b3b;"></div>
     <% } else if(tab === "Bot Settings") { %>
     <button class="tablinks" onclick="openTab(event, '<%= tab %>')" id="defaultOpen">
       <%= tab %>
@@ -55,5 +58,4 @@
   </div>
 </div>
 </div>
-
 <%- include('./guild-manage-blocks', {guild}) %>

@@ -43,6 +43,7 @@
     "express-session": "^1.15.6",
     "helmet": "^3.9.0",
     "jimp": "latest",
+    "jsdoc": "latest",
     "klaw": "^2.1.1",
     "level-session-store": "^2.1.0",
     "lodash": "latest",

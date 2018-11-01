@@ -15,6 +15,7 @@ dependencies:
   express-session: 1.15.6
   helmet: 3.14.0
   jimp: 0.4.0
+  jsdoc: 3.5.5
   klaw: 2.1.1
   level-session-store: 2.1.0
   lodash: 4.17.11
@@ -545,6 +546,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
+  /babylon/7.0.0-beta.19:
+    dev: false
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-Vg0C9s/REX6/WIXN37UKpv5ZhRi6A4pjHlpkE34+8/a6c2W1Q692n3hmc+SZG5lKRnaExLUbxtJ1SVT+KaCQ/A==
   /balanced-match/1.0.0:
     dev: false
     resolution:
@@ -605,6 +613,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DpLh5EzMR2kzvX1KIlVC0VkC3iZtHKTgdtZ0a3pglBZdaQFjt5S9g9xd1lE+YvXyfd6mtCeRnrUfOLYiTMlNSw==
+  /bluebird/3.5.2:
+    dev: false
+    resolution:
+      integrity: sha512-dhHTWMI7kMx5whMQntl7Vr9C6BvV10lFXDAasnqnrMYhXVCzzk6IO9Fo2L75jXHT07WrOngL1WDXOp+yYS91Yg==
   /bmp-js/0.1.0:
     dev: false
     resolution:
@@ -741,6 +753,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
+  /catharsis/0.8.9:
+    dependencies:
+      underscore-contrib: 0.3.0
+    dev: false
+    engines:
+      node: '>= 0.10'
+    resolution:
+      integrity: sha1-mMyJDKZS3S7w5ws3klMQ/56Q/Is=
   /chalk/2.4.1:
     dependencies:
       ansi-styles: 3.2.1
@@ -1951,11 +1971,37 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6IzjQxvnlT8UlklNmDXIJMWxijULjqGrzgqc0OG7YadZdvm7KPQ1j0ehmQQHckgEWOfgpptzcnWgESovxudpTA==
+  /js2xmlparser/3.0.0:
+    dependencies:
+      xmlcreate: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha1-P7YOqgicVED5MZ9RdgzNB+JJlzM=
   /jsbn/0.1.1:
     dev: false
     optional: true
     resolution:
       integrity: sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
+  /jsdoc/3.5.5:
+    dependencies:
+      babylon: 7.0.0-beta.19
+      bluebird: 3.5.2
+      catharsis: 0.8.9
+      escape-string-regexp: 1.0.5
+      js2xmlparser: 3.0.0
+      klaw: 2.0.0
+      marked: 0.3.19
+      mkdirp: 0.5.1
+      requizzle: 0.2.1
+      strip-json-comments: 2.0.1
+      taffydb: 2.6.2
+      underscore: 1.8.3
+    dev: false
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-6PxB65TAU4WO0Wzyr/4/YhlGovXl0EVYfpKbpSroSj0qBxT4/xod/l40Opkm38dRHRdQgdeY836M0uVnJQG7kg==
   /json-schema-traverse/0.3.1:
     dev: false
     resolution:
@@ -2007,6 +2053,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==
+  /klaw/2.0.0:
+    dependencies:
+      graceful-fs: 4.1.11
+    dev: false
+    resolution:
+      integrity: sha1-WcEo4Nxc5BAgEVEZTuucv4WGUPY=
   /klaw/2.1.1:
     dependencies:
       graceful-fs: 4.1.11
@@ -2097,6 +2149,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
+  /marked/0.3.19:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
+      tarball: 'http://registry.npmjs.org/marked/-/marked-0.3.19.tgz'
   /marked/0.5.1:
     dev: false
     engines:
@@ -2877,6 +2937,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XwZR1Gdv8rme0xLSRmxWNue/xQ5mgIfFGwbBJaF7TbFqQBgEBTr/M1/73a4dfn/keF5WDDiUr6RAF4nA1LskrQ==
+  /requizzle/0.2.1:
+    dependencies:
+      underscore: 1.6.0
+    dev: false
+    resolution:
+      integrity: sha1-aUPDUwxNmn5G8c3dUcFY/GcM294=
   /resolve-url/0.2.1:
     dev: false
     resolution:
@@ -3194,6 +3260,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==
+  /taffydb/2.6.2:
+    dev: false
+    resolution:
+      integrity: sha1-fLy2S1oUG2ou/CxdLGe04VCyomg=
   /tar/4.4.6:
     dependencies:
       chownr: 1.1.1
@@ -3325,6 +3395,20 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Il9rngM3Zj4Njnz9aG/Cg2zKznY=
+  /underscore-contrib/0.3.0:
+    dependencies:
+      underscore: 1.6.0
+    dev: false
+    resolution:
+      integrity: sha1-ZltmwkeD+PorGMn4y7Dix9SMJsc=
+  /underscore/1.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-izixDKze9jM3uLJOT/htRa6lKag=
+  /underscore/1.8.3:
+    dev: false
+    resolution:
+      integrity: sha1-Tz+1OxBuYJf8+ctBCfKl6b36UCI=
   /union-value/1.0.0:
     dependencies:
       arr-union: 3.1.0
@@ -3531,6 +3615,10 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=
+  /xmlcreate/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-+mv3YqYKQT+z3Y9LA8WyaSONMI8=
   /xtend/4.0.1:
     dev: false
     engines:
@@ -3565,6 +3653,7 @@ specifiers:
   express-session: ^1.15.6
   helmet: ^3.9.0
   jimp: latest
+  jsdoc: latest
   klaw: ^2.1.1
   level-session-store: ^2.1.0
   lodash: latest

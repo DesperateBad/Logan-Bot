@@ -11,21 +11,13 @@ const app = express();
 const moment = require("moment");
 require("moment-duration-format");
 
-// Express Plugins
-// Specifically, passport helps with oauth2 in general.
-// passport-discord is a plugin for passport that handles Discord's specific implementation.
-// express-session and level-session-store work together to create persistent sessions
-// (so that when you come back to the page, it still remembers you're logged in).
 const passport = require("passport");
 const session = require("express-session");
 const MemoryStore = require("memorystore")(session)
 const Strategy = require("passport-discord").Strategy;
 
-// Helmet is specifically a security plugin that enables some specific, useful 
-// headers in your page to enhance security.
 const helmet = require("helmet");
 
-// Used to parse Markdown from things like ExtendedHelp
 const md = require("marked");
 
 module.exports = (client) => {
@@ -50,21 +42,6 @@ module.exports = (client) => {
     done(null, obj);
   });
 
-  /* 
-  This defines the **Passport** oauth2 data. A few things are necessary here.
-  
-  clientID = Your bot's client ID, at the top of your app page. Please note, 
-    older bots have BOTH a client ID and a Bot ID. Use the Client one.
-  clientSecret: The secret code at the top of the app page that you have to 
-    click to reveal. Yes that one we told you you'd never use.
-  callbackURL: The URL that will be called after the login. This URL must be
-    available from your PC for now, but must be available publically if you're
-    ever to use this dashboard in an actual bot. 
-  scope: The data scopes we need for data. identify and guilds are sufficient
-    for most purposes. You might have to add more if you want access to more
-    stuff from the user. See: https://discordapp.com/developers/docs/topics/oauth2 
-  See config.js.example to set these up. 
-  */
   passport.use(new Strategy({
     clientID: '470864521842655252',
     clientSecret: 'WHlLUDGP9z12JkWEkjKxItamvqWVP61b',
@@ -74,12 +51,11 @@ module.exports = (client) => {
   (accessToken, refreshToken, profile, done) => {
     process.nextTick(() => done(null, profile));
   }));
-
   
   // Session data, used for temporary storage of your visitor's session information.
   // the `secret` is in fact a "salt" for the data, and should not be shared publicly.
   app.use(session({
-    store: new MemoryStore({ checkPeriod: 86400000 }),
+    store: new MemoryStore({ checkPeriod: 109900000 }),
     secret: process.env.SESSION_TOKEN,
     resave: false,
     saveUninitialized: false,
@@ -128,7 +104,7 @@ module.exports = (client) => {
     res.render(path.resolve(`${templateDir}${path.sep}${template}`), Object.assign(baseData, data));
   };
 
-
+    
   /** PAGE ACTIONS RELATED TO SESSIONS */
 
   // The login page saves the page the person was on in the session,
@@ -262,12 +238,13 @@ module.exports = (client) => {
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
-  app.post("/dashboard/:guildID/manage/changeNick", checkAuth, (req, res) => {
+  
+  app.post("/dashboard/:guildID/manage/changeNickname", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    client.changeNickname(guild.id, req.body);
+    client.changeNickname(guild, req.body);
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
@@ -315,5 +292,5 @@ module.exports = (client) => {
   });
   
   client.site = app.listen(process.env.PORT);
-  console.log("Web UI up and running cap'n!");
+  console.log("System: Web UI up and running cap'n!");
 };

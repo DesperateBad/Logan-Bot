@@ -13,13 +13,15 @@ const http = require("http");
 const Express = require("express");
 const express = Express();
 
+const testClass = require("./src/classes/genericCanvasCommand.js");
+
 client.sql = sql;
 client.config = require("./config.js");
 
 require("./src/functions/functions.js")(client);
 require("./src/functions/randomImageFunctions.js")(client);
 
-// Start website
+// Start Web UI
 require("./web/index.js")(client);
 
 
@@ -36,8 +38,8 @@ client.serverConfig = new Enmap({
 client.cooldownProvider = new Map();
 
 client.on("ready", async () => {
-  var cmds = await readdir("./commands/");
-  console.log(`Online and active on ${client.guilds.size} servers.`);
+  const cmds = await readdir("./commands/");
+  console.log(`Logan: So am I cap\'n, with ${commandFiles} commands and ${events} events, i\'m ready to serve ${client.guilds.size} servers ^-^`);
   client.user.setActivity(client.config.prefix + `help | ${cmds.length} Commands`, {type: 'PLAYING'});
   
   const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();
@@ -51,10 +53,13 @@ client.on("ready", async () => {
   client.setWins = sql.prepare("INSERT OR REPLACE INTO slotwins (id, user, guild, wins) VALUES (@id, @user, @guild, @wins);");
 });
 
-const init = async () => {
+let commandFiles;
+let events;
 
+const init = async () => {
+ 
  const cmdFiles = await readdir("./commands/");
-  console.log(`Loading a total of ${cmdFiles.length} commands.`);
+  commandFiles = cmdFiles.length;
   cmdFiles.forEach(f => {
     if (!f.endsWith(".js")) return;
     const response = client.loadCommand(f);
@@ -62,14 +67,14 @@ const init = async () => {
   });
 
   const evtFiles = await readdir("./events/");
-  console.log(`Loading a total of ${evtFiles.length} events.`);
+  events = evtFiles.length;
   evtFiles.forEach(file => {
     const eventName = file.split(".")[0];
     const event = require(`./events/${file}`);
     client.on(eventName, event.bind(null, client));
     delete require.cache[require.resolve(`./events/${file}`)];
   });
-
+    
   client.levelCache = {};
     for (let i = 0; i < client.config.permLevels.length; i++) {
       const thisLevel = client.config.permLevels[i];

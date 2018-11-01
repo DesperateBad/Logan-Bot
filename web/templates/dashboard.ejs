@@ -1,26 +1,27 @@
 <%- include('blocks/header', {bot, user, path}) %>
 <h3>Dashboard</h3>
-  <% user.guilds.forEach(guild => { 
+  <% user.guilds.forEach((guild) => { 
     const permsOnGuild = new perms(guild.permissions);
     if(!permsOnGuild.has("MANAGE_GUILD")) return;
   %>
-<div style="display: inline-block; margin: 10px; float: center;">
+<div class="dashboard-icon" style="display: inline-block; margin-left: auto; margin-right: auto;">
   <% if (guild.icon) { %>
-    <a href="/dashboard/<%= guild.id %>/manage"><img class="rounded-circle d-flex mr-3 tooltipped" src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=128` %>" width="80" height="80" alt="" data-position="top" data-tooltip="Manage"></a>
-  <% } else { %>
-  <a href="/dashboard/<%= guild.id %>/manage"><canvas style="background-color: #7289da" class="d-flex mr-3 rounded-circle tooltipped" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="80" height="80" data-position="top" data-tooltip="Manage"></canvas></a>
-    <script>
-      function draw() {
-        const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
-        ctx.font = '30px Arial';
-        ctx.textAlign = "center";
-        ctx.fillStyle = "white";
-        ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 40, 50);
-      };
-      draw();
-      </script>
-    <% } %>
-</div>
+        <a href="/dashboard/<%= guild.id %>/manage"><img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=64` %>" alt="<%= guild.name %>" class="circle hoverable tooltipped" data-position="top" data-tooltip="Manage" width="64px" height="64px"></a>
+        <% } else { %>
+  <a href="/dashboard/<%= guild.id %>/manage"><canvas style="background-color: #7289da" class="circle hoverable tooltipped" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="64px" height="64px" data-position="top" data-tooltip="Manage"></canvas></a>
+          <script>
+            function draw() {
+              const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
+              ctx.font = '18px Arial';
+              ctx.textAlign = "center";
+              ctx.fillStyle = "white";
+              ctx.textBaseline = "middle";
+              ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 32, 34);
+            };
+            draw();
+          </script>
+          <% } %>
+  </div>
   <% }); %>
 
 <% include ./blocks/footer %>

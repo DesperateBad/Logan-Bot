@@ -46,7 +46,12 @@ exports.run = (client, message, args) => {
     wrapText(ctx, text, x, y, maxWidth, lineHeight);
     
     ctx.fillStyle = '#3b3b3b';
-    ctx.font = 'normal 20px Verdana';
+    ctx.font;
+    if (args.join(" ").length >= 125) {
+      ctx.font = 'normal 20px Verdana';
+    } else {
+      ctx.font = 'normal 14px Verdana';
+    }
     ctx.fillText(date, 24, 330);
 
     var m = ctx.measureText(args.join(" "))

@@ -1,5 +1,13 @@
+const Discord = require("discord.js");
 exports.run = (client, message, level) => {
 
+  /* const serverInfo = new Discord.RichEmbed()
+    .setColor(0xCFD9F9)
+    .setThumbnail(message.guild.iconURL)
+    .setTitle(`Info for ${message.guild.name}`)
+    .addField("Owner", message.guild.owner.user.username, true)
+    .addfield("Members", guild.memberCount, true) */
+  
 	message.channel.send({
 		embed: {
 			color: 0xCFD9F9,
@@ -38,7 +46,7 @@ exports.run = (client, message, level) => {
 
 exports.conf = {
 	enabled: true,
-	aliases: ['serverinf'],
+	aliases: ['serverinf', 'server'],
 	permLevel: "Open"
 };
 

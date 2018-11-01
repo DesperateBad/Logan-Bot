@@ -40,13 +40,13 @@
 
     <title><%= bot.user.username %></title>
   </head>
-  <body>
-    
+  <body onload="startLoading()">
+      
     <% if(user) { %>
      <ul id="logindropdown" class="dropdown-content" style="text-decoration: none;">
       <li><a><%= user.username %>#<%= user.discriminator %></a></li>
+       <% if(user.id == bot.config.ownerID) { %>
       <li><a href="/dashboard">Dashboard</a></li>
-      <% if(user.id == bot.config.ownerID) { %>
       <li><a href="/admin">Admin</a></li>
       <% } %>
       <li class="divider"></li>
@@ -62,10 +62,14 @@
         <li><a href="https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot">Invite Me</a></li>
         <li style="margin-right: 10px;"><a href="">Donate</a></li>
         <% if(user) { %>
-        <li><a class="dropdown-trigger" data-target="logindropdown"><%= user.username %>#<%= user.discriminator %><i class="material-icons right" style="margin-top: 2.2px;">account_circle</i></a></li>
+        <li><a class="dropdown-trigger" data-target="logindropdown"><%= user.username %>#<%= user.discriminator %><img class="circle right" style="margin-top: 2.2px;" src="<%= user.displayAvatarURL %>"></a></li>
         <% } else { %>
         <li><a href="https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=identify&response_type=code&redirect_uri=https%3A%2F%2Flogan-bot.glitch.me%2Fcallback">Login<i class="material-icons right" style="margin-top: 2.2px;">account_circle</i></a></li>
         <% } %>
       </ul>
     </div>
   </nav>
+  
+  <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  
+  <div class="content animate-bottom" style="display: none;">
