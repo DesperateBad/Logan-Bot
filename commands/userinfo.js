@@ -1,46 +1,27 @@
+const { Embed } = require("../src/structures/Embed.js");
 exports.run = (client, message, args, level) => {
 
-	const memberMention = message.mentions.users.first();
+	const member = message.mentions.members.first() ? message.mentions.members.first() : message.member;
 
-	const member = memberMention ? memberMention : message.author;
+  const joinedAt = client.getCleanDate(`${member.joinedAt}`);
+  const createdAt = client.getCleanDate(`${member.user.createdAt}`);
+  
+  const userEmbed = new Embed()
+    .setThumbnail(member.user.avatarURL)
+    .setTitle(`Info for ${member.user.bot ? 'bot' : 'user'}: **${member.user.username}**`)
+    .addInlineField('Username', `${member.user.tag}`)
+    .addInlineField('User ID', `${member.id}`)
+    .addInlineField('Account Creation Date', `${createdAt}`)
+    .addInlineField('Server Join Date', `${joinedAt}`);
 
-	message.channel.send({
-		embed: {
-			color: 0xCFD9F9,
-			author: {
-				name: "User Info",
-			},
-			thumbnail: {
-				url: member.avatarURL,
-			},
-			fields: [
-				{
-					name: '**Username**',
-					value: `${member.username}`,
-					inline: true,
-				},
-				{
-					name: '**ID**',
-					value: `${member.id}`,
-					inline: true,
-				},
-				{
-					name: '**Account Creation Date**',
-					value: `${member.createdAt}`,
-				},
-				{
-					name: '**Bot Account**',
-					value: `${member.bot}`,
-				},
-			],
-		}
-	})
+  message.channel.send(userEmbed);
+  
 };
 
 exports.conf = {
 	enabled: true,
 	aliases: ['userinf'],
-	permLevel: "User"
+	permLevel: "Open"
 };
 
 exports.help = {

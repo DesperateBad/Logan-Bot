@@ -1,9 +1,19 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+
 * {
   box-sizing: border-box;
 }
 
-a, li, ul {
-  text-decoration: none;
+body {
+  margin:0;font-family:"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-size:0.9375rem;font-weight:400;line-height:1.5;color:#fff;text-align:left;background-color:#222
+}
+
+hr.faded {
+    width: 70%;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgb(59, 59, 59, 0), rgba(3, 3, 3, 0.75), rgb(59, 59, 59, 0));
 }
 
 .checkbox-grid li {
@@ -20,19 +30,17 @@ a, li, ul {
 }
 
 .tab-background {
-    margin: 15px;
-    float: left;
-    border: 1px solid #000;
+    width: 10%;
     background-color: #2d2d2d;
-    width: 19%;
+    border: 1px solid black;
     height: auto;
     border-radius: 2.8px;
 }
 
 .tab {
 	padding: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
 .tab:first-of-type {
@@ -52,15 +60,15 @@ a, li, ul {
   margin-right: auto;
 }
 
-.tab-avatar-caption {
-  text-align: center;
-  margin-top: 5px;
-  margin-bottom: 10px;
+.tab .dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
 }
 
 /* Style the buttons inside the tab */
-.tab button {
-	border-radius: 2.45px;
+.tab button, .dropdown-btn button {
+	  border-radius: 2.45px;
     display: block;
     background-color: inherit;
     color: white;
@@ -84,44 +92,27 @@ a, li, ul {
     background-color: #90caf9;
 }
 
+.tab button.dropdownActive {
+    background-color: #3b3b3b;
+}
+
 /* Style the tab content */
 .tabcontent {
     float: left;
     padding: 0px 12px;
-    width: 70%;
     border-left: none;
     height: 300px;
 }
 
-div .content {
+div .main-body-content {
   display: none;
 }
 
-.dashboard-icon {
+.dashboard-icon *:not(script) {
   border: 2px solid white;
   display: inline-block;
-  margin-top: auto;
-  margin-bottom: auto;
   margin-left: 10px;
   margin-right: 10px;
-}
-
-.dashboard-icon:first-of-type {
-  border: 2px solid white;
-  display: inline-block;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: auto;
-  margin-right: 10px;
-}
-
-.dashboard-icon:last-of-type {
-  border: 2px solid white;
-  display: inline-block;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 10px;
-  margin-right: auto;
 }
 
 .status {
@@ -153,66 +144,6 @@ div .content {
 .offline {
   background-color: #747f8d;
   border-color: #9099a4;
-}
-
-.lds-ellipsis {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  display: block;
-  position: relative;
-  width: 68px;
-  height: 68px;
-}
-.lds-ellipsis div {
-  position: absolute;
-  top: 27px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #cef;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-  left: 6px;
-  animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-  left: 6px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 26px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 45px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(19px, 0);
-  }
 }
 
 .animate-bottom {

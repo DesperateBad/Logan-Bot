@@ -3,7 +3,8 @@ exports.run = (client, message, args, level) => {
   
   let number;
   
-  if (!args || isNaN(args[0])) { message.channel.send("That isn't a number so i've thought of a random one for you -_-"); number = Math.floor(Math.random() * 250) - 1; } else number = args[0];
+  if (!args[0]) number = Math.floor(Math.random() * 250) - 1;
+  if (isNaN(args[0])) { message.channel.send("That isn't a number so i've thought of a random one for you -_-"); number = Math.floor(Math.random() * 250) - 1; } else number = args[0];
   
   request({
     url: `http://numbersapi.com/${number}`,

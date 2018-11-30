@@ -1,18 +1,42 @@
 <%- include('./blocks/header', {bot, user, path}) %>
 
-<% const guild = bot.guilds.get('488228632217780228') %>
-
-<%- include('./blocks/guild-nav.ejs', {guild}) %>
-
-<% include ./blocks/guild-modals %>
-
-<script type="text/javascript">
-  var ts = parseInt($('#guildCreate').text());
-  $('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);
-</script>
-<script type="text/javascript">
-    var server = '<%= guild.id %>';
-</script>
-<script type="text/javascript" src="/public/js/tabs.js"></script>
+<div class="ui cards">
+  <div class="card">
+    <div class="content">
+      <div class="header">Elliot Fu</div>
+      <div class="description">
+        Elliot Fu is a film-maker from New York.
+      </div>
+    </div>
+    <div class="ui bottom attached button">
+      <i class="add icon"></i>
+      Add Friend
+    </div>
+  </div>
+  <div class="card">
+    <div class="content">
+      <div class="header">Veronika Ossi</div>
+      <div class="description">
+        Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.
+      </div>
+    </div>
+    <div class="ui bottom attached button">
+      <i class="add icon"></i>
+      Add Friend
+    </div>
+  </div>
+  <div class="card">
+    <div class="content">
+      <div class="header">Jenny Hess</div>
+      <div class="description">
+        Jenny is a student studying Media Management at the New School
+      </div>
+    </div>
+    <div class="ui bottom attached button">
+      <i class="add icon"></i>
+      Add Friend
+    </div>
+  </div>
+</div>
 
 <% include ./blocks/footer %>

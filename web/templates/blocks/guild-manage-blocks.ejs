@@ -1,75 +1,105 @@
 <%
 const conf = bot.getGuildSettings(guild);
-const guildChannels = [];
+const guildChannels = guild.channels.array();
+guildChannels.filter(channel => channel.type.toLowerCase() === 'text');
 const nickname = guild.me.nickname !== null && guild.me.nickname !== "" ? guild.me.nickname : bot.user.username;
-guild.channels.forEach((channel) => {
-  guildChannels.push(channel.name);
+const help = {};
+bot.commands.forEach((command) => {
+  if (command.conf.hidden === true || command.conf.enabled !== true) return;
+  const cat = command.help.category;
+  if (!help.hasOwnProperty(cat)) help[cat] = [];
+  help[cat].push(command);
 });
 %>
 
-<div id="Bot Settings" class="tabcontent">
-  
-  <div class="input-field">
-    <input placeholder="<%= nickname %>" id="nickname" type="text" class="validate white-text changeNick">
-    <label class="active" for="nickname">Nickname</label>
+<div id="Bot Settings" class="tabcontent col-sm-9">
+  <div class="ui inverted input">
+    <a class="floating ui red label">Nickname</a>
+    <input type="text" value="<%= nickname %>" class="changeNick" id="nickname" placeholder="Nickname">
+  </div>
+  <div class="ui inverted divider"></div>
+  <div class="ui inverted input">
+    <a class="floating ui blue label">Prefix</a>
+    <input type="text" value="<%= conf.prefix %>" class="changePrefix" id="prefix" placeholder="Prefix">
   </div>
   <br>
-  <div class="input-field">
-    <input placeholder="<%= conf.prefix %>" id="prefix" type="text" class="validate white-text">
-    <label class="active" for="nickname">Server Prefix</label>
+  <div class="ui inverted divider"></div>
+  <button id="leaveButton" class="modal-trigger ui inverted red small button white-text" href="#serverLeaveModal"><i class="fas fa-sign-out-alt"></i>Leave Server</button>
+</div>
+
+<% for (const category in help) { %>
+<% if (help[category].length === 0) return; %>
+<div class="tabcontent col-sm-9" id="<%= category %>">
+  <div class="ui three cards">
+    <% for (const command of help[category]) { %>
+    <div class="ui raised card">
+    <div class="content">
+      <div class="header"><%= command.help.name %></div>
+      <div class="meta"><% if (conf.prefix != null || conf.prefix != '') { %><%= conf.prefix %><% } else { %><%= bot.config.prefix %><% } %><%= command.help.usage %></div>
+      <div class="description">
+        <%= command.help.description %>
+      </div>
+    </div>
+      <div class="extra content">
+      <div class="ui one buttons">
+      <div class="ui small basic <% if (conf.disabledCommands.indexOf(command.help.name) < 0) { %> red <% } else { %> green <% } %> button disableCommand" data-command="<%= command.help.name %>">
+      <% if (conf.disabledCommands.indexOf(command.help.name) < 0) { %>
+        <i class="remove icon"></i>
+        Disable Command
+      <% } else { %>
+        <i class="plus icon"></i>
+        Enable Command
+      <% } %>
+      </div>
+      </div>
+      </div>
+    </div>
+    <% } %>
   </div>
-  <br>
-  <a id="leaveButton" class="waves-effect waves-light btn red" href="#serverLeaveModal"><i class="fas fa-sign-out-alt"></i>Leave Server</a>
 </div>
+<% } %>
 
-<div class="tabcontent" id="Commands">
-  <ul class="checkbox-grid">
-    
-  </ul>
-</div>
-
-<div class="tabcontent" id="Events">
-  
-  <div class="container">
-    <h4>Member Join</h4>
-    <div class="checkAndSelect">
+<div class="tabcontent col-sm-9" id="Events">
+  <div class="section container">
+    <a class="ui blue ribbon label">Member Join</a>
+    <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="welcomeMembers">
-      <input type="checkbox" class="filled-in eventCheckbox" checked id="welcomeMembers" data-selectid="welcomeChannel" value="welcomeMembers" />
+      <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.welcomeMembers === "true") { %> checked <% } %> id="welcomeMembers" data-selectid="welcomeChannel" name="Welcome Members" />
       <span>Enable Welcome Message</span>
     </label>
     <br>
     <label>Welcome Channel</label>
     <select class="browser-default announcementChannelSelect" id="welcomeChannel">
-      <% for (const channel in guildChannels) { %>
-      <% if (guildChannels[channel] == conf.welcomeChannel) { %>
+      <% for (let i = 0; i < guildChannels.length; i++) { %>
+      <% if (guildChannels[i].name == conf.welcomeChannel) { %>
       <option value="<%= conf.welcomeChannel %>" selected><%= conf.welcomeChannel %></option>
       <% } else { %>
-      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <option value="<%= guildChannels[i].name %>"><%= guildChannels[i].name %></option>
       <% } %>
       <% } %>
     </select>
    </div>
-  </div>
+</div>
   
   <br>
   
-  <div class="divider"></div>
+  <div class="ui inverted divider"></div>
   
-  <div class="container">
-    <h4>Member Leave</h4>
-    <div class="checkAndSelect">
+  <div class="container section">
+    <a class="ui red ribbon label">Member Leave</a>
+    <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceLeaves">
-      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceLeaves" data-selectid="leaveAnnouncementChannel" value="announceLeaves" />
+      <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.announceLeaves === "true") { %> checked <% } %> id="announceLeaves" data-selectid="leaveAnnouncementChannel" name="Announce Member Leaves" />
       <span>Enable Member Leave Announcement</span>
     </label>
     <br>
     <label>Leave Message Channel</label>
     <select class="browser-default" id="leaveAnnouncementChannel">
-      <% for (const channel in guildChannels) { %>
-      <% if (guildChannels[channel] == conf.leaveAnnouncementChannel) { %>
+      <% for (let i = 0; i < guildChannels.length; i++) { %>
+      <% if (guildChannels[i].name == conf.leaveAnnouncementChannel) { %>
       <option value="<%= conf.leaveAnnouncementChannel %>" selected><%= conf.leaveAnnouncementChannel %></option>
       <% } else { %>
-      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <option value="<%= guildChannels[i].name %>"><%= guildChannels[i].name %></option>
       <% } %>
       <% } %>
     </select>
@@ -78,23 +108,23 @@ guild.channels.forEach((channel) => {
   
   <br>
   
-  <div class="divider"></div>
+  <div class="ui inverted divider"></div>
   
-  <div class="container">
-    <h4>Member Ban</h4>
-    <div class="checkAndSelect">
+  <div class="container section">
+    <a class="ui red ribbon label">Member Ban</a>
+    <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceBans">
-      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" />
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" name="Announce Bans" />
       <span>Enable Member Ban Announcement</span>
     </label>
     <br>
     <label>Ban Message Channel</label>
     <select class="browser-default" id="banAnnouncementChannel">
-      <% for (const channel in guildChannels) { %>
-      <% if (guildChannels[channel] == conf.banAnnouncementChannel) { %>
+      <% for (let i = 0; i < guildChannels.length; i++) { %>
+      <% if (guildChannels[i].name == conf.banAnnouncementChannel) { %>
       <option value="<%= conf.banAnnouncementChannel %>" selected><%= conf.banAnnouncementChannel %></option>
       <% } else { %>
-      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <option value="<%= guildChannels[i].name %>"><%= guildChannels[i].name %></option>
       <% } %>
       <% } %>
     </select>
@@ -103,28 +133,23 @@ guild.channels.forEach((channel) => {
   
   <br>
   
-  <div class="divider"></div>
+  <div class="ui inverted divider"></div>
   
-  <div class="container">
-    <h4>Channel Creation</h4>
-    <div class="twoChecksAndSelect">
-    <label for="announceNewTextChannels">
-      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewTextChannels" data-othercheck="announceNewVoiceChannels" data-selectid="newChannelAnnouncementChannel" data-nthof="second" />
-      <span>Enable New Text Channel Announcement</span>
-    </label>
-    
-    <label for="announceNewVoiceChannels">
-      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewVoiceChannels" data-othercheck="announceNewTextChannels" data-selectid="newChannelAnnouncementChannel" data-nthof="first" />
-      <span>Enable New Voice Channel Announcement</span>
+  <div class="container section">
+    <a class="ui red ribbon label">Channel Create</a>
+    <div class="checkAndSelect" style="margin-top: 20px;">
+    <label for="announceNewChannels">
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewChannels" data-selectid="newChannelAnnouncementChannel" name="Announce New Channels" />
+      <span>Enable New Channel Announcement</span>
     </label>
     <br>
     <label>New Channel Announcement Channel</label>
     <select class="browser-default" id="newChannelAnnouncementChannel">
-      <% for (const channel in guildChannels) { %>
-      <% if (guildChannels[channel] == conf.newChannelAnnouncementChannel) { %>
+      <% for (let i = 0; i < guildChannels.length; i++) { %>
+      <% if (guildChannels[i].name == conf.newChannelAnnouncementChannel) { %>
       <option value="<%= conf.newChannelAnnouncementChannel %>" selected><%= conf.newChannelAnnouncementChannel %></option>
       <% } else { %>
-      <option value="<%= guildChannels[channel] %>"><%= guildChannels[channel] %></option>
+      <option value="<%= guildChannels[i].name %>"><%= guildChannels[i].name %></option>
       <% } %>
       <% } %>
     </select>
@@ -133,12 +158,25 @@ guild.channels.forEach((channel) => {
   
 </div>
 
-<div class="tabcontent" id="Automod">
-  
+<div class="tabcontent col-sm-9" id="Automod">
+  <div class="ui warning message">
+  <i class="close icon"></i>
+  <div class="header">
+    Currently Under Construction
+  </div>
+  This part of the website is currently still in development, thank you for your patience and sorry for any inconvenience ^-^
+</div>
 </div>
 
-<div class="tabcontent" id="Logging">
-  <h3>
-    Logging
-  </h3>
+<div class="tabcontent col-sm-9" id="Logging">
+  <div class="ui warning message">
+  <i class="close icon"></i>
+  <div class="header">
+    Currently Under Construction
+  </div>
+  This part of the website is currently still in development, thank you for your patience and sorry for any inconvenience ^-^
+</div>
+</div>
+
+</div>
 </div>

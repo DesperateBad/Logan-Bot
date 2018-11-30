@@ -20,7 +20,7 @@ exports.run = (client, message, [member, ...newRole], level) => {
 exports.conf = {
   enabled: true,
   aliases: ['addrole'],
-  permLevel: "Open"
+  permLevel: "Server Admin"
 };
 
 exports.help = {

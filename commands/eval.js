@@ -18,19 +18,21 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     const clean = await client.clean(client, evaled);
 
   } catch (err) {
-    console.log("Error executing ?eval command");
+    console.log("Error executing ?eval command: " + err);
+    message.channel.send("Uh oh, spaghetti-oh, an error occured ._.");
   }
 };
 
 exports.conf = {
   enabled: true,
   aliases: [],
-  permLevel: "Bot Owner"
+  permLevel: "Bot Owner",
+  hidden: true
 };
 
 exports.help = {
   category: "System",
   name: "eval",
   description: "Executes arbitrary javascript. Only usable by the Bot Owner, for safety reasons.",
-  usage: "eval [...code]"
+  usage: "eval [code]"
 };

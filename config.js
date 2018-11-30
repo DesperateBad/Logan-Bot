@@ -20,87 +20,99 @@ const config = {
   
   
   "dashboardTabs": [
-      
       {
         name: "Bot Settings",
-        blocks: [
-          "changeNickname",
-          "changePrefix",
-          "leaveButton"
-        ]
       },
-      
       {
         name: "Commands",
-        blocks: [
-          "enableCommands"
+        dropdown: [
+          "Info",
+          "Miscellaneous",
+          "Memes",
+          "Moderation",
+          "Utility",
+          "Animals",
+          "Fun",
+          "Administration"
         ]
       },
-      
       "divider",
-      
       {
         name: "Events",
-        blocks: [
-          "memberJoinOptions",
-          "memberLeaveOptions",
-          "memberBanOptions",
-          "channelCreateOptions"
-        ]
       },
-      
       {
         name: "Automod",
-        blocks: [
-          "automodOptions"
-        ]
       },
-      
       {
         name: "Logging",
-        blocks: [
-          "loggingOptions"
-        ]
       }
-    
   ],
 
   // Default server config
   "defaultConfig": {
-
     "prefix": "?",
-    
     "disabledCommands": [],
-    "adminsOverrideDisabledCommands": "false",
-
-    "fallbackChannel": "general",
-
-    "unknownCommandNotice": "true",
-
-    "announceNewTextChannels": "false",
-    "newTextChannelAnnouncement": "A new text channel, {{channel}}, was just created!",
-    "announceNewVoiceChannels": "false",
-    "newVoiceChannelAnnouncement": "A new voice channel, {{channel}}, was just created!",
-    "newChannelAnnouncementChannel": "announcements",
-
-    "welcomeMembers": "true",
-    "welcomeChannel": "welcome-channel",
-    "welcomeMessage": "Welcome to the server {{member}}!",
-
-    "announceBans": "true",
-    "banAnnouncementChannel": "announcements",
-    "banAnnouncementMessage": "Oof! {{member}} was just banned from the server!",
-
-    "announceLeaves": "false",
-    "leaveAnnouncementMessage": "announcements",
-    "leaveMessage": "{{member}} just left the server ._."
-
+    
+    "channelCreate": {
+      "enabled": false,
+      "announcementChannel": "general",
+      "announcementMessage": "A new channel, {{channel}}, has just been created"
+    },
+    "guildMemberAdd": {
+      "enabled": true,
+      "announcementChannel": "announcements",
+      "announcementMessage": "Everyone give a warm welcome to {{member}}!"
+    },
+    "guildMemberRemove": {
+      "enabled": false,
+      "announcementChannel": "announcements",
+      "announcementMessage": "Say your goodbyes to {{member}} ._."
+    },
+    "guildBanAdd": {
+      "enabled": false,
+      "announcementChannel": "announcements",
+      "announcementMessage": "Oof! {{member was just banned from the server!"
+    },
+    "guildBanRemove": {
+      "enabled": false,
+      "announcementChannel": "announcements",
+      "announcementMessage": "Welcome back to the server{{member}}! ^-^"
+    },
+    "logging": {
+      
+      "loggingChannel": "logs",
+      
+      "guildMemberAdd": "true",
+      "guildMemberRemove": "true",
+      
+      "guildBanAdd": "true",
+      "guildBanRemove": "false",
+      
+      "messageDelete": "false",
+      
+    },
+    "autoMod": {
+      
+      "massEmoji": {
+        "enabled": "true",
+        "whitelist": []
+      },
+      
+      "massMentions": {
+        "enabled": "true"
+      },
+      
+      "messageSpam": {
+        "enabled": "true",
+      },
+      
+      "swearing": {
+        "enabled": "false",
+        "swearWords": ['fuck', 'shit', 'cunt', 'faggot', 'bitch']
+      },
+    }
   },
 
-  "defaultInv": {
-     368181623: 1,
-     261951299: 3
-  },
 
   permLevels: [
 

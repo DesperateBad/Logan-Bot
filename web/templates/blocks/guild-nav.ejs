@@ -1,9 +1,10 @@
 <%
-  let help = {};
   let tabs = [];
+  const help = {};
   bot.commands.forEach((command) => {
+    if (command.conf.hidden === true || command.conf.enabled !== true) return;
     const cat = command.help.category;
-    if (!command.hasOwnProperty('category')) help[cat] = [];
+    if (!help.hasOwnProperty(cat)) help[cat] = [];
     help[cat].push(command);
   });
   bot.config.dashboardTabs.forEach((tab) => {
@@ -17,13 +18,15 @@
   let disabledCommands = ['ping'];
 %>
 
-<div class="container left">
-<div class="tab-background">
-  <div class="tab-avatar">
+<div class="container-fluid section" style="width: 90%; margin-top: 20px;">
+<div class="row">
+<div class="tab-background col-sm-2">
+  <a class="ui teal ribbon label">Server Dashboard</a>
+  <div class="tab-avatar left">
   <% if (guild.icon) { %>
-        <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=64` %>" alt="<%= guild.name %>" class="circle z-depth-5">
+        <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=64` %>" alt="<%= guild.name %>" class="circle z-depth-3">
         <% } else { %>
-        <canvas style="background-color: #7289da" class="circle z-depth-5" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="64px" height="64px"></canvas>
+        <canvas style="background-color: #7289da" class="circle z-depth-3" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="64px" height="64px"></canvas>
           <script>
             function draw() {
               const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
@@ -37,25 +40,40 @@
           </script>
         <% } %>
   </div>
-  <div class="tab-avatar-caption">
-    <span><%= guild.name %></span>
+  <div class="ui label right raised" data-tooltip="Members" data-position="top left" data-inverted="">
+    <i class="users icon"></i> <%= guild.members.filter(member => !member.user.bot).size; %>
+  </div>
+  <br><br><br>
+  <div class="ui label right raised" data-tooltip="Bots" data-position="top left" data-inverted="">
+    &nbsp<i class="android icon"></i>&nbsp <%= guild.members.filter(member => member.user.bot).size; %>
+  </div>
+  <br>
+  <div class="tab" style="margin-top: 40px;">
+    <% for (i = 0; i < bot.config.dashboardTabs.length; i++) { %>
+    <% if (bot.config.dashboardTabs[i] === "divider") { %>
+    <ul class="ui inverted divider"></ul>
+    <% } else if (i === 0) { %>
+    <button class="tablinks" onclick="openTab(event, '<%= bot.config.dashboardTabs[i].name %>')" id="defaultOpen">
+      <%= bot.config.dashboardTabs[i].name %>
+    </button>
+    <% } else if (bot.config.dashboardTabs[i].name === "Commands") { %>
+    <button class="dropdown-btn"><%= bot.config.dashboardTabs[i].name %>
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <% for (t = 0; t < bot.config.dashboardTabs[i].dropdown.length; t++) { %>
+      <button class="tablinks" onclick="openTab(event, '<%= bot.config.dashboardTabs[i].dropdown[t] %>')">
+        <%= bot.config.dashboardTabs[i].dropdown[t] %>
+      </button>
+      <% } %>
+    </div>
+    <% } else { %>
+    <button class="tablinks" onclick="openTab(event, '<%= bot.config.dashboardTabs[i].name %>')">
+      <%= bot.config.dashboardTabs[i].name %>
+    </button>
+    <% }
+     } %>
+  </div>
   </div>
   
-  <div class="tab">
-    <% tabs.forEach((tab) => { %>
-    <% if(tab === "divider") { %>
-    <div class="divider" style="margin-top: 5px; margin-bottom: 5px; color: #3b3b3b;"></div>
-    <% } else if(tab === "Bot Settings") { %>
-    <button class="tablinks" onclick="openTab(event, '<%= tab %>')" id="defaultOpen">
-      <%= tab %>
-    </button>
-    <% } else { %>
-    <button class="tablinks" onclick="openTab(event, '<%= tab %>')">
-      <%= tab %>
-    </button>
-    <% } %>
-  <% }); %>
-  </div>
-</div>
-</div>
-<%- include('./guild-manage-blocks', {guild}) %>
+ <%- include('./guild-manage-blocks', {guild}) %>

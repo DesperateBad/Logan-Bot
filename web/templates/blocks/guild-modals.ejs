@@ -1,14 +1,23 @@
   <!-- Manage Page Modals -->
-  <div id="serverLeaveModal" class="modal" role="dialog" aria-labelledby="serverLeaveModalLabel" aria-hidden="true">
-    <div class="modal-content">
-      <h4>Leave Server?</h4>
-      <p>If I leave your server, your settings will be removed, and will have to be set again if you invite me back.</p>
+<div class="ui basic modal" id="serverLeaveModal">
+  <div class="ui icon header">
+    <i class="exclamation triangle icon"></i>
+    Leave Server?
+  </div>
+  <div class="content">
+    <p>Are you sure you want Logan to leave your server?</p>
+  </div>
+  <div class="actions">
+    <div class="ui basic cancel inverted button">
+      <i class="remove icon"></i>
+      No
     </div>
-    <div class="modal-footer">
-      <a href="/dashboard/<%= guild.id %>/leave" class="waves-effect waves-green btn-flat">Leave</a>
-      <a class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+    <div class="ui red ok inverted button">
+      <i class="checkmark icon"></i>
+      Yes
     </div>
   </div>
+</div>
   
   <div id="settingsResetModal" class="modal" role="dialog" aria-labelledby="settingsResetModalLabel" aria-hidden="true">
     <div class="modal-content">

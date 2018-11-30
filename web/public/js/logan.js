@@ -1,17 +1,20 @@
 $( document ).ready(function() {
-  $.noConflict();
+  // $.noConflict();
   
     $('.dropdown-trigger').dropdown({coverTrigger: false});
     $('.collapsible').collapsible();
-    $('.tabs').tabs();
-    $('.tooltipped').tooltip({swipeable: true});
-    $('.modal').modal();
+    $('.tooltipped').tooltip({margin: 1});
+    
   
     function updateConf(url, data, callback) {
       if (typeof data === 'function') {
 				callback = data;
 				data = {};
 			}
+      
+      if (typeof data !== 'object') {
+        return console.log('Data given was not an object!');
+      }
 
 			var options = {
 				method: 'POST',
@@ -31,8 +34,22 @@ $( document ).ready(function() {
 			});
     };
     
+    
+    $('.checkAndSelect input[type="checkbox"]').each(function(i) {
+      let selectBar = this.getAttribute("data-selectid");
+      if (this.checked) {
+        $('.checkAndSelect').find('#' + selectBar).prop('disabled', false);
+      } else {
+        $('.checkAndSelect').find('#' + selectBar).prop('disabled', true);
+      }
+    });
+  
     function showError() {
-      M.toast({html: 'An error occured', classes: 'rounded red'});
+      if (arguments) {
+        M.toast({html: arguments[0], classes: 'rounded red'});
+      } else {
+        M.toast({html: 'An error occured', classes: 'rounded red'});
+      }
     };
     
     function showSuccess(message) {
@@ -47,25 +64,14 @@ $( document ).ready(function() {
         $('.checkAndSelect').find('#' + selectBar).prop('disabled', true);
       }
     });
-  
-    $('.twoChecksAndSelect').find('input[data-nthof="first"], input[data-nthof="second"]').on('change', function() {
-      var secondCheckId = $(this).attr('data-othercheck'),
-          secondCheck = document.getElementById(secondCheckId),
-          selectBar = $(this).attr('data-selectid');
-      if (this.checked || secondCheck.checked) {
-        $('.twoChecksAndSelect').find('#' + selectBar).prop('disabled', false);
-      } else {
-        $('.twoChecksAndSelect').find('#' + selectBar).prop('disabled', true);
-      }
-    });
       
-  
-    $('.eventCheckbox').on('click change', function() {
-      let enabled = this.checked ? "true" : "false",
-          event = this.val(),
+    $('.eventCheckbox').on('click', function() {
+      var enabled = $(this).is(':checked') ? "true" : "false",
+          event = $(this).attr('id'),
           eventEzName = this.name,
-          url = "/dashboard/" + server + "/manage/updateConf",
-          data = { event: event, enabled: enabled };
+          url = "/api/" + server + "/updateConf",
+          data = { key: event, value: enabled };
+      if (protection !== 'continue') return showError("Please wait before changing that again");
       updateConf(url, data, function (err, msg) {
         if (err) return showError();
         var enabledOrDisabled = enabled ? 'enabled' : 'disabled';
@@ -73,24 +79,33 @@ $( document ).ready(function() {
       })
     });
   
-    $('.cmdCheckBox').on('click change', function() {
-      let command = $(this).val(),
-          enabled = this.checked,
-          url = "/dashboard/" + server + "/manage/updateCmd",
-          data = { command: command, enabled: enabled };
+    $('.enableCommand').on('click', function() {
+      let command = this.getAtrribute('data-command'),
+          url = "/api/" + server + "/enableCommand",
+          data = { command: command };
       updateConf(url, data, function (err, msg) {
         if (err) return showError();
-        var enabledOrDisabled = enabled ? 'enabled' : 'disabled'
-				return showSuccess(`Command ${command} has been ${enabledOrDisabled}`);
+        $(this).find("i").switchClass('remove', 'plus');
+				return showSuccess(`Command ${command} has been enabled`);
       })
-      
+    });
+  
+    $('.disableCommand').on('click', function() {
+      let command = this.getAtrribute('data-command'),
+          url = "/api/" + server + "/disableCommand",
+          data = { command: command };
+      updateConf(url, data, function (err, msg) {
+        if (err) return showError();
+        $(this).find("i").switchClass('plus', 'remove');
+				return showSuccess(`Command ${command} has been enabled`);
+      })
     });
   
   $('.changeNick').on('keyup', function(e) {
     e.preventDefault();
     if ((e.code || e.which) == 13) {
     let nick = $(this).val(),
-        url = "/dashboard/" + server + "/manage/changeNickname",
+        url = "/api/" + server + "/changeNickname",
         data = { nickname: nick };
     updateConf(url, data, function (err, msg) {
       if (err) return showError();
@@ -104,7 +119,7 @@ $( document ).ready(function() {
     e.preventDefault();
     if ((e.code || e.which) == 13) {
     let prefix = $(this).val(),
-        url = "/dashboard/" + server + "/manage/changePrefix",
+        url = "/api/" + server + "/changePrefix",
         data = { prefix: prefix };
     updateConf(url, data, function (err, msg) {
       if (err) return showError();

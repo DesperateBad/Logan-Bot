@@ -6,5 +6,5 @@ module.exports = (client, guild, user) => {
 
   const banMessage = serverConfig.banAnnouncementMessage.replace("{{member}}", user.tag);
 
-  guild.channels.find("name", serverConfig.banAnnouncementChannel).send(banMessage).catch(console.error);
+  guild.channels.find(c => c.name === serverConfig.banAnnouncementChannel).send(banMessage).catch(console.error);
 };

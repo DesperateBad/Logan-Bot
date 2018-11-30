@@ -1,5 +1,7 @@
 exports.run = async (client, message, args, level) => {
 
+if (!args[0]) return message.channel.send("Brain needs to say something!");
+
   const Discord = require("discord.js");
   const fs = require('fs')
   const path = require('path')
@@ -59,7 +61,7 @@ exports.run = async (client, message, args, level) => {
 
 exports.conf = {
   enabled: true,
-  aliases: ['bp'],
+  aliases: ['ns'],
   permLevel: "Open"
 };
 

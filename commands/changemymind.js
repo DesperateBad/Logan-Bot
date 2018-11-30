@@ -9,7 +9,7 @@ const Jimp = require('jimp');
         return message.reply("But you have to give me text ._.");
     };
     
-    var isLongText = text.length >= 34 ? Jimp.FONT_SANS_16_BLACK : Jimp.FONT_SANS_32_BLACK;
+    var isLongText = text.length >= 58 ? Jimp.FONT_SANS_16_BLACK : Jimp.FONT_SANS_32_BLACK;
     
     function getTextSize(length) {
         if (length >= 34) {

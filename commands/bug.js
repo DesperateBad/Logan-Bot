@@ -1,5 +1,5 @@
-exports.run = async (client, message, args, level) => {
-
+exports.run = (client, message, args) => {
+  
   if (!args) return message.channel.send("Please provide a message to send to my creator.");
 
   // Fetch Bot Owner by id
@@ -7,20 +7,21 @@ exports.run = async (client, message, args, level) => {
     .then(user => {
       // Once promise returns with user, send user a DM
       user.send("**From:** " + message.author.toString() + ` (id: ${message.author.id})\n**Text:** ` + args.join(" "));
-    })
-
+  })
+  
+  user.send(`**Bug Report**\n__From:__${message.author.toString()}\n---\n${args.join(" ")}`);
 };
 
 exports.conf = {
   enabled: true,
-  aliases: ['suggest'],
-  permLevel: "Open",
-  cooldown: 3600000
+  aliases: ['bugreport', 'reportbug', 'report'],
+  permlevel: 'Open',
+  cooldown: 100000
 };
 
 exports.help = {
-  category: 'Miscellaneous',
-  name: "suggestion",
-  description: "Sends a suggestion to my creator. (Has a 24 hour cooldown)",
-  usage: "suggestion [message]"
+  category: "Miscellaneous",
+  name: "bug",
+  description: "Use to report bugs, and ONLY to report bugs.",
+  usage: "bug [text]"
 };

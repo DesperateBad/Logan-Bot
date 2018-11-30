@@ -4,7 +4,7 @@ module.exports = async (client, channel) => {
 
   if (channel.type == "text") {
     if (serverConfig.announceNewTextChannels == "true") {
-      const announcementChannel = channel.guild.channels.find("name", serverConfig.textChannelAnnouncementChannel);
+      const announcementChannel = channel.guild.channels.find(t => t.name === serverConfig.textChannelAnnouncementChannel);
       const message = serverConfig.newTextChannelAnnouncement;
       const announcementMessage = message.replace("{{channel}}", channel.name);
 
@@ -14,7 +14,7 @@ module.exports = async (client, channel) => {
     }
   } else if (channel.type == "voice") {
     if (serverConfig.announceNewVoiceChannels == "true") {
-      const announcementChannel = channel.guild.channels.find("name", serverConfig.voiceChannelAnnouncementChannel);
+      const announcementChannel = channel.guild.channels.find(v => v.name === serverConfig.voiceChannelAnnouncementChannel);
       const message = serverConfig.newVoiceChannelAnnouncement;
       const announcementMessage = message.replace("{{channel}}", channel.name);
 

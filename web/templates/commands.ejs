@@ -8,7 +8,9 @@ bot.commands.forEach((command) => {
 });
 %>
 
-<div class="tab-background">
+<div class="container section">
+<div class="row">
+<div class="tab-background col-sm-3">
 <div class="tab">
   <% for (const category in help) { %>
     <% if (category === "Info") { %>
@@ -25,13 +27,14 @@ bot.commands.forEach((command) => {
 </div>
 
 <% for (const category in help) { %>
-<div id="<%= category %>" class="tabcontent container">
-  <table class="responsive-table">
+<div id="<%= category %>" class="tabcontent col-sm-9">
+  <table class="ui selectable inverted table">
         <thead>
           <tr>
               <th>Name</th>
               <th>Description</th>
               <th>Usage</th>
+              <th>Perm Level</th>
           </tr>
         </thead>
 
@@ -40,13 +43,16 @@ bot.commands.forEach((command) => {
           <tr>
             <td><%= command.help.name %></td>
             <td><%= command.help.description %></td>
-            <td><%= bot.config.prefix %><%= command.help.usage %></td>
+            <td><%= command.help.usage %></td>
+            <td><%= command.conf.permLevel %></td>
           </tr>
         <% } %>
         </tbody>
       </table>
 </div>
 <% } %>
+</div>
+</div>
 
 <script type="text/javascript" src="/public/js/tabs.js"></script>
 

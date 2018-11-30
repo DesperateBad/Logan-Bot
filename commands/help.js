@@ -1,13 +1,13 @@
 exports.run = (client, message, args, level) => {
 
   if (!args[0]) {
-    const myCommands = message.guild ? client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level) : client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level);
+    const commands = client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level && !cmd.conf.hidden && cmd.conf.enabled !== false);
 
-    const commandNames = myCommands.keyArray();
+    const commandNames = commands.keyArray();
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
 
     let output = `[Use ${client.config.prefix}help <commandname> for details]\n`;
-    const sorted = myCommands.array().sort((p, c) => p.help.name > c.help.name ? 1 : -1);
+    const sorted = commands.array().sort((p, c) => p.help.name > c.help.name ? 1 : -1);
     sorted.forEach(c => {
       output += `${client.config.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)}: ${c.help.description}\n`
     });
@@ -17,7 +17,7 @@ exports.run = (client, message, args, level) => {
     if (client.commands.has(command)) {
       command = client.commands.get(command);
       if (level < client.levelCache[command.conf.permLevel]) return;
-      message.author.send(`**${command.help.name}**\n${command.help.description}\nusage: ${command.help.usage}\naliases: ${command.conf.aliases.join(", ")}`, { code: "asciidoc" });
+      message.channel.send({ embed: { title: `${client.config.prefix}${command.help.name}`, description: `${command.help.description}`, fields: [{ name: 'Usage:', value: `${command.help.usage}`, inline: true }, { name: 'Aliases:', value: `${command.conf.aliases.join(", ")}`, inline: true }]}});
     }
   }
 };

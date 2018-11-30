@@ -9,21 +9,23 @@ const readdir = promisify(require("fs").readdir);
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./src/databases/slots/slotwins.sqlite");
 
+const DBL = require("dblapi.js");
+const dbl = new DBL(process.env.DISCORDBOTS_TOKEN, client);
+
 const http = require("http");
 const Express = require("express");
 const express = Express();
 
-const testClass = require("./src/classes/genericCanvasCommand.js");
-
 client.sql = sql;
 client.config = require("./config.js");
 
-require("./src/functions/functions.js")(client);
+require("./src/functions/vitalFunctions.js")(client);
 require("./src/functions/randomImageFunctions.js")(client);
+require("./src/functions/dashboardFunctions.js")(client);
+require("./src/functions/utils.js")(client);
 
 // Start Web UI
 require("./web/index.js")(client);
-
 
 client.commands = new Enmap();
 client.aliases = new Enmap();
@@ -38,9 +40,9 @@ client.serverConfig = new Enmap({
 client.cooldownProvider = new Map();
 
 client.on("ready", async () => {
-  const cmds = await readdir("./commands/");
+  client.site()
   console.log(`Logan: So am I cap\'n, with ${commandFiles} commands and ${events} events, i\'m ready to serve ${client.guilds.size} servers ^-^`);
-  client.user.setActivity(client.config.prefix + `help | ${cmds.length} Commands`, {type: 'PLAYING'});
+  client.user.setActivity(client.config.prefix + `help in ${client.guilds.size} servers`, {type: 'WATCHING'});
   
   const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'slotwins';").get();
   if (!table['count(*)']) {
@@ -79,7 +81,7 @@ const init = async () => {
     for (let i = 0; i < client.config.permLevels.length; i++) {
       const thisLevel = client.config.permLevels[i];
       client.levelCache[thisLevel.name] = thisLevel.level;
-  } 
+  };
 
   client.login(process.env.TOKEN);
 

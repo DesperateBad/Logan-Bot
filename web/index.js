@@ -159,35 +159,23 @@ module.exports = (client) => {
 
   // Index page. If the user is authenticated, it shows their info
   // at the top right of the screen.
-  app.get("/", (req, res) => {
+  app.get("/", async (req, res) => {
     renderTemplate(res, req, "index.ejs");
   });
 
 
-  // The list of commands the bot has. Current **not filtered** by permission.
+  // The list of commands the bot has.
   app.get("/commands", (req, res) => {
     renderTemplate(res, req, "commands.ejs", {md});
   });
   
-  // Bot statistics. Notice that most of the rendering of data is done through this code, 
-  // not in the template, to simplify the page code. Most of it **could** be done on the page.
   app.get("/stats", (req, res) => {
-    const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+    /* const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     const members = client.guilds.reduce((p, c) => p + c.memberCount, 0);
     const textChannels = client.channels.filter(c => c.type === "text").size;
     const voiceChannels = client.channels.filter(c => c.type === "voice").size;
-    const guilds = client.guilds.size;
-    renderTemplate(res, req, "stats.ejs", {
-      stats: {
-        servers: guilds,
-        members: members,
-        text: textChannels,
-        voice: voiceChannels,
-        uptime: duration,
-        memoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
-        dVersion: Discord.version,
-      }
-    });
+    const guilds = client.guilds.size; */
+    renderTemplate(res, req, "stats.ejs");
   });
 
   app.get("/dashboard", checkAuth, (req, res) => {
@@ -229,17 +217,26 @@ module.exports = (client) => {
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
-  app.post("/dashboard/:guildID/manage/updateCmd", checkAuth, (req, res) => {
+  app.post("/api/:guildID/enableCommand", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    client.editGuildCommands(guild.id, req.body);
+    client.enableGuildCommand(guild, req.body);
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
+  });
+  
+  app.post("/api/:guildID/disableCommand", checkAuth, (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    if (!guild) return res.status(404);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    client.disableGuildCommand(guild, req.body);
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
   
-  app.post("/dashboard/:guildID/manage/changeNickname", checkAuth, (req, res) => {
+  app.post("/api/:guildID/changeNickname", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
@@ -248,25 +245,48 @@ module.exports = (client) => {
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
-  app.post("/dashboard/:guildID/manage/changePrefix", checkAuth, (req, res) => {
+  app.post("/api/:guildID/changePrefix", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
-    const guildConf = client.serverConfig.get(req.params.guildID);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    guildConf.set("prefix", req.body.prefix);
+    client.serverConfig.set(`${req.params.guildID}`, 'prefix', `${req.body.prefix}`);
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
-  app.post("/dashboard/:guildID/manage/updateConf", checkAuth, (req, res) => {
+  app.post("/api/:guildID/event/:eventName/:announcementMessage", checkAuth, (req, res) => {
     const guild = client.guilds.get(req.params.guildID);
-    if (!guild) return res.status(404);
+    const event = req.params.eventName;
+    const newMessage = req.params.announcementMessage;
+    if (!guild || !event || !newMessage) return res.status(404);
     const guildConf = client.serverConfig.get(req.params.guildID);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    for (const key in req.body) {
-      client.serverConfig.setProp(req.params.guildID, key, req.body[key]);
-    };
+    // client.changeEventAnnouncementMessage(guild, req.body);
+    console.log(req.body);
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
+  });
+  
+  app.post("/api/:guildID/event/:eventName/:announcementChannel", checkAuth, (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    const event = req.params.eventName;
+    const newChannel = req.params.announcementChannel;
+    if (!guild || !event || !newChannel) return res.status(404);
+    const guildConf = client.serverConfig.get(req.params.guildID);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    client.changeEventAnnouncementChannel(guild, req.body);
+    res.redirect("/dashboard/"+req.params.guildID+"/manage");
+  });
+  
+  app.post("/api/:guildID/event/:eventName", checkAuth, (req, res) => {
+    const guild = client.guilds.get(req.params.guildID);
+    const event = req.params.eventName;
+    if (!guild || !event) return res.status(404);
+    const guildConf = client.serverConfig.get(req.params.guildID);
+    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+    if (!isManaged && !req.session.isAdmin) res.redirect("/");
+    client.changeEventStatus(guild, req.body);
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
@@ -291,6 +311,8 @@ module.exports = (client) => {
     res.redirect("/dashboard/"+req.params.guildID);
   });
   
-  client.site = app.listen(process.env.PORT);
-  console.log("System: Web UI up and running cap'n!");
+  client.site = function() { 
+    app.listen(process.env.PORT);
+    console.log("System: Web UI up and running cap'n!");
+  }
 };

@@ -42,7 +42,7 @@ exports.run = (client, message, args) => {
     var x = 24;
     var y = 130;
     var text = args.join(" ");
-    var date = client.getCurrentDate();
+    var date = client.getCleanCurrentDate();
     wrapText(ctx, text, x, y, maxWidth, lineHeight);
     
     ctx.fillStyle = '#3b3b3b';

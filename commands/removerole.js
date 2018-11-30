@@ -22,7 +22,7 @@ exports.run = (client, message, [member, ...serverRole], level) => {
 exports.conf = {
   enabled: true,
   aliases: ['deleterole', 'delrole'],
-  permLevel: "Open"
+  permLevel: "Server Admin"
 };
 
 exports.help = {

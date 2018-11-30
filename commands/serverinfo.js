@@ -1,47 +1,16 @@
 const Discord = require("discord.js");
+const { Embed } = require("../src/structures/Embed.js");
 exports.run = (client, message, level) => {
-
-  /* const serverInfo = new Discord.RichEmbed()
-    .setColor(0xCFD9F9)
-    .setThumbnail(message.guild.iconURL)
-    .setTitle(`Info for ${message.guild.name}`)
-    .addField("Owner", message.guild.owner.user.username, true)
-    .addfield("Members", guild.memberCount, true) */
   
-	message.channel.send({
-		embed: {
-			color: 0xCFD9F9,
-			author: {
-				name: message.guild.name,
-				icon_url: message.guild.iconURL
-			},
-			thumbnail: {
-				url: message.guild.iconURL,
-			},
-			title: "Server Info",
-			fields: [{
-				name: "**Name**",
-				value: `${message.guild.name}`,
-				inline: true,
-			},
-			{
-				name: "**Owner**",
-				value: `${message.guild.owner}`,
-				inline: true,
-			},
-			{
-				name: "**Created Timestamp**",
-				value: `${message.guild.createdTimestamp}`,
-				inline: true,
-			},
-			{
-				name: "**Members**",
-				value: `${message.guild.memberCount}`,
-				inline: true,
-			},
-			],
-		}
-	})
+  const embed = new Embed()
+    .setThumbnail(message.guild.iconURL)
+    .setTitle(`Info for Server: **${message.guild.name}**`)
+    .addInlineField("Owner:", `${message.guild.owner.toString()}`)
+    .addInlineField("Created At:", `${client.getCleanDate(`${message.guild.createdAt}`)}`)
+    .addInlineField("Members:", `${message.guild.members.filter(member => !member.user.bot).size}`)
+    .addInlineField("Bots:", `${message.guild.members.filter(member => member.user.bot).size}`);
+
+	message.channel.send({ embed });
 };
 
 exports.conf = {

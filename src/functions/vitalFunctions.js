@@ -18,20 +18,6 @@ module.exports = (client) => {
     return permlvl;
   };
   
-  /**
-  * Changes nickname on a server
-  * @param {Object} guild - Guild to change nickname for
-  * @param {Object} data - Nickname to change to
-  */
-  client.changeNickname = (guild, data) => {
-    if (typeof data !== 'object') return console.log("Change nick event triggered, but data given was not an object ;-;");
-    guild.me.setNickname(data.nickname);
-  };
-  
-  client.updateGuildEvent = (guild, event, bool) => {
-    client.serverConfig.setProp(guild.id, event, bool);
-  };
-  
   client.getGuildSettings = (guild) => {
     const def = client.config.defaultConfig;
     if (!guild) return def;
@@ -51,35 +37,6 @@ module.exports = (client) => {
       return collected.first().content;
     } catch (e) {
       return false;
-    }
-  };
-  
-  client.writeSettings = (id, newSettings) => {
-    const defaults = client.config.defaultConfig;
-    let settings = client.serverConfig.get(id);
-    if (typeof settings != "object") settings = {};
-    for (const key in newSettings) {
-      if (defaults[key] !== newSettings[key]) {
-        settings[key] = newSettings[key];
-      } else {
-        delete settings[key];
-      }
-    }
-    var values = Object.values(settings);
-    var place = 0;
-    Object.keys(settings).forEach(item => {
-      client.serverConfig.setProp(id, item, values[place]) 
-      place++;
-    })
-  };
-  
-  client.toggleGuildCmd = (guild, commandData) => {
-    let commandName = commandData.name;
-    let enabled = commandData.enabled;
-    if (enabled !== "true") {
-      client.serverConfig.pushIn(guild.id, "disabledCommands", commandName);
-    } else {
-      client.serverConfig.removeFrom(guild.id, "disabledCommands", commandName);
     }
   };
   
@@ -121,16 +78,6 @@ module.exports = (client) => {
     }
     return false;
   };
-  
-  client.getNumbersBetween = async (x, y) => {
-    var numbers = [];
-    for (var i = x; i < y; i++) {
-      numbers.push(i);
-    }
-    numbers.push(y);
-    
-    return numbers;
-  };
 
 client.getDefaultChannel = async (guild) => {
     guild.channels.forEach((channel) => {
@@ -141,28 +88,6 @@ client.getDefaultChannel = async (guild) => {
       }
     })
   };
-  
-client.cooldownHandler = (time, oncdmsg, message) => {
-  if (!client.cooldownProvider.has(message.author.id)) {
-    if (message.author.id == client.config.ownerID) return;
-    // if (message.author.id == '412518473420505089') return;
-    
-      client.cooldownProvider.set(message.author.id, oncdmsg);
-    
-      setTimeout(function() {
-        client.cooldownProvider.delete(message.author.id);
-      }, time)
-   }
-};
-
-client.getCurrentDate = () => {
-    var d = new Date();
-    var day = d.getDate();
-    var month = d.getMonth() + 1;
-    var year = d.getFullYear();
-    var n = `${day}/${month}/${year}`;
-    return n;
-};
   
 String.prototype.toProperCase = function() {
   return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});

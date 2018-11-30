@@ -2,7 +2,7 @@
 
 <%- include('../blocks/guild-nav', {guild}) %>
 
-<% include ../blocks/guild-modals %>
+<%- include('../blocks/guild-modals', {guild}) %>
 
 <script type="text/javascript">
   var ts = parseInt($('#guildCreate').text());
@@ -13,4 +13,4 @@
 </script>
 <script type="text/javascript" src="/public/js/tabs.js"></script>
 
-<% include ../blocks/footer %>
+<%- include ../blocks/footer %>

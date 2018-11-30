@@ -1,14 +1,9 @@
 const Discord = require("discord.js");
 const SQLite = require("better-sqlite3");
+const { Embed } = require("../src/structures/Embed.js");
 
 exports.run = async (client, message, args, level, slotwin) => {
-
-  if (message.channel.id == "443686685960830976") {
-    return message.channel.send(`${message.guild.channels.get('497652725459189760').toString()} please ;-;`)
-  };
-
-  client.cooldownHandler(15000, "Please wait 15 seconds between each slots roll", message);
-
+  
   if (args[0]) {
 
     const action = args[0];
@@ -31,12 +26,11 @@ exports.run = async (client, message, args, level, slotwin) => {
     if (action === "leaderboard") {
       const top10 = client.sql.prepare("SELECT * FROM slotwins WHERE guild = ? ORDER BY wins DESC LIMIT 10;").all(message.guild.id);
 
-      const embed = new Discord.RichEmbed()
+      const embed = new Embed()
         .setTitle("Leaderboard")
         .setAuthor(client.user.username, client.user.avatarURL)
-        .setDescription("Here are the top 10 members with the most slot wins!")
-        .setColor(0xCFD9F9);
-
+        .setDescription("Here are the top 10 members with the most slot wins!");
+      
       var currentplace = 1;
 
       for (const data of top10) {
@@ -92,13 +86,13 @@ exports.run = async (client, message, args, level, slotwin) => {
     return roll;
   };
 
-  message.channel.send(" |---|---|---| ")
+  message.channel.send(" **[---I---I---]** ")
     .then(async msg => {
       setTimeout(function () {
-        msg.edit(" | " + roll() + " |---|---| ");
+        msg.edit(" **[ " + roll() + " I---I---]** ");
       }, 500)
       setTimeout(function () {
-        msg.edit(" | " + roll() + " | " + roll() + " |---| ");
+        msg.edit(" **[ " + roll() + " I " + roll() + " I---]** ");
       }, 1000)
       setTimeout(async function () {
         const allEqual = array => array.every(v => v === array[0]);
@@ -106,10 +100,10 @@ exports.run = async (client, message, args, level, slotwin) => {
         var messageArray1 = rolls.split(" | ");
         var messageArray = messageArray1.filter(e => e != "");
 
-        var text = allEqual(messageArray) ? rolls + "" : rolls + "\nOh darn, bad luck...";
+        var text = allEqual(messageArray) ? rolls + "" : rolls + "\nOof, bad luck...";
         msg.edit(text)
 
-        var isNot3 = text.endsWith("Oh darn, bad luck...");
+        var isNot3 = text.endsWith("Oof, bad luck...");
 
         if (isNot3 === false) {
           let userwins = client.getWins.get(message.author.id, message.guild.id);
@@ -132,7 +126,8 @@ exports.run = async (client, message, args, level, slotwin) => {
 exports.conf = {
   enabled: true,
   aliases: [],
-  permLevel: "Open"
+  permLevel: "Open",
+  cooldown: 12000
 };
 
 exports.help = {

@@ -20,12 +20,23 @@ module.exports = (client, member) => {
   var welcomeMessage = serverConfig.welcomeMessage.replace("{{member}}", member.user.toString())
 
   // we'll send to the welcome channel.
-  var channel = member.guild.channels.find("name", serverConfig.welcomeChannel);
+  var channel = member.guild.channels.find(c => c.name === serverConfig.welcomeChannel);
 
   if (channel) {
     channel.send(welcomeMessage);
   } else if (!channel) {
-    var theChannel = getChannel(member.guild);
-    theChannel.send(welcomeMessage);
+    try {
+      var theChannel = getChannel(member.guild);
+      theChannel.send(welcomeMessage);
+    } catch(err) {
+      return;
+    }
   }
+  
+  if (serverConfig.logging.guildMemberAdd === "true") {
+    
+    const loggingChannel = member.guild.channels.find(c => c.name === serverConfig.logging.loggingChannel);
+    
+  };
+  
 };

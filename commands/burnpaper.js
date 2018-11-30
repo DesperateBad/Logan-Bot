@@ -1,5 +1,7 @@
 exports.run = async (client, message, args, level) => {
 
+if (!args[0]) return message.channel.send("Give me something to burn! :fire:");
+  
 const Discord = require("discord.js");
 const fs = require('fs')
 const path = require('path')
@@ -35,13 +37,13 @@ img.onload = () => {
   
 ctx.drawImage(img, 0, 0)
   
-ctx.font = 'normal 20px Verdana'
+ctx.font = 'normal 24px Verdana'
   
 ctx.fillStyle = '#000'
 
 var maxWidth = 210;
 var lineHeight = 20;
-var x = 49;
+var x = 53;
 var y = 99;
 var text = args.join(" ");
 wrapText(ctx, text, x, y, maxWidth, lineHeight); 
