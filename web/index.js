@@ -168,6 +168,10 @@ module.exports = (client) => {
   app.get("/commands", (req, res) => {
     renderTemplate(res, req, "commands.ejs", {md});
   });
+
+  app.get("/dbl", (req, res) => {
+    renderTemplate(res, req, "dbl.ejs");
+  });
   
   app.get("/stats", (req, res) => {
     /* const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");

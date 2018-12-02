@@ -16,12 +16,6 @@ hr.faded {
     background-image: linear-gradient(to right, rgb(59, 59, 59, 0), rgba(3, 3, 3, 0.75), rgb(59, 59, 59, 0));
 }
 
-.checkbox-grid li {
-  display: block;
-  float: left;
-  width: 5%;
-}
-
 .roleBox {
   border-radius: 3px;
   padding: 0px 3px;
@@ -73,12 +67,12 @@ hr.faded {
     background-color: inherit;
     color: white;
     padding: 8px 14px;
-    width: 100%;
+    width: 90%;
     border: none;
     outline: none;
     text-align: left;
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.25s;
     font-size: 14px;
 }
 

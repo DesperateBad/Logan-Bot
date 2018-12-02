@@ -10,7 +10,7 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite("./src/databases/slots/slotwins.sqlite");
 
 const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DISCORDBOTS_TOKEN, client);
+//const dbl = new DBL(process.env.DISCORDBOTS_TOKEN, client);
 
 const http = require("http");
 const Express = require("express");

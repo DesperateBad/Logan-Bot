@@ -1,3 +1,4 @@
+
 <%
 const conf = bot.getGuildSettings(guild);
 const guildChannels = guild.channels.array();
@@ -61,10 +62,10 @@ bot.commands.forEach((command) => {
 
 <div class="tabcontent col-sm-9" id="Events">
   <div class="section container">
-    <a class="ui blue ribbon label">Member Join</a>
+    <a class="ui red ribbon label">Member Join</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="welcomeMembers">
-      <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.welcomeMembers === "true") { %> checked <% } %> id="welcomeMembers" data-selectid="welcomeChannel" name="Welcome Members" />
+      <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.welcomeMembers === "true") { %> checked <% } %> id="welcomeMembers" data-selectid="welcomeChannel" name="Welcome Members" data-event="guildMemberAdd" />
       <span>Enable Welcome Message</span>
     </label>
     <br>
@@ -89,7 +90,7 @@ bot.commands.forEach((command) => {
     <a class="ui red ribbon label">Member Leave</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceLeaves">
-      <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.announceLeaves === "true") { %> checked <% } %> id="announceLeaves" data-selectid="leaveAnnouncementChannel" name="Announce Member Leaves" />
+      <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.announceLeaves === "true") { %> checked <% } %> id="announceLeaves" data-selectid="leaveAnnouncementChannel" name="Announce Member Leaves" data-event="guildMemberRemove" />
       <span>Enable Member Leave Announcement</span>
     </label>
     <br>
@@ -114,7 +115,7 @@ bot.commands.forEach((command) => {
     <a class="ui red ribbon label">Member Ban</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceBans">
-      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" name="Announce Bans" />
+      <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" name="Announce Bans" data-event="guildBanAdd"/>
       <span>Enable Member Ban Announcement</span>
     </label>
     <br>
