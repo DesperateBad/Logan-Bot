@@ -44,7 +44,7 @@ module.exports = (client) => {
 
   passport.use(new Strategy({
     clientID: '470864521842655252',
-    clientSecret: 'WHlLUDGP9z12JkWEkjKxItamvqWVP61b',
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: client.config.callbackURL,
     scope: ["identify", "guilds"]
   },
@@ -65,7 +65,6 @@ module.exports = (client) => {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(helmet());
-
   // The domain name used in various endpoints to link between pages.
   app.locals.domain = client.config.domain;
   

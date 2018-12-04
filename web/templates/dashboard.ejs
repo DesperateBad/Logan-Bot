@@ -5,7 +5,7 @@
   <% user.guilds.forEach((guild) => { 
     const permsOnGuild = new perms(guild.permissions);
     if(!permsOnGuild.has("MANAGE_GUILD")) return;
-    const link = bot.guilds.has(guild.id) ? "/dashboard/" + guild.id + "/manage" : "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot";
+    const link = bot.guilds.has(guild.id) ? "dashboard/" + guild.id + "/manage" : "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot";
     let createdAt;
     if (bot.guilds.has(guild.id)) { 
       const obj = bot.guilds.get(`${guild.id}`);

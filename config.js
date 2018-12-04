@@ -3,7 +3,6 @@ const config = {
   "botName": "Logan",
   "botDescription": "Logan brings fun and happiness to servers everywhere!",
 
-  // The following can not be changed by users:
   "ownerID": "428783792275193868",
 
   "prefix": "?",
@@ -14,9 +13,9 @@ const config = {
   "inviteLink": "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot",
   "version": "0.2.0",
 
-  "callbackURL": "https://logan-bot.glitch.me/callback",
+  "callbackURL": "https://highfox.tk/logan/callback",
 
-  "domain": "https://logan-bot.glitch.me",
+  "domain": "https://highfox.tk/logan/",
   
   
   "dashboardTabs": [

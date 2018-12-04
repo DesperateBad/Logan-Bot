@@ -1,17 +1,12 @@
 <!DOCTYPE html> 
 <html lang="en">
   <head>
-    <script>
-      if (location.protocol != 'https:') {
-       location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-      }
-    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Logan Bot" />
     <meta property="og:title" content="<%= bot.user.username %> Dashboard" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://logan-bot.glitch.me" />
+    <meta property="og:url" content="https://highfox.tk/logan/" />
     <meta property="og:description" content="<%= bot.config.botDescription %> " />
     <meta property="og:image" content="<%= bot.user.displayAvatarURL %>"/>
     <meta property="og:site_name" content="<%= bot.user.username %> Dashboard">
@@ -27,7 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/public/css/materialize.css">
+    <link rel="stylesheet" href="public/css/materialize.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
     <script type="text/javascript" src="https://rawgit.com/Dogfalo/materialize/1.0.0-alpha.1/dist/js/materialize.min.js"></script>
@@ -36,9 +31,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js" integrity="sha256-zG8v+NWiZxmjNi+CvUYnZwKtHzFtdO8cAKUIdB8+U9I=" crossorigin="anonymous"></script>
   
-    <link rel="stylesheet" href="/public/css/dashboard.css" />
+    <link rel="stylesheet" href="public/css/dashboard.css" />
     <link rel='icon' href='<%= bot.user.avatarURL %>'>
-    <script type="text/javascript" src="/public/js/logan.js"></script>
+    <script type="text/javascript" src="public/js/logan.js"></script>
 
     <title><%= bot.user.username %></title>
   </head>
@@ -48,11 +43,11 @@
      <ul id="logindropdown" class="dropdown-content" style="text-decoration: none;">
       <li><a><%= user.username %>#<%= user.discriminator %></a></li>
        <% if(user.id == bot.config.ownerID) { %>
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/admin">Admin</a></li>
+      <li><a href="dashboard">Dashboard</a></li>
+      <li><a href="admin">Admin</a></li>
       <% } %>
       <li class="divider"></li>
-      <li><a href="/logout">Logout</a></li>
+      <li><a href="logout">Logout</a></li>
       </ul>
     <% } %>
     
@@ -60,12 +55,12 @@
     <div class="nav-wrapper" style="text-decoration: none;">
     <a href="<%= bot.config.domain %>" class="brand-logo" style="padding-left: 12px; text-decoration: none;"><img src="<%= bot.user.avatarURL %>" width="40" height="40" class="rounded-circle" style="margin-bottom: 7px; margin-left: 5px; margin-right: 9px;"><%= bot.user.username %></a>
       <ul class="right hide-on-med-and-down" style="text-decoration: none;">
-        <li><a href="/commands">Commands</a></li>
+        <li><a href="commands">Commands</a></li>
         <li><a href="https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot" style="margin-right: 15px;">Invite Me</a></li>
         <% if(user) { %>
         <li><a class="dropdown-trigger" data-target="logindropdown"><%= user.username %>#<%= user.discriminator %><img class="responsive-img circle" src="<%= user.avatarURL %>"></a></li>
         <% } else { %>
-        <li><a href="https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=identify&response_type=code&redirect_uri=https%3A%2F%2Flogan-bot.glitch.me%2Fcallback">Login<i class="material-icons right" style="margin-top: 2.2px;">account_circle</i></a></li>
+        <li><a href="https://discordapp.com/api/oauth2/authorize?client_id=470864521842655252&redirect_uri=https%3A%2F%2Fhighfox.tk%2Flogan%2Fcallback&response_type=code&scope=guilds%20identify">Login<i class="material-icons right" style="margin-top: 2.2px;">account_circle</i></a></li>
         <% } %>
       </ul>
     </div>
