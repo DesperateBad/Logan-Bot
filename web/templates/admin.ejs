@@ -25,7 +25,7 @@
                 <% 
                   let href, text;
                   if(bot.guilds.get(guild.id)) {
-                    href = `/dashboard/${guild.id}/manage`;
+                    href = `/logan/dashboard/${guild.id}/manage`;
                     text = "Manage";
                   } else {
                     href = "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=identify&response_type=code&redirect_uri=https%3A%2F%2Flogan-bot.glitch.me%2Fcallback";

@@ -5,10 +5,11 @@
   <% user.guilds.forEach((guild) => { 
     const permsOnGuild = new perms(guild.permissions);
     if(!permsOnGuild.has("MANAGE_GUILD")) return;
-    const link = bot.guilds.has(guild.id) ? "dashboard/" + guild.id + "/manage" : "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot";
+    const link = bot.guilds.has(guild.id) ? "/logan/dashboard/" + guild.id + "/manage" : "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot";
     let createdAt;
+    let obj;
     if (bot.guilds.has(guild.id)) { 
-      const obj = bot.guilds.get(`${guild.id}`);
+      obj = bot.guilds.get(`${guild.id}`);
       created = obj.createdAt;
       createdAt = bot.getCleanDate(`${created}`);
     } else {
@@ -20,7 +21,7 @@
       <% if (guild.icon) { %>
       <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=512` %>" class="right floated ui tiny rounded image">
       <% } else { %>
-      <canvas style="background-color: #7289da" data-guild="<%= guild.name %>" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="260px" height="257px" class="right floated ui tiny rounded image"></canvas>
+      <canvas style="background-color: #7289da" id="<%= obj.nameAcronym %>" width="260px" height="257px" class="right floated ui tiny rounded image"></canvas>
       <% } %>
       <div class="header"><%= guild.name %></div>
       <div class="meta">
@@ -40,7 +41,7 @@
       ctx.textAlign = 'center';
       ctx.fillStyle = 'white';
       ctx.textBaseline = 'middle';
-      ctx.fillText(`${$(this).attr('data-guild').split(' ').map(v => v[0]).join('')}`, 130, 130);
+      ctx.fillText(`${$(this).attr('id')}`, 130, 130);
     })
   };
   draw();

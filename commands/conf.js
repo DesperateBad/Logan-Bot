@@ -1,7 +1,11 @@
 const { inspect } = require("util");
 
 exports.run = async (client, message, [action, key, ...value], level) => {
-
+  
+  if (message.author.id !== client.config.ownerID) {
+    return message.channel.send("The \`?conf\` command has been disabled until the end of the month (December 2018), and it is going to be removed soon after that, as from then on you will be able to manage your server through the new and upcoming Logan web dashboard!");
+  };
+  
   // Retrieve current guild settings (merged) and overrides only.
   const serverConfig = message.serverConfig;
   const overrides = client.serverConfig.get(message.guild.id);

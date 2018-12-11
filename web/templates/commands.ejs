@@ -28,7 +28,7 @@ bot.commands.forEach((command) => {
 
 <% for (const category in help) { %>
 <div id="<%= category %>" class="tabcontent col-sm-9">
-  <table class="ui selectable table">
+  <table class="ui inverted selectable table">
         <thead>
           <tr>
               <th>Name</th>
@@ -54,6 +54,6 @@ bot.commands.forEach((command) => {
 </div>
 </div>
 
-<script type="text/javascript" src="public/js/tabs.js"></script>
+<script type="text/javascript" src="/public/js/tabs.js"></script>
 
 <% include ./blocks/footer %>

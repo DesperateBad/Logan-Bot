@@ -1,7 +1,10 @@
 <%
 const conf = bot.getGuildSettings(guild);
-const guildChannels = guild.channels.array();
-guildChannels.filter(channel => channel.type.toLowerCase() === 'text');
+let guildChannels = [];
+guild.channels.forEach((channel) => {
+  if (channel.type !== 'text' || !channel.type) return;
+  guildChannels.push(channel);
+});
 const nickname = guild.me.nickname !== null && guild.me.nickname !== "" ? guild.me.nickname : bot.user.username;
 const help = {};
 bot.commands.forEach((command) => {
@@ -12,7 +15,7 @@ bot.commands.forEach((command) => {
 });
 %>
 
-<div id="Bot Settings" class="tabcontent col-sm-9">
+<div id="Bot Settings" class="tabcontent col-md-auto col-sm-auto">
   <div class="ui inverted input">
     <a class="floating ui red label">Nickname</a>
     <input type="text" value="<%= nickname %>" class="changeNick" id="nickname" placeholder="Nickname">
@@ -29,7 +32,7 @@ bot.commands.forEach((command) => {
 
 <% for (const category in help) { %>
 <% if (help[category].length === 0) return; %>
-<div class="tabcontent col-sm-9" id="<%= category %>">
+<div class="tabcontent col-md-auto col-sm-auto" id="<%= category %>">
   <div class="ui three cards">
     <% for (const command of help[category]) { %>
     <div class="ui raised card">
@@ -59,17 +62,30 @@ bot.commands.forEach((command) => {
 </div>
 <% } %>
 
-<div class="tabcontent col-sm-9" id="Events">
+<div class="tabcontent col-md-auto col-sm-auto" id="guildMemberAdd">
+  <div class="ui item">
+    <select class="ui select dropdown" id="welcomeChannel">
+      <% for (let i = 0; i < guildChannels.length; i++) { %>
+      <% if (guildChannels[i].name == conf.welcomeChannel) { %>
+      <option value="<%= conf.welcomeChannel %>" selected><%= conf.welcomeChannel %></option>
+      <% } else { %>
+      <option value="<%= guildChannels[i].name %>"><%= guildChannels[i].name %></option>
+      <% } %>
+      <% } %>
+    </select>
+  </div>
+</div>
+
+<div class="tabcontent col-md-auto col-sm-auto" id="Events">
   <div class="section container">
-    <a class="ui red ribbon label">Member Join</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="welcomeMembers">
       <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.welcomeMembers === "true") { %> checked <% } %> id="welcomeMembers" data-selectid="welcomeChannel" name="Welcome Members" data-event="guildMemberAdd" />
       <span>Enable Welcome Message</span>
     </label>
     <br>
-    <label>Welcome Channel</label>
-    <select class="browser-default announcementChannelSelect" id="welcomeChannel">
+    <div class="left floated ui small basic github right pointing label">Welcome Channel</div>
+    <select class="ui select dropdown" id="welcomeChannel">
       <% for (let i = 0; i < guildChannels.length; i++) { %>
       <% if (guildChannels[i].name == conf.welcomeChannel) { %>
       <option value="<%= conf.welcomeChannel %>" selected><%= conf.welcomeChannel %></option>
@@ -86,15 +102,14 @@ bot.commands.forEach((command) => {
   <div class="ui inverted divider"></div>
   
   <div class="container section">
-    <a class="ui red ribbon label">Member Leave</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceLeaves">
       <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.announceLeaves === "true") { %> checked <% } %> id="announceLeaves" data-selectid="leaveAnnouncementChannel" name="Announce Member Leaves" data-event="guildMemberRemove" />
       <span>Enable Member Leave Announcement</span>
     </label>
     <br>
-    <label>Leave Message Channel</label>
-    <select class="browser-default" id="leaveAnnouncementChannel">
+    <div class="ui basic github right pointing label">Leave Message Channel</div>
+    <select class="ui select dropdown" id="leaveAnnouncementChannel">
       <% for (let i = 0; i < guildChannels.length; i++) { %>
       <% if (guildChannels[i].name == conf.leaveAnnouncementChannel) { %>
       <option value="<%= conf.leaveAnnouncementChannel %>" selected><%= conf.leaveAnnouncementChannel %></option>
@@ -111,15 +126,14 @@ bot.commands.forEach((command) => {
   <div class="ui inverted divider"></div>
   
   <div class="container section">
-    <a class="ui red ribbon label">Member Ban</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceBans">
       <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" name="Announce Bans" data-event="guildBanAdd"/>
       <span>Enable Member Ban Announcement</span>
     </label>
     <br>
-    <label>Ban Message Channel</label>
-    <select class="browser-default" id="banAnnouncementChannel">
+    <div class="ui basic github right pointing label">Ban Message Channel</div>
+    <select class="ui select dropdown" id="banAnnouncementChannel">
       <% for (let i = 0; i < guildChannels.length; i++) { %>
       <% if (guildChannels[i].name == conf.banAnnouncementChannel) { %>
       <option value="<%= conf.banAnnouncementChannel %>" selected><%= conf.banAnnouncementChannel %></option>
@@ -136,15 +150,14 @@ bot.commands.forEach((command) => {
   <div class="ui inverted divider"></div>
   
   <div class="container section">
-    <a class="ui red ribbon label">Channel Create</a>
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceNewChannels">
       <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewChannels" data-selectid="newChannelAnnouncementChannel" name="Announce New Channels" />
       <span>Enable New Channel Announcement</span>
     </label>
     <br>
-    <label>New Channel Announcement Channel</label>
-    <select class="browser-default" id="newChannelAnnouncementChannel">
+    <div class="ui basic github right pointing label">New Channel Announcement Channel</div>
+    <select class="ui select dropdown" id="newChannelAnnouncementChannel">
       <% for (let i = 0; i < guildChannels.length; i++) { %>
       <% if (guildChannels[i].name == conf.newChannelAnnouncementChannel) { %>
       <option value="<%= conf.newChannelAnnouncementChannel %>" selected><%= conf.newChannelAnnouncementChannel %></option>
@@ -158,7 +171,7 @@ bot.commands.forEach((command) => {
   
 </div>
 
-<div class="tabcontent col-sm-9" id="Automod">
+<div class="tabcontent col-md-auto col-sm-auto" id="Automod">
   <div class="ui warning message">
   <i class="close icon"></i>
   <div class="header">
@@ -168,15 +181,12 @@ bot.commands.forEach((command) => {
 </div>
 </div>
 
-<div class="tabcontent col-sm-9" id="Logging">
+<div class="tabcontent col-md-auto col-sm-auto" id="Logging">
   <div class="ui warning message">
   <i class="close icon"></i>
   <div class="header">
     Currently Under Construction
   </div>
   This part of the website is currently still in development, thank you for your patience and sorry for any inconvenience ^-^
-</div>
-</div>
-
 </div>
 </div>
