@@ -2,6 +2,7 @@
 
 <% const help = {};
 bot.commands.forEach((command) => {
+  if (command.conf.permLevel === "Bot Owner" || command.conf.hidden === true) return;
   const cat = command.help.category;
   if (!help.hasOwnProperty(cat)) help[cat] = [];
   help[cat].push(command);
@@ -10,24 +11,22 @@ bot.commands.forEach((command) => {
 
 <div class="container section">
 <div class="row">
-<div class="tab-background col-sm-3">
-<div class="tab">
+<div class="ui secondary inverted vertical pointing menu col-2">
   <% for (const category in help) { %>
-    <% if (category === "Info") { %>
-    <button class="tablinks" onclick="openTab(event, '<%= category %>')" id="defaultOpen">
-      <%= category %>
-    </button>
-    <% } else { %>
-    <button class="tablinks" onclick="openTab(event, '<%= category %>')">
-      <%= category %>
-    </button>
-   <% } %>
-  <% } %>
-</div>
+  <% if (category === "Info") { %>
+  <a class="item tablinks" onclick="openTab(event, '<%= category %>')" id="defaultOpen">
+    <%= category %>
+  </a>
+  <% } else { %>
+  <a class="item tablinks" onclick="openTab(event, '<%= category %>')">
+    <%= category %>
+  </a>
+  <% }
+  } %>
 </div>
 
 <% for (const category in help) { %>
-<div id="<%= category %>" class="tabcontent col-sm-9">
+<div id="<%= category %>" class="tabcontent col-10">
   <table class="ui inverted selectable table">
         <thead>
           <tr>
@@ -49,6 +48,10 @@ bot.commands.forEach((command) => {
         <% } %>
         </tbody>
       </table>
+  <div class="ui inverted message" style="width: 75%;">
+    <code class="inline">&ltargument&gt</code> is an optional argument (defined by the 'less than' and 'greater than' signs)<br>
+    <code class="inline">[argument]</code> is a required argument (defined by the square brackets)
+  </div>
 </div>
 <% } %>
 </div>

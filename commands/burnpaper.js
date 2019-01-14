@@ -1,6 +1,6 @@
 exports.run = async (client, message, args, level) => {
 
-if (!args[0]) return message.channel.send("Give me something to burn! :fire:");
+if (!args[0]) return message.channel.send(`You have to give me something to burn first... ${client.getEmoji('488284096649494529')}`);
   
 const Discord = require("discord.js");
 const fs = require('fs')

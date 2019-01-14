@@ -31,17 +31,11 @@ module.exports = (client) => {
   };
   
   client.enableGuildCommand = (guild, data) => {
-    let command = data.command;
-    let current = client.serverConfig.getProp(guild.id, 'disabledCommands');
-    if (current.indexOf(data.command) > -1) return;
-    client.serverConfig.pushIn(guild.id, 'disabledCommands', command);
+    client.serverConfig.pushIn(guild.id, 'disabledCommands', data.command, false);
   };
   
   client.disableGuildCommand = (guild, data) => {
-    let command = data.command;
-    let current = client.serverConfig.getProp(guild.id, 'disabledCommands');
-    if (current.indexOf(data.command) < 0) return;
-    client.serverConfig.removeFrom(guild.id, 'disabledCommands', command);
+    client.serverConfig.removeFrom(guild.id, 'disabledCommands', data.command);
   };
   
   client.changeConfProp = (guild, data) => {

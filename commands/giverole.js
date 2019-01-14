@@ -27,5 +27,5 @@ exports.help = {
   category: "Moderation",
   name: "giverole",
   description: "Adds a role to a user in the server.",
-  usage: "giverole [@mention] [roleName]"
+  usage: "giverole [@mention] [role name]"
 };

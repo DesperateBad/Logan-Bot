@@ -25,6 +25,6 @@ exports.conf = {
 exports.help = {
   category: "Miscellaneous",
   name: "numberfact",
-  description: "Get an interesting fact about a random number, or a number you choose!",
-  usage: "advice [number]"
+  description: "Get a (possibly) interesting fact about a number!",
+  usage: "numberfact <number>"
 };

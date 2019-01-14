@@ -20,7 +20,7 @@ exports.run = (client, message, args, level) => {
 
 exports.conf = {
 	enabled: true,
-	aliases: ['userinf'],
+	aliases: ['userinf', 'user'],
 	permLevel: "Open"
 };
 
@@ -28,5 +28,5 @@ exports.help = {
   category: 'Info',
 	name: 'userinfo',
 	description: 'Get information about yourself or another user!',
-	usage: 'userinfo'
+	usage: 'userinfo <@mention>'
 };

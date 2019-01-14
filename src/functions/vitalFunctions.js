@@ -93,10 +93,9 @@ String.prototype.toProperCase = function() {
   return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }; 
   
-Array.prototype.random = function() {
-  let rand = Math.floor(Math.random() * this.length);
-  return this[rand];
-}
+Object.defineProperty(Array.prototype, 'random', {
+  value: function() { return this[Math.floor(Math.random() * this.length)] }
+});
   
 client.wait = require("util").promisify(setTimeout);
   

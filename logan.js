@@ -9,7 +9,7 @@ const readdir = promisify(require("fs").readdir);
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./src/databases/slots/slotwins.sqlite");
 
-const DBL = require("dblapi.js");
+//const DBL = require("dblapi.js");
 //const dbl = new DBL(process.env.DISCORDBOTS_TOKEN, client);
 
 const http = require("http");
@@ -19,10 +19,12 @@ const express = Express();
 client.sql = sql;
 client.config = require("./config.js");
 
-require("./src/functions/vitalFunctions.js")(client);
-require("./src/functions/randomImageFunctions.js")(client);
-require("./src/functions/dashboardFunctions.js")(client);
-require("./src/functions/utils.js")(client);
+const path = require("path");
+const glob = require("glob");
+
+glob.sync("./src/functions/**/*.js").forEach(function(f) {
+  require(path.resolve(f))(client);
+});
 
 // Start Web UI
 require("./web/index.js")(client);
@@ -55,11 +57,10 @@ client.on("ready", async () => {
   client.setWins = sql.prepare("INSERT OR REPLACE INTO slotwins (id, user, guild, wins) VALUES (@id, @user, @guild, @wins);");
 });
 
-let commandFiles;
 let events;
+let commandFiles;
 
 const init = async () => {
- 
  const cmdFiles = await readdir("./commands/");
   commandFiles = cmdFiles.length;
   cmdFiles.forEach(f => {
@@ -67,7 +68,6 @@ const init = async () => {
     const response = client.loadCommand(f);
     if (response) console.log(response);
   });
-
   const evtFiles = await readdir("./events/");
   events = evtFiles.length;
   evtFiles.forEach(file => {
@@ -75,16 +75,15 @@ const init = async () => {
     const event = require(`./events/${file}`);
     client.on(eventName, event.bind(null, client));
     delete require.cache[require.resolve(`./events/${file}`)];
-  });
-    
+  }); 
   client.levelCache = {};
     for (let i = 0; i < client.config.permLevels.length; i++) {
       const thisLevel = client.config.permLevels[i];
       client.levelCache[thisLevel.name] = thisLevel.level;
   };
-
   client.login(process.env.TOKEN);
-
 };
 
 init();
+
+

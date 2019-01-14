@@ -8,6 +8,7 @@ const config = {
   "prefix": "?",
 
   "admins": [],
+  "webAdmins": ['428783792275193868', '292505050436206593'],
   "support": ['242638287712288768', '412518473420505089'],
 
   "inviteLink": "https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot",
@@ -52,31 +53,37 @@ const config = {
     "prefix": "?",
     "disabledCommands": [],
     
-    "channelCreate": {
-      "enabled": false,
+    "events": {
       "announcementChannel": "general",
-      "announcementMessage": "A new channel, {{channel}}, has just been created"
+      "announcements": [
+        {
+          "event": "channelCreate",
+          "announcement": "false",
+          "announcementMessage": "A new channel was just created! Go check out {{channel}}"
+        },
+        {
+          "event": "guildMemberAdd",
+          "announcement": "true",
+          "announcementMessage": "Welcome {{member}}! We hope you enjoy your time here at {{guildName}}"
+        },
+        {
+          "event": "guildMemberRemove",
+          "announcement": "false",
+          "announcementMessage": "{{member}} just left the server ._."
+        },
+        {
+          "event": "guildBanAdd",
+          "announcement": "false",
+          "announcementMessage": "Oof! {{member}} was just banned from the server!"
+        },
+        {
+          "event": "guildBanRemove",
+          "announcement": "false",
+          "announcementMessage": "{{member}} was just unbanned! Welcome back!"
+        }
+      ]
     },
-    "guildMemberAdd": {
-      "enabled": true,
-      "announcementChannel": "announcements",
-      "announcementMessage": "Everyone give a warm welcome to {{member}}!"
-    },
-    "guildMemberRemove": {
-      "enabled": false,
-      "announcementChannel": "announcements",
-      "announcementMessage": "Say your goodbyes to {{member}} ._."
-    },
-    "guildBanAdd": {
-      "enabled": false,
-      "announcementChannel": "announcements",
-      "announcementMessage": "Oof! {{member was just banned from the server!"
-    },
-    "guildBanRemove": {
-      "enabled": false,
-      "announcementChannel": "announcements",
-      "announcementMessage": "Welcome back to the server{{member}}! ^-^"
-    },
+    
     "logging": {
       
       "loggingChannel": "logs",
@@ -90,6 +97,7 @@ const config = {
       "messageDelete": "false",
       
     },
+    
     "autoMod": {
       
       "massEmoji": {

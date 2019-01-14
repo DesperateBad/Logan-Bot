@@ -29,5 +29,5 @@ exports.help = {
   category: "Moderation",
   name: "removerole",
   description: "Removes a role from a user.",
-  usage: "removerole [@mention] [roleName]"
+  usage: "removerole [@mention] [role name]"
 };

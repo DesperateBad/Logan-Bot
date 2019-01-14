@@ -23,7 +23,7 @@ exports.run = async (client, message, args, level) => {
     ctx.drawImage(avatar, 300, 165, 410, 410);
     
     const attachment = new Discord.Attachment(canvas.toBuffer(), 'none.jpg');
-    message.channel.send('\u200b', attachment);
+    message.channel.send(`${client.getEmoji('525247487825412097')}`, attachment);
   };
 
 };
@@ -37,6 +37,6 @@ exports.conf = {
 exports.help = {
   category: "Memes",
   name: "god",
-  description: "Even children know who their almighty saviour is!",
-  usage: "god"
+  description: "Anyone can be a god through childrens eyes.",
+  usage: "god <@mention>"
 };

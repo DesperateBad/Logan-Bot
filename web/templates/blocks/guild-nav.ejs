@@ -19,81 +19,63 @@
 %>
 
 <div class="container">
-<div class="section">
-<div class="row">
-<div class="col-md-auto col-sm-auto">
-<div class="ui secondary inverted vertical menu" style="border: 0.9px solid black;">
-<div class="ui items">
-  <div class="item">
-    <div class="ui circular tiny image">
-      <% if (guild.icon) { %>
-      <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` %>" style="border: 2px solid white; border-radius: 500rem;">
-      <% } else { %>
-      <canvas style="background-color: #7289da" id="<%= guild.nameAcronym %>" width="64px" height="64px" style="border: 2px solid white;"></canvas>
-        <script>
-          function draw() {
-            const ctx = document.getElementById("<%= guild.nameAcronym %>").getContext('2d');
-            ctx.font = '18px Arial';
-            ctx.textAlign = "center";
-            ctx.fillStyle = "white";
-            ctx.textBaseline = "middle";
-            ctx.fillText("<%= guild.nameAcronym %>", 33, 33);
-          };
-          draw();
-        </script>
-      <% } %>
-    </div>
-    <div class="content">
-      <a class="ui inverted header"><%= guild.name %></a>
-      <div class="meta">
-        <a class="ui basic black label" data-tooltip="Bots" data-inverted="" data-variation="mini">
-          &nbsp<i class="android icon" style="font-size: 13px;"></i> 
-          <%= guild.members.filter(member => member.user.bot).size; %>
-        </a>
-        <a class="ui basic black label" data-tooltip="Members" data-inverted="" data-variation="mini">
-          <i class="users icon" style="font-size: 13px;"></i> 
-          <%= guild.members.filter(member => !member.user.bot).size; %>
-        </a>
+  <div class="section">
+    <div class="row">
+      <div class="col-auto">
+        <div class="ui inverted secondary pointing vertical menu">
+          <div class="item">
+            <div class="ui tiny image">
+              <% if (guild.icon) { %>
+              <img src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` %>">
+              <% } else { %>
+              <canvas style="background-color: #7289da" id="<%= guild.nameAcronym %>" width="64px" height="64px" style="border: 2px solid white;"></canvas>
+              <script>
+                function draw() {
+                  const ctx = document.getElementById("<%= guild.nameAcronym %>").getContext('2d');
+                  ctx.font = '18px Arial';
+                  ctx.textAlign = "center";
+                  ctx.fillStyle = "white";
+                  ctx.textBaseline = "middle";
+                  ctx.fillText("<%= guild.nameAcronym %>", 33, 33);
+                };
+                draw();
+              </script>
+              <% } %>
+            </div>
+          </div>
+          <div class="ui inverted divider"></div>
+          <a class="tablinks item" id="defaultOpen" onclick="openTab(event, 'BotSettings')">
+            Basic Settings
+          </a>
+          <div class="ui left pointing dropdown item">
+            <i class="dropdown icon"></i>
+            <span class="text">Commands</span>
+            <div class="menu">
+              <% for (const command in bot.config.dashboardTabs[1].dropdown) { %>
+              <a class="tablinks item" onclick="openTab(event, '<%= bot.config.dashboardTabs[1].dropdown[command] %>')">
+              <%= bot.config.dashboardTabs[1].dropdown[command] %>
+              </a>
+              <% } %>
+            </div>
+          </div>
+          <div class="ui left pointing dropdown item">
+            <i class="dropdown icon"></i>
+            <span class="text">Events</span>
+            <div class="menu">
+              <a class="tablinks item" onclick="openTab(event, 'guildMemberAdd')">Member Join</a>
+              <a class="tablinks item" onclick="openTab(event, 'guildMemberRemove')">Member Leave</a>
+              <a class="tablinks item" onclick="openTab(event, 'guildBanAdd')">Member Ban</a>
+              <a class="tablinks item" onclick="openTab(event, 'channelCreate')">Channel Create</a>
+            </div>
+          </div>
+          <a class="item" href="/logan/help">
+            <span class="text"><i class="small question circle outline icon"></i></span>
+          </a>
+        </div>
+      </div>
+      <div class="col-9">
+        <%- include('./guild-manage-blocks', {guild}) %>
       </div>
     </div>
   </div>
-  <a class="item" id="defaultOpen" onclick="openTab(event, 'Bot Settings')" style="width: 85%; margin-left: auto; margin-right: auto;">
-    Basic Settings
-  </a>
-  <div class="ui dropdown item" style="width: 85%; margin-left: auto; margin-right: auto;">
-    <i class="dropdown icon"></i>
-    Commands
-    <div class="ui menu">
-      <% for (let i = 0; i < bot.config.dashboardTabs[1].dropdown.length; i++) { %>
-      <a class="item" onclick="openTab(event, '<%= bot.config.dashboardTabs[1].dropdown[i] %>')">
-        <%= bot.config.dashboardTabs[1].dropdown[i] %>
-      </a>
-      <% } %>
-    </div>
-  </div>
-  <div class="fitted ui inverted divider" style="width: 85%; margin-left: auto; margin-right: auto;"></div>
-  <div class="ui dropdown item" style="width: 85%; margin-left: auto; margin-right: auto;">
-    <i class="dropdown icon"></i>
-    Events
-    <div class="ui menu">
-      <a class="item" onclick="openTab(event, 'guildMemberAdd')">
-        Member Join
-      </a>
-      <a class="item" onclick="openTab(event, 'guildMemberRemove')">
-        Member Leave
-      </a>
-      <a class="item" onclick="openTab(event, 'guildBanAdd')">
-        Member Ban
-      </a>
-      <a class="item" onclick="openTab(event, 'channelCreate')">
-        Channel Create
-      </a>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-<%- include('./guild-manage-blocks', {guild}) %>
-</div>
-</div>
 </div>

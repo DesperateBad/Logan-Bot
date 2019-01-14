@@ -1,0 +1,29 @@
+<%- include('../blocks/header', {bot, user, path}) %>
+
+<div class="visible ui inverted vertical sidebar menu">
+  <div class="item">
+    <img class="ui rounded avatar image" style="height: 36px; width: 36px;" src="<%= `https://cdn.discordapp.com/avatars/${bot.user.id}/${bot.user.avatar}.png?size=64` %>">
+    <a href="/logan/help"><b>Logan Docs</b></a>
+  </div>
+  <a class="tablinks link item" onclick="openTab(event, 'gettingStarted')">
+    Getting Started
+  </a>
+  <div class="item">
+    <div class="header">Web Dashboard</div>
+    <div class="menu">
+      <a class="tablinks item" onclick="openTab(event, 'dashboardNavigation')">Navigation</a>
+      <a class="tablinks item" onclick="openTab(event, 'dashboardBasicSettings')">Basic Settings</a>
+      <a class="tablinks item" onclick="openTab(event, 'dashboardCommands')">Commands</a>
+      <a class="tablinks item" onclick="openTab(event, 'dashboardEvents')">Events</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Support</div>
+    <div class="menu">
+      <a class="item">E-mail Support</a>
+      <a class="item">FAQs</a>
+    </div>
+  </div>
+</div>
+
+<% include ../blocks/footer %>

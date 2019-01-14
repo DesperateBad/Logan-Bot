@@ -2,63 +2,90 @@
 
 <div class="container">
 
-<div class="section no-pad-bot" id="index-banner">
+  <div class="section">
     <div class="container">
-      <br><br>
-      <h1 class="header center"><img class="circle hoverable" src="<%= bot.user.avatarURL %>" width="100" height="100"></h1>
-      <h1 class="header center teal-text text-lighten-5">Logan Bot</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">Creating fun and happiness throughout Discord!</h5>
+      <div class="roll-in-blurred-top">
+        <img class="ui centered circular image" src="<%= bot.user.avatarURL %>" width="100" height="100">
       </div>
-      <div class="center">
-        <a href="https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot" id="download-button" class="btn-large waves-effect waves-light blue-accent-1 hoverable <% if (!user) { %>pulse<% } %>">Invite me!</a>
+      <div class="ui center aligned inverted header">
+        <h1 class="display-4 tracking-in-expand">Logan Bot</h1>
       </div>
-      <br><br>
+      <div class="ui center aligned inverted header">
+        <h3 class="lead tracking-in-expand">Bringing fun and happiness throughout Discord!</h3>
+      </div>
+      <div class="ui center aligned header">
+        <a href="https://discordapp.com/oauth2/authorize?client_id=470864521842655252&scope=bot" class="big basic teal ui center button scale-in-center">Invite me!</a>
+      </div>
     </div>
   </div>
 
-<div class="ui inverted divider"></div>
+<div class="ui inverted divider scale-in-hor-center-one"></div>
+
+<div class="container section" style="margin-top: 40px;">
+  <blockquote class="blockquote text-center">
+    <p class="mb-0 slide-in-blurred-right">There's no fear when you're having fun.</p>
+    <footer class="blockquote-footer slide-in-blurred-left">Will Thomas</footer>
+  </blockquote>
+</div>
+  
+<div class="ui inverted divider scale-in-hor-center-two"></div>
 
 <div class="container">
     <div class="section">
-
-      <div class="row">
-        <div class="col s12 m4 ">
+      <div class="row justify-content-center">
+        <div class="col">
           <div class="icon-block">
-            <h2 class="center"><i class="small material-icons">settings</i></h2>
-            <h5 class="center">Server Web UI</h5>
-
-            <p class="light">Logan has a simple web UI that makes changing settings on your servers as smooth as possible. His settings change how he behaves and interacts with your server and his commands.</p>
+            <h2 class="inverted ui center aligned header font-weight-bold lead slide-in-bck-center">
+              <i class="small shield alternate icon"></i>
+            </h2>
+            <div style="text-align: center;">
+              <a class="font-weight-bold lead slide-in-bck-center">
+                Server Automod
+              </a>
+              <p class="lead slide-in-bck-center">Logan helps you maintain order with his automod feature! Customize what you want to be punished, and what those punishments are!</p>
+            </div>
           </div>
         </div>
-        <div class="col s12 m4">
+        <div class="col">
           <div class="icon-block">
-            <h2 class="center"><i class="small material-icons">security</i></h2>
-            <h5 class="center">Server Moderation</h5>
-
-            <p class="light">Logan helps moderate your server to make sure no rules are broken, and provides commands that allow you to mute and warn users, as well as automatically warning and muting members.</p>
+            <h2 class="inverted ui center aligned header font-weight-bold lead slide-in-bck-center">
+              <i class="small cog icon"></i>
+            </h2>
+            <div style="text-align: center;">
+              <a class="font-weight-bold lead slide-in-bck-center">
+                Web Dashboard
+              </a>
+              <p class="lead slide-in-bck-center">Customizing Logan is made as easy as changing server settings with the new server dashboard! The clean design allows you to change his prefix, enable and disable commands, customize announcements, and so much more with the ease of a few button clicks!</p>
+            </div>
           </div>
         </div>
-        <div class="col s12 m4">
+        <div class="col">
           <div class="icon-block">
-            <h2 class="center"><i class="small material-icons">mood</i></h2>
-            <h5 class="center">Fun Commands</h5>
-
-            <p class="light">Packed full of commands, Logan lightens the mood and entertains one and all.</p>
+            <h2 class="inverted ui center aligned header font-weight-bold lead slide-in-bck-center">
+              <i class="small heart icon"></i>
+            </h2>
+            <div style="text-align: center;">
+              <a class="font-weight-bold lead slide-in-bck-center">
+                Fun Commands
+              </a>
+              <p class="lead slide-in-bck-center">Packed full of commands, Logan lightens the mood and entertains one and all.</p>
+          </div>
           </div>
         </div>
       </div>
-
     </div>
     <br><br>
   </div>
 
-<div class="ui inverted divider"></div>
+<div class="ui inverted divider scale-in-hor-center-three"></div>
 
 <div class="container">
 <div class="section">
-<div class="row">
-  <div class="col s6 m6 push-s2 push-m2 ui inverted statistic">
+<div class="row justify-content-center">
+  <div class="col-auto ui inverted statistic slide-in-bck-center">
+    <div class="label">
+      Trusted by
+    </div>
     <div class="value">
       <%= bot.guilds.size %>
     </div>
@@ -66,7 +93,10 @@
       Servers
     </div>
   </div>
-  <div class="col s6 m6 pull-s2 pull-m2 ui inverted statistic">
+  <div class="col-auto ui inverted statistic slide-in-bck-center">
+    <div class="label">
+      Maintaining order in
+    </div>
     <div class="value">
       <%= bot.channels.size %>
     </div>
@@ -78,20 +108,44 @@
 </div>
 </div>
 
-<div class="ui inverted divider"></div>
+<div class="ui inverted divider scale-in-hor-center-four"></div>
 
-<section class="card-container section hoverable">
-  <div class="card">
-    <div class="avatar">
-      <img src="https://avatars1.githubusercontent.com/u/41532580?s=460&v=4">
+<div class="container section">
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <div class="ui cards slide-in-bck-center">
+          <div class="card">
+            <div class="content">
+              <img class="left floated mini ui image" src="https://avatars1.githubusercontent.com/u/41532580?s=460&v=4">
+              <div class="header">
+                High Fox
+              </div>
+              <div class="meta">
+                Owner, Developer
+              </div>
+              <div class="description">
+                Programmer, social outlier, ultimate nerd. Proficient in NodeJS, Javascript, HTML, and CSS.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="content">
+              <img class="left floated mini ui image" src="https://scontent-syd2-1.cdninstagram.com/vp/2da928d93a5a924f8e53fa00438a5189/5C9D39CB/t51.2885-19/s150x150/43023156_245892842768895_2206175050409705472_n.jpg">
+              <div class="header">
+                Jacobm348
+              </div>
+              <div class="meta">
+                Front-End Developer
+              </div>
+              <div class="description">
+                Jacob please insert your description here :3
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <h1 class="title">High Fox</h1>
-    <p class="description">Owner and Developer</p>
-    <div class="footer">
-      <a href="https://github.com/High-Fox">GitHub</a>
-    </div>
-  </div>
-</section>
+</div>
   
 </div>
 

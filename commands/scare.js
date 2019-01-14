@@ -42,6 +42,6 @@ exports.conf = {
 exports.help = {
   category: "Memes",
   name: "scare",
-  description: "Stop scaring the poor child!",
-  usage: "scare"
+  description: "Everyones so scary!",
+  usage: "scare <@mention>"
 };

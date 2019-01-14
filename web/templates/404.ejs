@@ -1,0 +1,23 @@
+<%- include('./blocks/header.ejs', {bot, user, path}) %>
+
+<div class="container section">
+  <div class="row justify-content-center">
+    <div class="ui medium image">
+      <img src="https://cdn.glitch.com/b013ab07-2408-4579-95c8-e4eea004c64a%2Flogansad.png?1545377173177">
+    </div>
+  </div>
+  <div class="row justify-content-center" style="margin: 40px;">
+    <h1 class="ui center aligned inverted blue header">
+      404 Not Found!
+      <div class="sub header">
+        The URL at &nbsp<b>https://highfox.tk/logan<%= url %></b>&nbsp was not found, did you type it correctly?
+      </div>
+    </h1>
+  </div>
+  <div class="row justify-content-center" style="margin: 40px;">
+    <a class="large inverted ui teal button" href="https://highfox.tk/logan/">
+      Return to Civilization
+    </a>
+  </div>
+</div>
+<% include ./blocks/footer.ejs %>

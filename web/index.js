@@ -18,11 +18,10 @@ const helmet = require("helmet");
 const md = require("marked");
 
 module.exports = (client) => {
+
   const dataDir = path.resolve(`${process.cwd()}${path.sep}web`);
   const templateDir = path.resolve(`${dataDir}${path.sep}templates`);
-
-  app.use("/public", express.static(path.resolve(`${dataDir}${path.sep}public`)));
-
+  
   passport.serializeUser((user, done) => {
     done(null, user);
   });
@@ -66,12 +65,13 @@ module.exports = (client) => {
     req.session.backURL = req.url;
     res.redirect("/logan/login");
   }
-
+    
   const renderTemplate = (res, req, template, data = {}) => {
     const baseData = {
       bot: client,
       path: req.path,
-      user: req.isAuthenticated() ? req.user : null
+      user: req.isAuthenticated() ? req.user : null,
+      less: data.less ? data.less : null
     };
     res.render(path.resolve(`${templateDir}${path.sep}${template}`), Object.assign(baseData, data));
   };
@@ -92,17 +92,15 @@ module.exports = (client) => {
   passport.authenticate("discord"));
 
   app.get("/callback", passport.authenticate("discord", { failureRedirect: "/logan/autherror" }), (req, res) => {
-    if (req.user.id === client.config.ownerID) {
+    if (client.config.webAdmins.indexOf(`${req.user.id}`) > -1) {
       req.session.isAdmin = true;
     } else {
       req.session.isAdmin = false;
     }
-    if (req.session.backURL && req.session.backURL.startsWith('https://highfox.tk/logan/')) {
-      const url = req.session.backURL;
-      req.session.backURL = null;
-      res.redirect(url);
-    } else {
+    if (req.session.isAdmin) {
       res.redirect("/logan/dashboard");
+    } else {
+      res.redirect("/logan/");
     }
   });
   
@@ -118,7 +116,7 @@ module.exports = (client) => {
   });
 
   app.get("/", async (req, res) => {
-    renderTemplate(res, req, "index.ejs");
+    renderTemplate(res, req, "index.ejs", {less: 'index'});
   });
 
 
@@ -140,34 +138,36 @@ module.exports = (client) => {
   });
 
   app.get("/dashboard", checkAuth, (req, res) => {
+    if (!req.session.isAdmin) return res.redirect("/logan/");
     const perms = Discord.EvaluatedPermissions;
     renderTemplate(res, req, "dashboard.ejs", {perms});
   });
 
   app.get("/admin", checkAuth, (req, res) => {
-    if (!req.session.isAdmin) return res.redirect("/");
+    if (!req.session.isAdmin) return res.redirect("/logan/");
     renderTemplate(res, req, "admin.ejs");
+  });
+  
+  app.get("/help", (req, res) => {
+    renderTemplate(res, req, "help/help.ejs");
+  });
+  
+  app.get("/help/:helpPage", (req, res) => {
+    renderTemplate(res, req, `help/${req.params.helpPage}`, {active: `${req.params.helpPage}`});
   });
 
   app.get("/dashboard/:guildID", checkAuth, (req, res) => {
+    if (!req.session.isAdmin) return res.redirect("/logan/");
     res.redirect(`/dashboard/${req.params.guildID}/manage`);
   });
 
   app.get("/dashboard/:guildID/manage", checkAuth, (req, res) => {
+    if (!req.session.isAdmin) return res.redirect("/logan/");
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
     renderTemplate(res, req, "guild/manage.ejs", {guild});
-  });
-
-  app.post("/dashboard/:guildID/manage", checkAuth, (req, res) => {
-    const guild = client.guilds.get(req.params.guildID);
-    if (!guild) return res.status(404);
-    const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
-    if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    client.writeSettings(guild.id, req.body);
-    res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
   app.post("/api/:guildID/enableCommand", checkAuth, (req, res) => {
@@ -194,7 +194,7 @@ module.exports = (client) => {
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
-    client.changeNickname(guild, req.body);
+    guild.setNickname(req.body.nickname);
     res.redirect("/dashboard/"+req.params.guildID+"/manage");
   });
   
@@ -242,6 +242,7 @@ module.exports = (client) => {
   });
   
   app.get("/dashboard/:guildID/leave", checkAuth, async (req, res) => {
+    if (!req.session.isAdmin) return res.redirect("/logan/");
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
@@ -251,12 +252,27 @@ module.exports = (client) => {
   });
 
   app.get("/dashboard/:guildID/reset", checkAuth, async (req, res) => {
+    if (!req.session.isAdmin) return res.redirect("/logan/");
     const guild = client.guilds.get(req.params.guildID);
     if (!guild) return res.status(404);
     const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
     if (!isManaged && !req.session.isAdmin) res.redirect("/");
     client.serverConfig.delete(guild.id);
     res.redirect("/dashboard/"+req.params.guildID);
+  });
+  
+  // 404 Page
+  app.use(function(req, res, next) {
+    res.status(404)
+    if (req.accepts('html')) {
+      renderTemplate(res, req, '404.ejs', { url: req.url });
+      return;
+    }
+    if (req.accepts('json')) {
+      res.send({ error: 'Error 404: Page not found' });
+      return;
+    }
+    res.type('txt').send('Error 404: Page not found');
   });
   
   client.site = function() { 

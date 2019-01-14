@@ -23,5 +23,9 @@ module.exports = (client) => {
     let returned = date.split(' ');
     return `${returned[1]} ${returned[2]} ${returned[3]}`;
   };
+  
+  client.getEmoji = (id) => {
+    return `${client.emojis.get(`${id}`).toString()}`;
+  };
     
 };

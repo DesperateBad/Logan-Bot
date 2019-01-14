@@ -6,7 +6,7 @@ const Jimp = require('jimp');
   const text = args.join(" ");
   
     if (!text) {
-        return message.reply("But you have to give me text ._.");
+        return message.reply(`But you have to give me text ${client.emojis.get('488284105700671488').toString()}`);
     };
     
     var isLongText = text.length >= 58 ? Jimp.FONT_SANS_16_BLACK : Jimp.FONT_SANS_32_BLACK;

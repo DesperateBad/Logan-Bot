@@ -15,24 +15,31 @@ bot.commands.forEach((command) => {
 });
 %>
 
-<div id="Bot Settings" class="tabcontent col-md-auto col-sm-auto">
-  <div class="ui inverted input">
-    <a class="floating ui red label">Nickname</a>
-    <input type="text" value="<%= nickname %>" class="changeNick" id="nickname" placeholder="Nickname">
+<div id="BotSettings" class="tabcontent section">
+  <div class="ui two divided items">
+  <div class="item">
+    <div class="ui inverted input">
+      <a class="floating ui red label">Nickname</a>
+      <input type="text" value="<%= nickname %>" class="changeNick" placeholder="Nickname">
+    </div>
+  </div>
+  <div class="item">
+    <div class="ui inverted input">
+      <a class="floating ui blue label">Prefix</a>
+      <input type="text" value="<%= conf.prefix %>" class="changePrefix" placeholder="Prefix">
+    </div>
+  </div>
   </div>
   <div class="ui inverted divider"></div>
-  <div class="ui inverted input">
-    <a class="floating ui blue label">Prefix</a>
-    <input type="text" value="<%= conf.prefix %>" class="changePrefix" id="prefix" placeholder="Prefix">
-  </div>
-  <br>
-  <div class="ui inverted divider"></div>
-  <button id="leaveButton" class="modal-trigger ui inverted red small button white-text" href="#serverLeaveModal"><i class="fas fa-sign-out-alt"></i>Leave Server</button>
+  <button id="leaveButton" class="modal-trigger ui red small button white-text" href="#serverLeaveModal">Leave Server</button>
+</div>
+
+<div class="tabcontent section" id="commands">
 </div>
 
 <% for (const category in help) { %>
 <% if (help[category].length === 0) return; %>
-<div class="tabcontent col-md-auto col-sm-auto" id="<%= category %>">
+<div class="tabcontent section" id="<%= category %>">
   <div class="ui three cards">
     <% for (const command of help[category]) { %>
     <div class="ui raised card">
@@ -43,9 +50,7 @@ bot.commands.forEach((command) => {
         <%= command.help.description %>
       </div>
     </div>
-      <div class="extra content">
-      <div class="ui one buttons">
-      <div class="ui small basic <% if (conf.disabledCommands.indexOf(command.help.name) < 0) { %> red <% } else { %> green <% } %> button disableCommand" data-command="<%= command.help.name %>">
+      <div class="bottom attached ui small basic <% if (conf.disabledCommands.indexOf(command.help.name) < 0) { %> red <% } else { %> green <% } %> button disableCommand" data-command="<%= command.help.name %>">
       <% if (conf.disabledCommands.indexOf(command.help.name) < 0) { %>
         <i class="remove icon"></i>
         Disable Command
@@ -53,16 +58,14 @@ bot.commands.forEach((command) => {
         <i class="plus icon"></i>
         Enable Command
       <% } %>
-      </div>
-      </div>
-      </div>
     </div>
-    <% } %>
   </div>
+  <% } %>
+</div>
 </div>
 <% } %>
 
-<div class="tabcontent col-md-auto col-sm-auto" id="guildMemberAdd">
+<div class="tabcontent section" id="guildMemberAdd">
   <div class="ui item">
     <select class="ui select dropdown" id="welcomeChannel">
       <% for (let i = 0; i < guildChannels.length; i++) { %>
@@ -76,8 +79,8 @@ bot.commands.forEach((command) => {
   </div>
 </div>
 
-<div class="tabcontent col-md-auto col-sm-auto" id="Events">
-  <div class="section container">
+<div class="tabcontent container section" id="Events">
+  <div class="section">
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="welcomeMembers">
       <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.welcomeMembers === "true") { %> checked <% } %> id="welcomeMembers" data-selectid="welcomeChannel" name="Welcome Members" data-event="guildMemberAdd" />
@@ -101,7 +104,7 @@ bot.commands.forEach((command) => {
   
   <div class="ui inverted divider"></div>
   
-  <div class="container section">
+  <div class="section">
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceLeaves">
       <input type="checkbox" class="filled-in eventCheckbox" <% if (conf.announceLeaves === "true") { %> checked <% } %> id="announceLeaves" data-selectid="leaveAnnouncementChannel" name="Announce Member Leaves" data-event="guildMemberRemove" />
@@ -125,7 +128,7 @@ bot.commands.forEach((command) => {
   
   <div class="ui inverted divider"></div>
   
-  <div class="container section">
+  <div class="section">
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceBans">
       <input type="checkbox" class="filled-in eventCheckbox" checked id="announceBans" data-selectid="banAnnouncementChannel" name="Announce Bans" data-event="guildBanAdd"/>
@@ -149,7 +152,7 @@ bot.commands.forEach((command) => {
   
   <div class="ui inverted divider"></div>
   
-  <div class="container section">
+  <div class="section">
     <div class="checkAndSelect" style="margin-top: 20px;">
     <label for="announceNewChannels">
       <input type="checkbox" class="filled-in eventCheckbox" checked id="announceNewChannels" data-selectid="newChannelAnnouncementChannel" name="Announce New Channels" />
@@ -171,7 +174,7 @@ bot.commands.forEach((command) => {
   
 </div>
 
-<div class="tabcontent col-md-auto col-sm-auto" id="Automod">
+<div class="tabcontent section" id="Automod">
   <div class="ui warning message">
   <i class="close icon"></i>
   <div class="header">
@@ -181,12 +184,12 @@ bot.commands.forEach((command) => {
 </div>
 </div>
 
-<div class="tabcontent col-md-auto col-sm-auto" id="Logging">
+<div class="tabcontent section" id="Logging">
   <div class="ui warning message">
   <i class="close icon"></i>
   <div class="header">
     Currently Under Construction
   </div>
   This part of the website is currently still in development, thank you for your patience and sorry for any inconvenience ^-^
-</div>
+  </div>
 </div>

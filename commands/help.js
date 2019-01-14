@@ -14,11 +14,15 @@ exports.run = (client, message, args, level) => {
     message.author.send(output, { code: "asciidoc", split: { char: "\u200b" } });
   } else {
     let command = args[0];
-    if (client.commands.has(command)) {
-      command = client.commands.get(command);
-      if (level < client.levelCache[command.conf.permLevel]) return;
-      message.channel.send({ embed: { title: `${client.config.prefix}${command.help.name}`, description: `${command.help.description}`, fields: [{ name: 'Usage:', value: `${command.help.usage}`, inline: true }, { name: 'Aliases:', value: `${command.conf.aliases.join(", ")}`, inline: true }]}});
-    }
+    if (client.commands.has(command) || client.commands.has(client.aliases.get(command))) {
+      let cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
+      let aliases = [];
+      cmd.conf.aliases.forEach((alias) => {
+        aliases.push(`${message.serverConfig.hasOwnProperty('prefix') ? message.serverConfig.prefix : client.config.prefix}${alias}`);
+      });
+      if (level < client.levelCache[cmd.conf.permLevel]) return;
+      message.channel.send({ embed: { color: 0xCFD9F9, title: `Info for command: **${cmd.help.name}**`, description: `${cmd.help.description}`, fields: [{ name: '**Usage**', value: `${message.serverConfig.hasOwnProperty('prefix') ? message.serverConfig.prefix : client.config.prefix}${cmd.help.usage}`, inline: true}, { name: '**Aliases:**', value: `${aliases.length > 0 ? aliases.join(', ') : 'None'}`, inline: true }]}});
+    } else return;
   }
 };
 
@@ -32,5 +36,5 @@ exports.help = {
   category: "Info",
   name: 'help',
   description: 'Gives you all of my commands :3',
-  usage: 'help [command]'
+  usage: 'help <command>'
 };

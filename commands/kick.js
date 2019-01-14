@@ -32,7 +32,7 @@ exports.help = {
   category: "Moderation",
   name: "kick",
   description: "Kicks a member from the server.",
-  usage: "kick @memberToKick"
+  usage: "kick [@mention]"
 };
 
 

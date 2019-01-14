@@ -61,7 +61,7 @@ if (!args[0]) return message.channel.send("Brain needs to say something!");
 
 exports.conf = {
   enabled: true,
-  aliases: ['ns'],
+  aliases: [],
   permLevel: "Open"
 };
 

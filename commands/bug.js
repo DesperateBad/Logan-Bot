@@ -23,5 +23,5 @@ exports.help = {
   category: "Miscellaneous",
   name: "bug",
   description: "Use to report bugs, and ONLY to report bugs.",
-  usage: "bug [text]"
+  usage: "bug [description]"
 };
